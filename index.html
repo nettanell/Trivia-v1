@@ -5,120 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#14203A">
-<title>ידע · תרגול לילי</title>
+<meta name="theme-color" content="#05080D">
+<title>ידע · פורטל תרגול</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#14203A; --night2:#1C2B4B; --ink:#1B2233;
-  --paper:#F3E9D6; --paper2:#E9DDC4; --amber:#E8B86D; --amber2:#C99548;
-  --mist:#8FA3C7; --mist2:#5C709A; --ok:#7FB58A; --no:#D97A6C; --meh:#C9B36B;
+  --void:#05080D; --panel:#0C1420; --panel2:#111B2B; --edge:rgba(95,232,255,.14);
+  --portal:#41F17B; --portal2:#1FBF5C; --cyan:#5FE8FF; --sun:#FFD84D; --flare:#FF5470;
+  --text:#EAF3F8; --dim:#7B8CA3; --dim2:#54637A;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:var(--night);color:var(--paper);font-family:"Heebo",-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow-x:hidden}
+html,body{margin:0;height:100%;background:var(--void);color:var(--text);font-family:"Heebo",-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow-x:hidden;
+  background:
+   radial-gradient(60% 40% at 85% -5%, rgba(65,241,123,.10), transparent 60%),
+   radial-gradient(50% 35% at 0% 100%, rgba(95,232,255,.08), transparent 60%),
+   var(--void)}
 button{font-family:inherit;border:0;cursor:pointer;color:inherit;background:none;font-size:inherit}
-button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
-.app{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:16px 18px 24px}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.app{position:relative;z-index:2;max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:16px 18px 24px}
 .screen{display:none;flex:1;flex-direction:column}
 .screen.on{display:flex}
 
+/* quote ticker */
+#qticker{position:fixed;z-index:1;left:0;right:0;bottom:12vh;pointer-events:none;text-align:center;padding:0 24px;
+  font:400 15px/1.6 "Heebo";color:var(--cyan);opacity:0;letter-spacing:.03em;
+  text-shadow:0 0 14px rgba(95,232,255,.65),0 0 40px rgba(95,232,255,.25)}
+#qticker.go{animation:qdrift 8s ease-in-out forwards}
+@keyframes qdrift{0%{opacity:0;transform:translateY(14px) scale(.98)}12%{opacity:.85;transform:none}80%{opacity:.85}100%{opacity:0;transform:translateY(-18px)}}
+
 /* ---- top bar ---- */
 .bar{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 18px}
-.bar h1{font:500 17px/1 "Heebo";letter-spacing:.02em;margin:0;color:var(--mist)}
-.bar .streak{display:flex;align-items:center;gap:6px;color:var(--amber);font-weight:500;font-size:15px}
+.bar h1{font:400 15px/1 "Heebo";letter-spacing:.14em;margin:0;color:var(--dim)}
+.bar .streak{display:flex;align-items:center;gap:6px;color:var(--sun);font-weight:500;font-size:15px;text-shadow:0 0 12px rgba(255,216,77,.5)}
 .bar .streak svg{width:16px;height:16px}
-.icon-btn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--mist)}
-.icon-btn svg{width:22px;height:22px}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--dim);background:var(--panel);border:1px solid var(--edge)}
+.icon-btn svg{width:20px;height:20px}
 
 /* ---- home ---- */
-.home-hero{margin-top:6vh}
-.home-hero .greet{font:300 20px/1.4 "Heebo";color:var(--mist);margin:0 0 6px}
-.home-hero h2{font:500 42px/1.1 "Frank Ruhl Libre",serif;margin:0 0 28px;color:var(--paper)}
-.ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.home-hero{margin-top:4vh}
+.home-hero .greet{font:300 17px/1.4 "Heebo";color:var(--dim);margin:0 0 6px}
+.home-hero h2{font:400 40px/1.15 "Secular One",sans-serif;margin:0 0 30px;color:var(--text)}
+.ring{position:relative;width:196px;height:196px;margin:0 auto 22px}
+.ring::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(65,241,123,.0), rgba(65,241,123,.45), rgba(95,232,255,.4), rgba(65,241,123,.0));
+  filter:blur(14px);animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring svg{position:relative;width:100%;height:100%;transform:rotate(-90deg)}
 .ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
-.ring .num b{font:500 54px/1 "Frank Ruhl Libre",serif;color:var(--paper);display:block}
-.ring .num span{font-size:13px;color:var(--mist);margin-top:6px;display:block}
-.home-sub{text-align:center;color:var(--mist);font-size:15px;margin:0 0 28px;line-height:1.5}
-.primary{width:100%;padding:18px;border-radius:16px;background:var(--amber);color:var(--night);font-weight:700;font-size:18px;box-shadow:0 8px 28px -8px rgba(232,184,109,.55);transition:transform .08s}
+.ring .num b{font:400 56px/1 "Secular One",sans-serif;color:var(--text);display:block;text-shadow:0 0 24px rgba(65,241,123,.35)}
+.ring .num span{font-size:13px;color:var(--dim);margin-top:6px;display:block}
+.home-sub{text-align:center;color:var(--dim);font-size:15px;margin:0 0 26px;line-height:1.5}
+.primary{width:100%;padding:18px;border-radius:16px;background:linear-gradient(180deg,var(--portal),var(--portal2));color:#03140A;font-weight:700;font-size:18px;
+  box-shadow:0 0 0 1px rgba(65,241,123,.5),0 10px 34px -8px rgba(65,241,123,.45);transition:transform .08s}
 .primary:active{transform:scale(.985)}
-.secondary{width:100%;padding:14px;border-radius:14px;background:var(--night2);color:var(--paper);font-weight:500;font-size:16px;margin-top:10px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
-.chip{padding:8px 13px;border-radius:999px;background:var(--night2);color:var(--mist);font-size:14px;border:1px solid transparent}
-.chip.on{border-color:var(--amber);color:var(--amber)}
+.secondary{width:100%;padding:14px;border-radius:14px;background:var(--panel);border:1px solid var(--edge);color:var(--text);font-weight:500;font-size:16px;margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px 0 0}
+.chip{padding:8px 13px;border-radius:999px;background:var(--panel);border:1px solid var(--edge);color:var(--dim);font-size:14px}
+.chip.on{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 12px rgba(95,232,255,.25),inset 0 0 10px rgba(95,232,255,.07)}
+.chips-lbl{font-size:12px;color:var(--dim2);text-align:center;margin:14px 0 6px;letter-spacing:.06em}
 
 /* ---- practice card ---- */
 .card-wrap{flex:1;display:flex;flex-direction:column}
-.progress{height:4px;background:var(--night2);border-radius:2px;margin-bottom:22px;overflow:hidden}
-.progress i{display:block;height:100%;background:var(--amber);border-radius:2px;transition:width .35s ease}
-.card{background:var(--paper);color:var(--ink);border-radius:22px;padding:26px 24px 22px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7), inset 0 1px 0 #fff8;position:relative}
-.card .cat{font-size:13px;color:var(--mist2);margin:0 0 14px;display:flex;justify-content:space-between;align-items:center}
-.card .cat .again{color:var(--amber2);font-weight:500}
-.card .q{font:500 26px/1.35 "Frank Ruhl Libre",serif;margin:0;color:var(--ink)}
-.reveal{margin-top:18px;border-top:1px dashed #cdbf9f;padding-top:14px}
-.reveal .lbl{font-size:13px;color:var(--mist2);margin:0 0 4px}
-.reveal p{margin:0;font-size:17px;line-height:1.55}
-.reveal.ans p{font:500 20px/1.45 "Frank Ruhl Libre",serif}
-.reveal .more{font-size:15px;color:#4a536b;margin-top:8px;line-height:1.5}
+.progress{height:4px;background:var(--panel2);border-radius:2px;margin-bottom:22px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--portal),var(--cyan));border-radius:2px;transition:width .35s ease;box-shadow:0 0 10px rgba(65,241,123,.6)}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));color:var(--text);border-radius:20px;padding:26px 22px 22px;position:relative;
+  border:1px solid var(--edge);box-shadow:0 30px 70px -30px rgba(0,0,0,.9),0 0 40px -18px rgba(95,232,255,.25)}
+.card .cat{font-size:12.5px;color:var(--dim);margin:0 0 14px;display:flex;justify-content:space-between;align-items:center;letter-spacing:.08em}
+.card .cat .again{color:var(--sun);font-weight:500}
+.card .q{font:400 25px/1.4 "Secular One",sans-serif;margin:0;color:var(--text)}
+.qimg{width:100%;max-height:240px;object-fit:cover;border-radius:14px;margin:0 0 16px;display:block;background:var(--panel2);border:1px solid var(--edge)}
+.imgerr{font-size:13px;color:var(--dim);background:var(--panel2);border-radius:10px;padding:8px 10px;margin:0 0 14px}
+.reveal{margin-top:18px;border-top:1px dashed rgba(123,140,163,.35);padding-top:14px}
+.reveal .lbl{font-size:12px;color:var(--cyan);margin:0 0 5px;letter-spacing:.12em}
+.reveal p{margin:0;font-size:16.5px;line-height:1.6}
+.reveal.ans p{font:400 19px/1.5 "Secular One",sans-serif}
+.reveal.ans p.lbl,.reveal.ans p.more{font-family:"Heebo"}
+.reveal .more{font-size:15px;color:var(--dim);margin-top:8px;line-height:1.55}
+.reveal.deep{background:rgba(65,241,123,.05);margin:16px -10px 0;padding:14px 12px 12px;border-radius:14px;border:1px solid rgba(65,241,123,.22);border-top:1px solid rgba(65,241,123,.22)}
+.reveal.deep .lbl{color:var(--portal)}
+.reveal.deep p{font-size:15.5px;line-height:1.65;font-family:"Heebo"}
+.askme{margin-top:12px;padding:9px 12px;border-radius:10px;background:none;border:1px dashed rgba(95,232,255,.4);color:var(--cyan);font-size:13.5px}
 .actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}
 .rowbtns{display:flex;gap:10px}
-.rowbtns button{flex:1;padding:16px;border-radius:14px;font-weight:500;font-size:16px;background:var(--night2);color:var(--paper);transition:transform .08s}
+.rowbtns button{flex:1;padding:16px;border-radius:14px;font-weight:500;font-size:16px;background:var(--panel);border:1px solid var(--edge);color:var(--text);transition:transform .08s}
 .rowbtns button:active{transform:scale(.97)}
-.rowbtns button.amber{background:var(--amber);color:var(--night);font-weight:700}
+.rowbtns button.amber{background:linear-gradient(180deg,var(--portal),var(--portal2));border:0;color:#03140A;font-weight:700;box-shadow:0 8px 26px -10px rgba(65,241,123,.5)}
 .grade{display:none;gap:8px}
 .grade.on{display:flex}
-.grade button{flex:1;padding:16px 6px;border-radius:14px;font-weight:500;font-size:15px;color:var(--night)}
-.grade .no{background:var(--no)}.grade .meh{background:var(--meh)}.grade .ok{background:var(--ok)}
-.grade small{display:block;font-weight:400;font-size:12px;opacity:.75;margin-top:2px}
-.hint-txt{color:var(--mist);font-size:13px;text-align:center;margin-top:14px}
-
-/* ---- image, deepen, review ---- */
-.qimg{width:100%;max-height:240px;object-fit:cover;border-radius:14px;margin:0 0 16px;display:block;background:#e6dcc6}
-.imgerr{font-size:13px;color:var(--mist2);background:var(--paper2);border-radius:10px;padding:8px 10px;margin:0 0 14px}
-.reveal.deep{background:var(--paper2);margin:14px -8px 0;padding:14px 12px 12px;border-radius:14px;border-top:0}
-.reveal.deep p{font-size:15.5px;line-height:1.6}
-.deepbtn{width:100%;padding:14px;border-radius:14px;background:var(--night2);color:var(--amber);font-weight:500;font-size:16px;border:1px solid var(--amber2)}
-.prevlink{width:100%;padding:10px;color:var(--mist2);font-size:14px;text-decoration:underline;text-underline-offset:3px}
-.chips-lbl{font-size:12px;color:var(--mist2);text-align:center;margin:14px 0 6px}
+.grade button{flex:1;padding:15px 6px;border-radius:14px;font-weight:600;font-size:15px;color:#0A0505;border:0}
+.grade .no{background:var(--flare);box-shadow:0 6px 22px -10px rgba(255,84,112,.6)}
+.grade .meh{background:var(--sun);box-shadow:0 6px 22px -10px rgba(255,216,77,.5)}
+.grade .ok{background:var(--portal);box-shadow:0 6px 22px -10px rgba(65,241,123,.6)}
+.grade small{display:block;font-weight:400;font-size:12px;opacity:.8;margin-top:2px}
+.deepbtn{width:100%;padding:14px;border-radius:14px;background:rgba(65,241,123,.08);color:var(--portal);font-weight:600;font-size:16px;border:1px solid rgba(65,241,123,.45);box-shadow:0 0 18px -6px rgba(65,241,123,.35)}
+.prevlink{width:100%;padding:10px;color:var(--dim2);font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.hint-txt{color:var(--dim2);font-size:13px;text-align:center;margin-top:14px}
 
 /* ---- done ---- */
 .done{margin:auto 0;text-align:center}
-.done .big{font:500 68px/1 "Frank Ruhl Libre",serif;color:var(--amber);margin:0 0 6px}
-.done h2{font:500 30px/1.2 "Frank Ruhl Libre",serif;margin:0 0 10px}
-.done p{color:var(--mist);line-height:1.6;margin:0 0 26px;font-size:16px}
-.stars{position:fixed;inset:0;pointer-events:none;overflow:hidden}
-.stars i{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--amber);opacity:0;animation:fall 1.8s ease-out forwards}
+.done .big{font:400 70px/1 "Secular One",sans-serif;color:var(--portal);margin:0 0 6px;text-shadow:0 0 30px rgba(65,241,123,.5)}
+.done h2{font:400 30px/1.2 "Secular One",sans-serif;margin:0 0 10px}
+.done p{color:var(--dim);line-height:1.6;margin:0 0 26px;font-size:16px}
+.stars{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+.stars i{position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;animation:fall 1.8s ease-out forwards}
 @keyframes fall{0%{opacity:1;transform:translateY(-20px) scale(1)}100%{opacity:0;transform:translateY(110vh) scale(.4)}}
-@media (prefers-reduced-motion:reduce){.stars i{animation:none;display:none}}
 
 /* ---- stats ---- */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
-.stat{background:var(--night2);border-radius:16px;padding:16px}
-.stat b{font:500 34px/1 "Frank Ruhl Libre",serif;display:block;color:var(--paper);margin-bottom:6px}
-.stat span{font-size:13px;color:var(--mist)}
-.stats h3{font:500 16px "Heebo";color:var(--mist);margin:8px 0 12px}
+.stat{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:16px}
+.stat b{font:400 32px/1 "Secular One",sans-serif;display:block;color:var(--text);margin-bottom:6px}
+.stat span{font-size:13px;color:var(--dim)}
+.stats h3{font:500 15px "Heebo";color:var(--dim);margin:8px 0 12px;letter-spacing:.06em}
 .catrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:15px}
 .catrow .name{width:88px;flex:none}
-.catrow .track{flex:1;height:8px;background:var(--night2);border-radius:4px;overflow:hidden}
-.catrow .track i{display:block;height:100%;background:var(--amber);border-radius:4px}
-.catrow .n{width:44px;text-align:left;color:var(--mist);font-size:13px;flex:none}
-.weak{background:var(--night2);border-radius:16px;padding:14px 16px;margin-top:8px}
-.weak p{margin:0 0 6px;font-size:14px;color:var(--mist)}
+.catrow .track{flex:1;height:8px;background:var(--panel2);border-radius:4px;overflow:hidden}
+.catrow .track i{display:block;height:100%;background:linear-gradient(90deg,var(--portal),var(--cyan));border-radius:4px}
+.catrow .n{width:44px;text-align:left;color:var(--dim);font-size:13px;flex:none}
+.weak{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:14px 16px;margin-top:8px}
+.weak p{margin:0 0 6px;font-size:14px;color:var(--dim)}
 .weak li{font-size:15px;line-height:1.5;margin:4px 0}
 .weak ul{margin:0;padding-right:18px}
-.tiny{font-size:12px;color:var(--mist2);text-align:center;margin-top:22px;line-height:1.6}
-.danger{color:var(--no);font-size:14px;margin-top:14px;width:100%;padding:10px}
-.modal{position:fixed;inset:0;background:rgba(8,13,26,.8);display:grid;place-items:center;padding:20px;z-index:50}
+.tiny{font-size:12px;color:var(--dim2);text-align:center;margin-top:22px;line-height:1.6}
+.danger{color:var(--flare);font-size:14px;margin-top:14px;width:100%;padding:10px}
+.modal{position:fixed;inset:0;background:rgba(2,4,8,.86);display:grid;place-items:center;padding:20px;z-index:50}
 .modal[hidden]{display:none}
-.modal-box{background:var(--night2);border-radius:18px;padding:20px;width:100%;max-width:440px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-.modal-box h3{margin:0 0 8px;font:500 18px "Heebo";color:var(--paper)}
-.modal-box p{margin:0 0 12px;color:var(--mist);font-size:14px;line-height:1.5}
-.modal-box textarea{width:100%;height:150px;border-radius:10px;border:0;background:var(--night);color:var(--paper);padding:10px;font-size:12px;direction:ltr;font-family:monospace}
+.modal-box{background:var(--panel);border:1px solid var(--edge);border-radius:18px;padding:20px;width:100%;max-width:440px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.modal-box h3{margin:0 0 8px;font:500 18px "Heebo";color:var(--text)}
+.modal-box p{margin:0 0 12px;color:var(--dim);font-size:14px;line-height:1.5}
+.modal-box textarea{width:100%;height:150px;border-radius:10px;border:1px solid var(--edge);background:var(--void);color:var(--text);padding:10px;font-size:12px;direction:ltr;font-family:monospace}
 .m-btns{display:flex;gap:8px;margin-top:12px}
-.m-btns button{flex:1;padding:13px;border-radius:12px;font-weight:500;font-size:15px;background:var(--night);color:var(--paper)}
-.m-btns button.amber{background:var(--amber);color:var(--night);font-weight:700}
+.m-btns button{flex:1;padding:13px;border-radius:12px;font-weight:500;font-size:15px;background:var(--panel2);border:1px solid var(--edge);color:var(--text)}
+.m-btns button.amber{background:linear-gradient(180deg,var(--portal),var(--portal2));border:0;color:#03140A;font-weight:700}
+@media (prefers-reduced-motion:reduce){
+  .stars i{animation:none;display:none}
+  .ring::before{animation:none}
+  #qticker.go{animation:none;opacity:.6}
+}
 </style>
 </head>
 <body>
@@ -137,7 +161,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
     <p class="greet" id="greet">ערב טוב, נתן.</p>
     <h2 id="headline">כמה שאלות לפני השינה?</h2>
     <div class="ring">
-      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" stroke="#1C2B4B" stroke-width="7" fill="none"/><circle id="ring-fg" cx="50" cy="50" r="44" stroke="#E8B86D" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="276" stroke-dashoffset="276" style="transition:stroke-dashoffset .6s ease"/></svg>
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" stroke="#111B2B" stroke-width="7" fill="none"/><circle id="ring-fg" cx="50" cy="50" r="44" stroke="#41F17B" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="276" stroke-dashoffset="276" style="transition:stroke-dashoffset .6s ease"/></svg>
       <div class="num"><div><b id="today-n">0</b><span id="today-goal">מתוך 10 היום</span></div></div>
     </div>
     <p class="home-sub" id="home-sub"></p>
@@ -168,7 +192,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
       <p class="q" id="c-q"></p>
       <div class="reveal" id="c-hint" hidden><p class="lbl">רמז</p><p id="c-hint-t"></p></div>
       <div class="reveal ans" id="c-ans" hidden><p class="lbl">תשובה</p><p id="c-ans-t"></p><p class="more" id="c-more"></p></div>
-      <div class="reveal deep" id="c-deep" hidden><p class="lbl">העמקה</p><p id="c-deep-t"></p></div>
+      <div class="reveal deep" id="c-deep" hidden><p class="lbl">העמקה</p><p id="c-deep-t"></p><button class="askme" onclick="askClaude()">שאל את קלוד עוד על זה — העתקת שאלה מוכנה</button></div>
     </div>
     <div class="actions">
       <div class="rowbtns" id="reveal-btns">
@@ -230,6 +254,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 
 </div>
 <div class="stars" id="stars"></div>
+<p id="qticker"></p>
 <div class="modal" id="modal" hidden>
   <div class="modal-box">
     <h3 id="m-title"></h3>
@@ -571,6 +596,61 @@ const IMGQ=[
 ];
 Q.push(...IMGQ);
 
+/* ================= שכבה 2 — שאלות חדשות ================= */
+const NEWQ=[
+{c:"מדע",q:"מהו אטום, ומאילו חלקיקים הוא בנוי?",h:"גרעין ומה שסביבו.",a:"יחידת היסוד של החומר: גרעין (פרוטונים וניוטרונים) ואלקטרונים שסובבים אותו.",m:"מספר הפרוטונים לבדו קובע איזה יסוד זה: 1 = מימן, 79 = זהב.",d:"האטום הוא כמעט כולו ריק: אם הגרעין היה בגודל זבוב במרכז אצטדיון, האלקטרונים היו ביציעים — וכל השאר כלום. הסיבה שהיד שלך לא עוברת דרך השולחן היא לא 'חומר מלא' אלא דחייה חשמלית בין האלקטרונים. וכל אטום כבד ממימן והליום נוצר בליבת כוכב — הברזל בדם שלך והסידן בעצמות בושלו בכוכבים שהתפוצצו לפני שהשמש נולדה."},
+{c:"מדע",q:"מי ניסח את חוקי התנועה ואת חוק הכבידה האוניברסלי?",h:"תפוח, לפי האגדה.",a:"אייזק ניוטון, במאה ה־17 — בספר ״פרינקיפיה״ (1687).",m:"אותו כוח שמפיל תפוח מחזיק את הירח במסלולו — זו הייתה ההברקה.",d:"ניוטון עשה את רוב עבודתו הגדולה בגיל 23–25, כשאוניברסיטת קיימברידג׳ נסגרה בגלל מגפת הדבר והוא ישב בבית — 'שנת הפלאות' שלו: כבידה, אופטיקה, ותשתית החדו״א. עיקרון שלמדנו ממנו על ידע: המכניקה שלו 'נכונה' עד היום לצרכים יומיומיים — נאס״א מטיסה חלליות עם ניוטון, לא עם איינשטיין — כי היחסות משנה משהו רק במהירויות וכבידה קיצוניות. תיאוריה חדשה לא תמיד מוחקת ישנה; לפעמים היא רק מסמנת את גבולותיה."},
+{c:"מדע",q:"מהי סופרנובה?",h:"מותו הנפיץ של כוכב ענק.",a:"פיצוץ אדיר בסוף חיי כוכב מסיבי — לרגעים הוא מאיר יותר מגלקסיה שלמה.",m:"בפיצוץ נוצרים ומפוזרים היסודות הכבדים — זהב, כסף, אורניום.",d:"״אנחנו אבק כוכבים״ זו לא מליצה אלא עובדה כימית: היסודות שמהם אתה עשוי נוצרו בכוכבים ופוזרו בסופרנובות, התערבבו בענן גז, וממנו התעבתה מערכת השמש. סופרנובה קרובה מדי (עד כמה עשרות שנות אור) הייתה מסכנת חיים על כדור הארץ — אך אין מועמדת כזו באופק. האחרונה שנראתה בעין בגלקסיה שלנו: 1604, עוד לפני הטלסקופ."},
+{c:"מדע",q:"מהו אדרנלין ומה הוא עושה לגוף?",h:"הורמון ה״הילחם או ברח״.",a:"הורמון חירום מבלוטת יותרת הכליה: מאיץ דופק, מרחיב סמפונות, מציף שרירים בדם וסוכר — הכנה מיידית למאמץ או סכנה.",m:"לכן הידיים רועדות אחרי בהלה — הגוף טעון לפעולה שלא הגיעה.",d:"מה ששווה לדעת מעולם הביצוע: אדרנלין מחדד כוח ומהירות אך פוגע במוטוריקה עדינה ובחשיבה מורכבת — לכן לוחמים ושוטרים מתאמנים עד שהפעולות אוטומטיות, שיישרדו את ההצפה. נשימה איטית ונשיפה ארוכה היא המתג ההפוך (מערכת פאראסימפתטית) — הדרך המהירה להוריד סיבוב. וכרונית: אותה מערכת חירום שמופעלת בלי הפסקה על ידי לחץ יומיומי היא שוחקת — הגוף לא מבחין בין נמר לבין מייל מעצבן."},
+{c:"מדע",q:"מהי שנת אור?",h:"יחידת מרחק, לא זמן.",a:"המרחק שהאור עובר בשנה — כ־9.5 טריליון ק״מ.",m:"הכוכב הקרוב אחרי השמש: 4.2 שנות אור. הגלקסיה שלנו: כ־100,000 שנות אור רוחב.",d:"המשמעות היפה: להסתכל רחוק זה להסתכל אחורה בזמן. אור השמש בן 8 דקות, אור הכוכבים בן שנים עד אלפי שנים — ייתכן שחלק מהכוכבים שאתה רואה כבר לא קיימים. גלקסיית אנדרומדה, השכנה, נראית כפי שהייתה לפני 2.5 מיליון שנה. טלסקופים הם בעצם מכונות זמן: ג׳יימס ווב קולט אור שיצא לדרך לפני יותר מ־13 מיליארד שנה — צילום של ינקות היקום."},
+{c:"מדע",q:"מהו ג׳ט לג, ולמה הוא קורה?",h:"השעון הפנימי מפגר אחרי המטוס.",a:"חוסר התאמה בין השעון הביולוגי הפנימי (המחזור הצירקדי) לשעון המקומי החדש — הגוף מפריש הורמוני שינה וערות לפי אזור הזמן הישן.",m:"כלל אצבע: יום הסתגלות לכל שעה–שעה וחצי של הפרש.",d:"השעון הפנימי מכויל בעיקר על ידי אור — ולכן אור הוא גם התרופה: חשיפה לשמש בשעות הנכונות ביעד מזיזה את השעון מהר יותר מכל דבר אחר. טיסה מזרחה קשה ממערבה — קל להאריך יום, קשה לקצרו. טריק מעשי: להתחיל להזיז שינה ואוכל יומיים־שלושה לפני, ולכוון את הארוחות לשעות היעד — גם מערכת העיכול היא שעון."},
+{c:"היסטוריה",q:"באילו שנים התרחשה מלחמת העולם השנייה, ומה נחשב לקרב המפנה באירופה?",h:"עיר על הוולגה.",a:"1939–1945; נקודת המפנה — סטלינגרד (1942–43), שם נבלמה גרמניה לראשונה ואיבדה צבא שלם.",m:"המלחמה הקטלנית בהיסטוריה: 60–70 מיליון הרוגים, רובם אזרחים.",d:"פרספקטיבה שמשנה את התמונה המקובלת: כ־80% מהאבדות של הצבא הגרמני נגרמו בחזית המזרחית מול ברית המועצות — ברה״מ איבדה כ־27 מיליון בני אדם, יותר מכל בעלות הברית יחד. ובצד הכלכלי: המלחמה הוכרעה גם בפסי ייצור — ארה״ב ייצרה לבדה יותר מטוסים מכל מדינות הציר יחד. מלחמות מודרניות מנצחים במפעלים לא פחות מבשדה."},
+{c:"היסטוריה",q:"מהי השואה?",h:"1941–1945.",a:"רצח שיטתי ומתועש של כשישה מיליון יהודים בידי גרמניה הנאצית ועוזריה — כשני שלישים מיהודי אירופה.",m:"יום הזיכרון הבינלאומי: 27 בינואר, יום שחרור אושוויץ.",d:"מה שמייחד את השואה בתולדות רצח העם: התיעוש והביורוקרטיה — רכבות, רישום, מפעלי מוות — מדינה מודרנית שרתמה את כל מנגנוניה להשמדה. ההיסטוריון ראול הילברג הראה שהיא התקדמה בשלבים: הגדרה, נישול, ריכוז, השמדה — כל שלב הכשיר את הבא. מכאן הלקח האוניברסלי על זיהוי תהליכים בתחילתם. ומשפטי נירנברג שאחריה קבעו עיקרון חדש במשפט הבינלאומי: ״מילאתי פקודות״ אינה הגנה."},
+{c:"היסטוריה",q:"מהי האימפריה העות׳מאנית, ומה קרה לה?",h:"שלטה גם כאן, 400 שנה.",a:"אימפריה טורקית־מוסלמית ששלטה במזרח התיכון, בבלקן ובצפון אפריקה כ־600 שנה — עד תבוסתה במלחמת העולם הראשונה ופירוקה ב־1922.",m:"ארץ ישראל הייתה תחת שלטונה מ־1517 עד 1917.",d:"הפירוק שלה הוא המפתח להבנת המזרח התיכון של היום: בריטניה וצרפת שרטטו את הגבולות (הסכם סייקס–פיקו 1916) בקווים ישרים על מפה, בלי קשר לעמים ולעדות בשטח — עיראק, סוריה ולבנון הן תוצרי השרטוט הזה, וחלק ניכר מחוסר היציבות האזורי נטוע שם. מהריסותיה קמה גם טורקיה המודרנית של אטאטורק — רפובליקה חילונית שהחליפה אלף בית ערבי בלטיני בן לילה."},
+{c:"היסטוריה",q:"מה קרה ב־1492?",h:"שנה כפולה בהיסטוריה — גם לספרד וגם ליהודים.",a:"קולומבוס הגיע לאמריקה בשליחות ספרד — ובאותה שנה גורשו יהודי ספרד.",m:"קולומבוס מת בטוח שהגיע לאסיה. היבשת נקראה על שם אמריגו וספוצ׳י, שהבין שמדובר ביבשת חדשה.",d:"האירוע החשוב באמת הוא ״החילוף הקולומביאני״ — ההחלפה הביולוגית הגדולה בהיסטוריה: מאמריקה לעולם — תפוח אדמה, עגבנייה, תירס, קקאו, טבק; לאמריקה — סוסים, בקר, חיטה, וגם מחלות. האבעבועות ומגפות אחרות הרגו עד 90% מילידי אמריקה — קריסה דמוגרפית שאין לה אח ורע. תפוח האדמה לבדו שינה את אירופה: תזונה זולה שאפשרה את גידול האוכלוסייה שהזין את המהפכה התעשייתית."},
+{c:"גאוגרפיה",q:"מהו יער האמזונס, והאם הוא באמת ״ריאות כדור הארץ״?",h:"היער הטרופי הגדול בעולם — אבל הכינוי מטעה.",a:"יער הגשם הגדול בעולם (רובו בברזיל). הכינוי לא מדויק: הוא צורך בעצמו את רוב החמצן שהוא מייצר; רוב החמצן באטמוספירה מקורו באצות ים לאורך מיליוני שנים.",m:"חשיבותו האמיתית: מאגר פחמן עצום, מנוע גשם יבשתי, ומגוון ביולוגי חסר תקדים.",d:"היער מייצר חלק מהגשם של עצמו: העצים מזיעים אדי מים ('נהרות מעופפים') שמניעים משקעים על פני אלפי ק״מ, עד ארגנטינה. מכאן הסכנה שמדאיגה מדענים — נקודת אל־חזור: אם ייכרת חלק גדול מדי, מנגנון הגשם ייחלש והיער עלול להידרדר מעצמו לסוואנה. ובקרקעו — פרדוקס: אדמת יער גשם דלה להפליא; כל העושר נמצא בצמחייה החיה עצמה, ולכן שטח שנכרת מפסיק להניב תוך שנים."},
+{c:"גאוגרפיה",q:"מהו קו התאריך הבינלאומי?",h:"חוצים אותו — ומדלגים יום.",a:"קו דמיוני באוקיינוס השקט (בסביבות קו אורך 180°) שבו מתחלף התאריך: חצייה מערבה — מדלגים יום קדימה; מזרחה — חוזרים יום אחורה.",m:"מוכרח להתקיים: אם השעה זזה סביב כדור הארץ, איפשהו חייב להתחלף היום.",d:"הקו מתעקל בצורה מוזרה כי מדינות בוחרות באיזה צד להיות: סמואה קפצה ב־2011 יום שלם קדימה — דילגה על ה־30 בדצמבר — כדי להיות באותו יום עסקים עם אוסטרליה וסין במקום עם אמריקה. ומגלי העולם של מגלן גילו את הצורך בו בדרך הקשה: שבו הביתה ב־1522 אחרי הקפת כדור הארץ ומצאו שחסר להם יום ביומן — ספרו כל יום, אבל נסעו מערבה עם השמש."},
+{c:"גאוגרפיה",q:"אילו מדינות נחשבות סקנדינביה, ומה ההבדל מ״המדינות הנורדיות״?",h:"שלוש מול חמש.",a:"סקנדינביה: שוודיה, נורווגיה ודנמרק. הנורדיות מוסיפות את פינלנד ואיסלנד.",m:"פינלנד שונה גם בשפה — פינית אינה שפה סקנדינבית כלל, והיא קרובה דווקא להונגרית.",d:"למה הן מככבות בראש מדדי האושר? המחקר מצביע פחות על מזג אוויר וכסף ויותר על אמון: אמון גבוה בין אנשים ובמוסדות, שחיתות נמוכה, ורשת ביטחון שמורידה חרדה קיומית. מודל 'הגמישות הביטחונית' הדני — קל לפטר, אבל האבטלה מרווחת והמדינה מכשירה מחדש — מאפשר כלכלה דינמית בלי אימת הפיטורים. אמון הוא תשתית כלכלית, לא רק ערך יפה."},
+{c:"כלכלה",q:"מהי בורסה, בעצם?",h:"שוק — רק שהסחורה היא בעלות על חברות.",a:"שוק מרוכז שבו קונים ומוכרים ניירות ערך — בעיקר מניות ואג״ח — והמחירים נקבעים בכל רגע לפי היצע וביקוש.",m:"הראשונה בעולם: אמסטרדם 1602, סביב מניות חברת הודו המזרחית ההולנדית.",d:"התפקיד הכלכלי האמיתי שלה הוא לא ההימור אלא הקצאת הון: היא מאפשרת לחברה לגייס כסף מהציבור לרעיון, ולציבור — להיות שותף ברווחים ולצאת מתי שרוצה (נזילות). המחיר בכל רגע הוא בעצם סקירת ענק של דעת כולם על שווי החברה בעתיד — לכן מניות מגיבות לחדשות עוד לפני שהן מתממשות. בטווח קצר המחיר הוא מצב רוח; בטווח ארוך הוא מתכנס לרווחים האמיתיים — ״בטווח הקצר השוק מכונת הצבעה, בטווח הארוך מכונת שקילה.״"},
+{c:"כלכלה",q:"מהו מינוף?",h:"להשקיע עם כסף של אחרים.",a:"שימוש בהלוואה כדי להגדיל השקעה — מגדיל את הרווח באחוזים כשהנכס עולה, ומגדיל בדיוק באותה מידה את ההפסד כשהוא יורד.",m:"דוגמה: דירה במיליון עם 250 אלף הון עצמי. עלייה של 10% = ‏100 אלף רווח = ‏40% על הכסף שלך. ירידה של 10% — מינוס 40%.",d:"הכלל שמפריד משקיעים ותיקים מהרוסים: מינוף לא הופך השקעה טובה לרעה או להפך — הוא מגביר את מה שיש, כולל את הטעויות. הסכנה האמיתית היא ה'מחיקה': במינוף גבוה מדי, ירידה זמנית שולית יכולה לחסל את כל ההון — ומאפס אין ריבית דריבית שתציל. לכן השאלה הנכונה היא לא ״כמה ארוויח אם יעלה״ אלא ״האם אשרוד את התרחיש הרע ואוכל להחזיק עד שיעבור״ — תזרים, לא רק שווי."},
+{c:"כלכלה",q:"מהו שער חליפין, ומה מזיז אותו?",h:"כמה שקלים עולה דולר.",a:"המחיר של מטבע אחד במונחי אחר. זז לפי היצע וביקוש: ריביות, סחר, השקעות זרות — וציפיות לגבי כולם.",m:"שקל חזק = חו״ל ויבוא זולים לך, אבל קשה ליצואנים; שקל חלש — הפוך.",d:"המנגנון המרכזי ששווה להכיר: כסף גדול זורם לאן שהריבית גבוהה יותר — כשהריבית בארה״ב עולה מעל זו שבישראל, משקיעים קונים דולרים כדי ליהנות ממנה, והדולר מתחזק. חוקיות ישראלית מעניינת: כשוול סטריט יורדת, השקל נחלש — כי המוסדיים הישראלים מגדרים השקעות עצומות בחו״ל וקונים דולרים בירידות. לכן החזקת דולרים מתפקדת בתיק ישראלי כמעין כרית בלימה בימים רעים."},
+{c:"חשיבה",q:"מהי קונפורמיות, ומה הראה ניסוי אש?",h:"קווים על לוח, ותשובה שגויה בקול רם.",a:"הנטייה ליישר קו עם הקבוצה. בניסוי אש (1951) שתלו שחקנים שענו תשובה שגויה בעליל — וכ־75% מהנבדקים חזרו אחריה לפחות פעם אחת, בניגוד לעיניהם.",m:"מספיק ״שותף״ אחד שאומר את האמת — והקונפורמיות צונחת דרמטית.",d:"היישום החשוב הוא בקבלת החלטות בקבוצה: בישיבה שבה הבכיר מדבר ראשון, כל השאר 'מתיישרים' — לכן מנהלים טובים אוספים עמדות בכתב לפני הדיון, או נותנים לזוטרים לדבר ראשונים. הממצא על השותף האחד הוא גם שיעור על אומץ אזרחי: המתנגד הראשון משלם את המחיר הגבוה ביותר — ומשחרר את כל השאר. ובגרסת האינטרנט: לייקים וצפיות הם קול הקבוצה בהגברה — קונפורמיות בקנה מידה תעשייתי."},
+{c:"חשיבה",q:"מהו ״אפקט ההילה״?",h:"יפה = חכם? לא באמת.",a:"תכונה בולטת אחת (יופי, ביטחון, הצלחה) צובעת את השיפוט שלנו על כל שאר התכונות של האדם — לטוב ולרע.",m:"מועמדים נאים נשפטים כמוכשרים יותר באותם כישורים בדיוק.",d:"איפה זה עולה כסף: משקיעים מייחסים למנכ״ל כריזמטי גם תבונה עסקית; מצליחן בתחום אחד מקבל קרדיט אוטומטי בתחומים שאין לו בהם מושג (שחקנים על מדיניות, מיליארדרים על הכל). ההגנה: לפרק את השיפוט לרכיבים ולשפוט כל אחד לגופו — בדיוק כמו ראיון מובנה, שבו מדרגים כל כישור בנפרד ורק בסוף מסכמים; שיטה שמנבאת הצלחה טוב בהרבה מ'תחושת בטן' על המועמד."},
+{c:"חשיבה",q:"מהו ״ניסוי המרשמלו״, ומה באמת נמצא בו?",h:"אחד עכשיו — או שניים בעוד רבע שעה.",a:"ניסוי דחיית סיפוקים בילדים (סטנפורד, שנות ה־60): מי שהתאפק קיבל כפול. במעקב נמצא קשר בין ההתאפקות להצלחה בהמשך החיים.",m:"החזרות המאוחרות ריככו את המסקנה: חלק ניכר מהקשר מוסבר ברקע הכלכלי של הילד.",d:"שני לקחים בוגרים מהסיפור: 1) הריכוך אינו ביטול — שליטה עצמית עדיין חשובה, אבל ילד שגדל בסביבה לא צפויה צודק בלקחת עכשיו; 'חוסר איפוק' הוא לפעמים הסתגלות רציונלית. 2) הילדים שהצליחו להתאפק לא הפעילו כוח רצון גולמי — הם הסיטו מבט, שרו, הסתירו את הממתק. השליטה הטובה ביותר היא עיצוב הסביבה, לא מאבק בפיתוי: מי שלא מחזיק חטיפים בבית לא צריך כוח רצון מולם."},
+{c:"תרבות",q:"מי היה סלבדור דאלי?",h:"שעונים נמסים ושפם מסולסל.",a:"צייר ספרדי, מגדולי הסוריאליזם — ציורי חלום מדויקים להפליא, המפורסם שבהם ״התמדת הזיכרון״ (השעונים הנמסים, 1931).",m:"הסוריאליזם ביקש לצייר את הלא־מודע — בהשראת פרויד.",d:"דאלי היה גם ממציא הפרסונה המודרנית: השפם, ההצהרות (״אני לא לוקח סמים, אני הסם״), ההופעות המתוקשרות — הוא הבין עשרות שנים לפני האינסטגרם שהאמן עצמו הוא יצירה ומותג. עבד גם עם היצ׳קוק (סצנת החלום ב״מכושפת״) ועיצב את הלוגו של סוכריות צ׳ופה צ׳ופס. חבריו הסוריאליסטים סילקו אותו מהתנועה על רדיפת כסף — הוא ענה: ״ההבדל ביני לבין הסוריאליסטים הוא שאני סוריאליסט.״"},
+{c:"תרבות",q:"מהו ג׳אז, ואיפה נולד?",h:"ניו אורלינס, תחילת המאה ה־20.",a:"ז׳אנר שנולד בקהילה האפרו־אמריקאית בניו אורלינס — מפגש בלוז, מקצבים אפריקאיים וכלי תזמורת — שלב מרכזי בו: אלתור.",m:"ענקי הז׳אנר: לואי ארמסטרונג, דיוק אלינגטון, מיילס דיוויס.",d:"הרעיון העמוק בג׳אז הוא איזון בין מבנה לחופש: הלהקה מסכימה על שלד אקורדים — ובתוכו כל נגן ממציא בזמן אמת ומגיב לאחרים. חוקרי ניהול משתמשים בו כמודל לצוותים: כללים מינימליים, הקשבה מקסימלית. ובהיסטוריה האמריקאית הוא היה כוח חברתי — להקות מעורבות של שחורים ולבנים ניגנו יחד עשרות שנים לפני ביטול ההפרדה בחוק. אלתור, אגב, הוא לא ״בלי הכנה״: מיילס דיוויס תרגל שעות ביום כדי להיות חופשי על הבמה."},
+{c:"טכנולוגיה",q:"מהו קוד בינארי, ולמה מחשבים משתמשים דווקא בו?",h:"רק שני סימנים.",a:"ייצוג כל מידע באפסים ואחדות. הסיבה: לרכיב חשמלי קל ואמין להבחין בין שני מצבים — יש זרם או אין.",m:"8 ביטים = בייט; 8 ספרות בינריות מייצגות אות, מספר או פיסת צבע.",d:"הרעיון החשוב: הכול ניתן לקידוד. תמונה = רשת נקודות שלכל אחת מספר צבע; צליל = דגימות גובה גל אלפי פעמים בשנייה; טקסט = מספר לכל אות. ברגע שהכול מספרים, מכונה אחת מטפלת בהכול — לכן הטלפון שלך הוא גם מצלמה, פטיפון, ספרייה ובנק. זו גם הסיבה שעותק דיגיטלי מושלם תמיד: מעתיקים מספרים, לא חומר. ה־DNA, אגב, עובד באותו עיקרון — קוד של 4 אותיות במקום 2."},
+{c:"טכנולוגיה",q:"מהו ״פישינג״ (Phishing)?",h:"דיוג — עם ח׳ מוחלפת.",a:"הונאה שבה תוקף מתחזה לגורם לגיטימי (בנק, דואר, מנהל) כדי לגרום לך למסור סיסמה, קוד או תשלום.",m:"ערוץ התקיפה מספר אחת בעולם — כי הכי קל לפרוץ לאדם, לא למחשב.",d:"העיקרון מאחורי כל פישינג טוב: דחיפות + סמכות + פחד — ״החשבון ייחסם בעוד שעה״, ״החבילה ממתינה, שלם 6 ₪״. הלחץ נועד לכבות את החשיבה. כללי ברזל: גוף אמיתי לא מבקש סיסמה או קוד בהודעה; קיבלת הודעה מהבנק — היכנס בעצמך מהאפליקציה, לא מהקישור; וקוד אימות שנשלח אליך הוא מפתח הבית — מי שמבקש אותו בטלפון גונב אותו. השדרוג שכדאי לכולם: אימות דו־שלבי בכל חשבון חשוב."},
+{c:"ישראל",q:"מהי מצדה?",h:"מבצר על צוק מול ים המלח.",a:"מבצר הורדוס שבו התבצרו המורדים האחרונים במרד הגדול נגד רומא — נפל ב־73/74 לספירה; לפי יוספוס, המגינים שלחו יד בנפשם ולא נכנעו.",m:"אתר מורשת עולמית. ״שנית מצדה לא תיפול״ הפך לסמל.",d:"הסיפור מגיע ממקור יחיד — יוסף בן מתתיהו (יוספוס), מפקד יהודי שערק לרומאים — והארכיאולוגיה תומכת בחלקו בלבד; ההתאבדות ההמונית שנויה במחלוקת מחקרית. מעניין לא פחות גלגול הסמל: בשנות המדינה הראשונות טקסי צה״ל נערכו שם ברוח ״במותם ציוו״; עם השנים עלתה אי־נוחות מהאדרת התאבדות, והדגש עבר לחירות ולעמידה. איך אומה בוחרת ומעצבת את סמליה — זה שיעור בפני עצמו. ובצד ההנדסי: הורדוס בנה שם ארמון תלוי ומערכת בורות שאגרה עשרות אלפי קוב מי שיטפונות — פאר תכנון בלב מדבר."},
+{c:"ישראל",q:"מהו קיבוץ?",h:"המצאה חברתית ישראלית.",a:"יישוב שיתופי שבו הרכוש והייצור משותפים — מהמצאות החברתיות המזוהות ביותר עם הציונות; הראשון: דגניה, 1910.",m:"פחות מ־2% מהאוכלוסייה — אבל תרומה עצומה להתיישבות, לחקלאות, לצבא ולתעשייה.",d:"הקיבוץ הוא ניסוי חברתי מרתק גם למי שלא ציוני: ניסיון אמיתי ורב־דורי לחיות שוויון מלא — כולל לינה משותפת של ילדים ותקציב אישי זהה. מה קרה? רובם עברו ״הפרטה״ בשנות ה־90 אחרי משבר כלכלי ועזיבת צעירים — שכר דיפרנציאלי ורכוש אישי. הלקחים המקובלים: שיתוף עובד היטב בקבוצות עם מחויבות ובחירה, וקשה לקיימו לאורך דורות שלא בחרו בו. ובכל זאת — קיבוצים מייצרים היום חלק לא פרופורציונלי מהתעשייה והחקלאות המתקדמות בישראל."},
+{c:"שפה",q:"מי המציא את האלף־בית הראשון, ואיך הוא הגיע אלינו?",h:"עם של סוחרים ימיים מהחוף שלנו.",a:"האלף־בית הפיניקי (סביב 1,000 לפנה״ס, בחופי לבנון של היום) — אב כמעט כל האלפביתים: ממנו העברית והארמית, וממנו היוונית, ומהיוונית הלטינית.",m:"A היא אלף (ראש שור הפוך), B היא בית. האותיות שלנו הן ציורים מופשטים.",d:"למה זו מהפכה? כתבים קודמים (יתדות, הירוגליפים) דרשו מאות עד אלפי סימנים — קריאה הייתה מקצוע של מעמד סופרים. אלף־בית של ~22 סימנים הפך את הקריאה לנחלת סוחר פשוט — דמוקרטיזציה של ידע, אלפי שנים לפני גוטנברג. והמסלול סמלי: עם סוחרים הפיץ אותו בנמלים, לא צבא בכיבושים. היוונים הוסיפו חידוש אחד — אותיות לתנועות (בפיניקית ובעברית כותבים בעיקר עיצורים, כמו שאתה משלים תנועות בעצמך ממש עכשיו)."},
+{c:"ספורט",q:"מאיפה הגיע השחמט?",h:"התחיל כמשחק מלחמה.",a:"נולד בהודו סביב המאה ה־6 (בשם צ׳טורנגה — ״ארבע זרועות הצבא״), עבר לפרס ומשם דרך העולם המוסלמי לאירופה.",m:"״שח מט״ — מפרסית: ״המלך מת״ (שאה מאת).",d:"עובדה שממחישה מהו גידול מעריכי: מספר משחקי השחמט האפשריים גדול ממספר האטומים ביקום הנצפה — לכן אי אפשר ״לפתור״ שחמט בכוח חישוב גס. וציון דרך בתולדות הבינה המלאכותית: 1997, המחשב ״כחול עמוק״ מנצח את אלוף העולם קספרוב — הרגע שבו מכונה גברה על האדם בסמל החשיבה. היום כל טלפון חזק מכל אלוף אנושי, והמעניין: שחקני העל לומדים מהמכונות רעיונות שבני אדם לא העלו בדעתם מאות שנים."},
+{c:"כדור הארץ",q:"מהי רוח, בעצם?",h:"אוויר שמנסה להשוות חשבון.",a:"תנועת אוויר מאזור לחץ גבוה לאזור לחץ נמוך. ההפרשים נוצרים מחימום לא אחיד של פני כדור הארץ.",m:"ככל שהפרש הלחצים גדול וקרוב יותר — הרוח חזקה יותר.",d:"דוגמה שאתה מכיר מהים: בריזת חוף. ביום היבשה מתחממת מהר מהים, אוויר חם עולה מעליה ונוצר לחץ נמוך — והרוח נושבת מהים פנימה (לכן אחר הצהריים בחוף תמיד נושב). בלילה הכיוון מתהפך. סיבוב כדור הארץ (כוח קוריוליס) מסובב את הרוחות הגדולות — לכן סופות מסתחררות, נגד כיוון השעון בחצי הצפוני. ואנרגיית רוח היא בעצם אנרגיית שמש ממוחזרת — השמש היא שיצרה את הפרשי הלחץ."},
+{c:"כדור הארץ",q:"מהו אל ניניו?",h:"״הילד״ בספרדית — משבש מזג אוויר עולמי.",a:"התחממות מחזורית של מי האוקיינוס השקט המשווני (כל 2–7 שנים), שמזיזה את מערכות הגשם ומשבשת מזג אוויר בכל העולם.",m:"השם ניתן על ידי דייגים בפרו — התופעה מגיעה סביב חג המולד (״הילד״ = ישו).",d:"זו ההדגמה הטובה ביותר לכך שהאוקיינוס והאטמוספירה הם מערכת אחת: שינוי טמפרטורה של 1–2 מעלות ברצועת ים אחת מייבש את אוסטרליה, מציף את פרו, מחליש את המונסון ההודי ומזיז מחירי קפה, סוכר ואורז בעולם — סוחרי סחורות עוקבים אחרי תחזיות אל ניניו כמו אחרי דוחות בנקים. שנות אל ניניו חזקות הן בדרך כלל גם שנות השיא של החום העולמי, כי האוקיינוס פולט אז חום עצום לאטמוספירה."},
+];
+Q.push(...NEWQ);
+
+/* ================= שכבה 2 — העמקות לשאלות קיימות ================= */
+const DEEP2={
+"מי כתב את ״המלט״?":"למה דווקא שייקספיר נחשב לגדול מכולם? קודם כול השפה: הוא טבע או קיבע מאות מילים וביטויים שחיים באנגלית עד היום. ושנית — הוא כתב לכולם בו־זמנית: בדיחות גסות לקהל שעמד בפרוטה, ופסיכולוגיה עמוקה לאצולה, באותו מחזה עצמו. ועובדה מפתיעה: כמעט את כל העלילות הוא ״גנב״ ממקורות קיימים — הגאונות לא הייתה הסיפור אלא מה שעשה ממנו. המלט מבוסס על אגדה דנית ישנה.",
+"מי צייר את ״ליל כוכבים״?":"ואן גוך צייר את ליל כוכבים מחלון חדרו במוסד לחולי נפש שאליו אשפז את עצמו — השמיים המערבולתיים הם נוף פנימי לא פחות מחיצוני. הקריירה כולה: עשור אחד, כ־900 ציורים, מכירה אחת. מי שהאמינה בו הייתה גיסתו יוהנה: אחרי מותו ומות אחיו תיאו היא נשארה עם ערימת ציורים ״חסרי ערך״ — ובנתה בעקשנות של שנים את המוניטין שלו דרך תערוכות ופרסום מכתביו. התהילה של ואן גוך היא גם סיפור על מי שמנהל את המורשת.",
+"על שם מי קרוי פרס נובל, ומה המציא?":"הדינמיט עצמו הוא סיפור על כוונות ותוצאות: נובל המציא אותו כדי לעשות פיצוץ *בטוח* — ניטרוגליצרין התפוצץ אז ממגע, והרג בין השאר את אחיו במפעל. ההמצאה חוללה מהפכה בכרייה ובסלילה — ובמלחמה. הצוואה שלו הקדישה כ־94% מהונו לפרסים, לזעם משפחתו, וקבעה עיקרון חריג לתקופה: הפרס פתוח לכל העולם, בלי הבדל לאום. ופרט מוזר לסיום: פרס הכלכלה איננו פרס נובל מקורי — הוא נוסף ב־1968 על ידי הבנק המרכזי השוודי, וחלק ממשפחת נובל מוחה על כך עד היום.",
+"מי כתב את ״1984״?":"אורוול כתב מניסיון, לא מדמיון: נלחם במלחמת האזרחים בספרד וראה שם איך התעמולה הסובייטית משכתבת בזמן אמת אירועים שהוא חווה בעצמו — חברים שלו הוכרזו בוגדים. מכאן ״משרד האמת״. המילון שהספר תרם לשיח — אח גדול, חשיבה כפולה, שפה חדשה (Newspeak), חדר 101 — הפך לכלי העבודה של כל דיון על מעקב וכוח. והרעיון החד ביותר בספר הוא על שפה: מי ששולט במילים שולט במחשבה, כי קשה לחשוב מחשבה שאין לה מילים. אורוול מת מ׳שחפת חצי שנה אחרי צאת הספר, בן 46.",
+"מי הלחין את הסימפוניה התשיעית (״אודה לשמחה״)?":"הרגע בבכורה, וינה 1824: בטהובן, חירש לגמרי, עמד ליד המנצח והמשיך ״לנצח״ גם אחרי שהיצירה נגמרה — עד שזמרת סובבה אותו אל הקהל שהריע בטירוף. הוא הלחין את המוזיקה מתוך זיכרון הצליל בלבד, בעזרת רעידות הפסנתר. והתשיעית הפכה לסמל חוצה מחנות באופן חסר תקדים: נוגנה בנפילת חומת ברלין, נבחרה להמנון האיחוד האירופי — וקוטר התקליטור נקבע, לפי הסיפור המקובל בתעשייה, כך שהתשיעית תיכנס בשלמותה.",
+"איך GPS יודע איפה אתה?":"החלק המדהים באמת: בלי תורת היחסות של איינשטיין ה־GPS היה מפסיק לעבוד תוך יום. השעונים על הלוויינים רצים מהר יותר משעונים על הקרקע (כבידה חלשה מאיצה זמן) ולאט יותר בגלל מהירותם — נטו כ־38 מיליונית שנייה ביום. נשמע כלום? במהירות האור זה שגיאה של כ־10 ק״מ ביום. המערכת מתקנת את זה מראש — כך שכל ניווט בוויז הוא הוכחה יומיומית שהזמן באמת מתעקם. וההשלכה המעשית: אות ה־GPS חלש וקל לשיבוש — לכן ספינות וצבאות שומרים גם על ניווט עצמאי.",
+"מהי בינה מלאכותית, במשפט אחד?":"ההבחנה ששווה להכיר: תוכנה קלאסית = אדם כותב כללים והמחשב מבצע; למידת מכונה = נותנים למחשב דוגמאות והוא מוצא את הכללים בעצמו. לכן היא מצטיינת במשימות שאיש לא יודע לנסח ככללים — לזהות חתול, להבין משפט. המחיר: מערכת שלמדה מדוגמאות יורשת את ההטיות שבהן, וקשה להסביר החלטה בודדת שלה. ופרדוקס משעשע להכיר: מה שנחשב פעם לפסגת האינטליגנציה (שחמט, חישוב) הוכרע מזמן — ומה שכל פעוט עושה (לקפל כביסה, להבין מצב חברתי) עדיין קשה למכונות.",
+"מהו הנהר הארוך בעולם?":"הנילוס הוא הסיבה שמצרים קיימת: רצועת חיים ברוחב קילומטרים בלב מדבר מוחלט — 95% מהמצרים חיים לאורכו עד היום. ההצפה השנתית הסדירה שלו, שהשקתה ודישנה את השדות, היא שאפשרה את אחת הציוויליזציות הראשונות — וגם הולידה גאומטריה (למדוד מחדש חלקות אחרי כל הצפה) ולוח שנה. סכר אסואן (1970) עצר את ההצפות — ונתן חשמל ויציבות במחיר אובדן הדשן הטבעי. ובהווה: סכר ״התחייה״ שאתיופיה בנתה במעלה הנהר הוא ממוקדי המתיחות הגאופוליטיים באפריקה — מים הם הנפט הבא.",
+"מהי המדינה הקטנה בעולם?":"מדינה בלי כמעט שטח — אבל עם השפעה על מיליארד וחצי מאמינים: הוותיקן הוא ההוכחה שריבונות היא רעיון משפטי, לא גודל. יש לו דרכונים, בולים, דיפלומטיה מהוותיקות בעולם — וצבא של ממש: המשמר השוויצרי, שמאייש אותו מ־1506 (המדים הצבעוניים אינם תחפושת — זו יחידה מבצעית). מקור הריבונות: הסכמי לטראנו עם איטליה, 1929. ובנק הוותיקן היה במשך עשורים ממוקדי השערוריות הפיננסיות באירופה — תזכורת שגם מוסד רוחני צריך ביקורת פנימית.",
+"מי ניסח את תורת היחסות?":"הרעיון בבסיס היחסות הפרטית פשוט להפתיע: מהירות האור זהה לכל צופה — ומזה נובע בהכרח שזמן ומרחב גמישים. שעון נע מתקתק לאט יותר; זה נמדד בשעונים אטומיים על מטוסים. וה־E=mc² אומר דבר אחד מסעיר: מסה היא אנרגיה דחוסה — ומקדם ההמרה עצום; לכן גרם חומר מכיל אנרגיית עיר. ואיינשטיין עצמו עשה את כל מהפכת 1905 — יחסות, האפקט הפוטואלקטרי, הוכחת קיום האטומים — כפקיד פטנטים בן 26 שנדחה ממשרות אקדמיות. הוועדות לא תמיד מזהות.",
+"מי גילה את הפניצילין, ובאיזו שנה בערך?":"הסיפור המלא מלמד על הפער בין תגלית למוצר: פלמינג גילה, פרסם — והעולם התעלם 12 שנה, כי לא ידע לייצר כמויות. פלורי וצ׳יין באוקספורד הפכו את זה לתרופה בזמן מלחמת העולם השנייה, וארה״ב תיעשה את הייצור בשיטות של מפעלי בירה — עד הפלישה לנורמנדי היה פניצילין לכל פצוע. שלושתם חלקו בנובל. והאזהרה של פלמינג בנאום הפרס, 1945: שימוש חסר אחריות ייצור חיידקים עמידים. קלע בול — עמידות לאנטיביוטיקה היא היום מהאיומים הרפואיים הגדולים, בגלל שימוש יתר בדיוק כפי שחזה.",
+"מהו DNA, במשפט אחד?":"קנה המידה מטריף: בכל תא בגופך שני מטר DNA מקופלים לגרעין זעיר, וכל המידע לבניית אדם שוקל פחות מגרם. הקוד אוניברסלי — אותן 4 אותיות בחיידק, בבננה ובך (עם הבננה אתה חולק כ־60% מהגנים) — הראיה החזקה ביותר למוצא משותף של כל החיים. מאז 2012 יש לאנושות ״עורך טקסט״ ל־DNA — קריספר, שכבר ריפא מחלות דם תורשתיות. והמהפכה הצנועה יותר כבר כאן מזמן: בדיקת DNA הפכה זיהוי פלילי, בדיקות אבהות וגילוי קרובים — ופתרה תיקים שנסגרו לפני עשרות שנים.",
+"מי היה ראש הממשלה הראשון של ישראל?":"שתי הכרעות של בן־גוריון מגדירות את המדינה עד היום: ההכרזה עצמה — נגד עמדת חלק מחבריו וארה״ב, כשהצבא הצעיר בקושי חמוש — ופירוק המחתרות והקמת צבא אחד (פרשת אלטלנה, שבה הורה לירות על אניית נשק של האצ״ל): העיקרון שלמדינה יש מונופול על הכוח. הרגלים אישיים ששווה להכיר: למד יוונית עתיקה וספרדית בעצמו כדי לקרוא את אפלטון ואת דון קיחוטה במקור, ועמד על הראש על חוף הים לפי שיטת פלדנקרייז. ב־1953 התפטר מראשות הממשלה ועבר לצריף בשדה בוקר — להראות דוגמה אישית של הגשמה בנגב.",
+"מהו מבצע אנטבה?":"מה שהפך את אנטבה לאגדה מבצעית עולמית: הטווח (4,000 ק״מ מהבית, בלי תדלוק בדרך חזרה מובטח), ההונאה (מרצדס שחורה שחיקתה את שיירת הרודן אידי אמין), והמהירות — כדקה וחצי מרגע הנחיתה עד פריצת הטרמינל. ההחלטה הקשה באמת הייתה של הדרג המדיני: לאשר סיכון של 100 בני ערובה ומאות חיילים על בסיס מודיעין חלקי — סוג ההחלטות שבהן אין ודאות, רק אחריות. המבצע נלמד עד היום בצבאות זרים, וקבע רף לאומי: ישראל תגיע לכל מקום. שם המבצע שונה רשמית ל״מבצע יונתן״, על שם יוני נתניהו.",
+"מי נחשב בעיני רבים לשחקן הכדורסל הגדול בכל הזמנים?":"מה שהפך את ג׳ורדן למיתוס הוא לא הכישרון אלא היחס לכישלון — הוא נחתך מנבחרת התיכון בשנתו הראשונה, והפך את זה לדלק: ״החטאתי יותר מ־9,000 זריקות, הפסדתי כמעט 300 משחקים, 26 פעמים קיבלתי את זריקת הניצחון והחטאתי — ולכן אני מצליח.״ שיעור על יחסי סיכון־הצלחה: הגדולים נמדדים בנכונות לקחת את הזריקה. ובצד העסקי — עסקת נייקי מ־1984 (חברה שהוא בכלל לא רצה לפגוש) יצרה את מותג האייר ג׳ורדן, שמכניס לו היום יותר בשנה מכל שכר הקריירה שלו יחד: נכס שעובד בשבילך מנצח משכורת."
+};
+Q.forEach(q=>{if(DEEP2[q.q])q.d=DEEP2[q.q]});
+
+
 /* ================= STATE ================= */
 const KEY='trivia-state-v1';
 const GOAL=10;
@@ -619,7 +699,8 @@ function renderHome(){
   const t=dayKey(),n=S.days[t]||0;
   const h=new Date().getHours();
   document.getElementById('greet').textContent=(h<5?'לילה טוב':h<12?'בוקר טוב':h<18?'צהריים טובים':'ערב טוב')+', נתן.';
-  document.getElementById('headline').textContent=n>=GOAL?'היעד היומי הושלם.':n>0?'ממשיכים?':'כמה שאלות לפני השינה?';
+  const HL=['מוכן לסבב?','הידע לא ילמד את עצמו.','המוח הוא שריר. תרים.','סבב מהיר, וממשיכים.','נפתח פורטל?','עוד סבב, עוד שכבה.'];
+  document.getElementById('headline').textContent=n>=GOAL?'היעד היומי הושלם.':n>0?'ממשיכים?':HL[Math.floor(Math.random()*HL.length)];
   document.getElementById('today-n').textContent=n;
   document.getElementById('today-goal').textContent='מתוך '+GOAL+' היום';
   document.getElementById('ring-fg').style.strokeDashoffset=276-276*Math.min(1,n/GOAL);
@@ -777,7 +858,7 @@ async function grade(g){
   S.days[t]=before+1;
   if(S.lastDay!==t){S.streak=(S.lastDay===yesterdayKey())?S.streak+1:1;S.lastDay=t;}
   await save();
-  hist.push(cur);
+  hist.push(cur);reviewPos=-1;
   idx++;
   if(before+1===GOAL)stars();
   next();
@@ -792,8 +873,35 @@ function finish(){
 }
 function stars(){
   const w=document.getElementById('stars');w.innerHTML='';
-  for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top='-10px';s.style.animationDelay=Math.random()*.6+'s';s.style.width=s.style.height=(4+Math.random()*6)+'px';w.appendChild(s);}
+  const cols=['#41F17B','#5FE8FF','#FFD84D','#FF5470'];
+  for(let i=0;i<48;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top='-10px';s.style.animationDelay=Math.random()*.6+'s';s.style.width=s.style.height=(4+Math.random()*6)+'px';s.style.background=cols[i%4];s.style.boxShadow='0 0 8px '+cols[i%4];w.appendChild(s);}
   setTimeout(()=>w.innerHTML='',2600);
+}
+const QUOTES=[
+'״אני יודע שאיני יודע.״ — סוקרטס',
+'״לא הדברים מטרידים אותנו, אלא הדעות שלנו עליהם.״ — אפיקטטוס',
+'״הניצחון העליון: לשבור את האויב בלי להילחם.״ — סון דזה',
+'״אין רוח טובה לספינה שאינה יודעת לאיזה נמל היא מפליגה.״ — סנקה',
+'״עמוד זקוף — או שיעמידו אותך.״ — מרקוס אורליוס',
+'״מי ששואל — טיפש לרגע. מי שלא — טיפש לתמיד.״ — פתגם סיני',
+'״ההשקעה הטובה ביותר היא בעצמך.״',
+'״חזרה היא אם הלמידה.״ — פתגם לטיני',
+'״דמיון חשוב מידע.״ — איינשטיין',
+'״מה שאיני יכול לברוא — איני מבין.״ — פיינמן'
+];
+let qi=Math.floor(Math.random()*QUOTES.length);
+function tick(){
+  const el=document.getElementById('qticker');
+  el.classList.remove('go');void el.offsetWidth;
+  el.textContent=QUOTES[qi%QUOTES.length];qi++;
+  el.classList.add('go');
+}
+setInterval(tick,11000);setTimeout(tick,1800);
+function askClaude(){
+  const q=Q[ (reviewPos>=0&&hist[reviewPos]!==undefined) ? hist[reviewPos] : cur ];
+  const txt='למדתי עכשיו בטריוויה:\nשאלה: '+q.q+'\nתשובה: '+q.a+'\nספר לי על זה עוד בעומק — משהו שירחיב לי את ההבנה מעבר למה שכתוב.';
+  navigator.clipboard&&navigator.clipboard.writeText(txt);
+  const b=document.querySelector('.askme');if(b){b.textContent='הועתק! הדבק בצ׳אט עם קלוד.';setTimeout(()=>{b.textContent='שאל את קלוד עוד על זה — העתקת שאלה מוכנה';},2500);}
 }
 
 /* ================= STATS ================= */
