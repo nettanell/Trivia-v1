@@ -309,10 +309,17 @@ body.has-nav .app{padding-bottom:96px}
 .vs-rev .row small{display:block;margin-top:3px;font-size:13px;color:#7FF0E1}
 .vs-rev .row small.tm{color:var(--vdim)}
 /* --- versus emoji & chat --- */
-#fx-btn{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:16px;z-index:56;width:54px;height:54px;border-radius:50%;
-  font-size:26px;background:var(--vpanel);border:1px solid var(--vhair);box-shadow:0 10px 30px -8px rgba(45,212,191,.35);transition:transform .12s}
-#fx-btn:active{transform:scale(.88)}
-.fx-tray{position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom));z-index:56;max-width:496px;margin:0 auto;
+.fx-bar{position:fixed;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:56;max-width:500px;margin:0 auto;
+  display:flex;gap:8px;align-items:center;background:rgba(12,14,26,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--vhair);border-radius:18px;padding:8px}
+body.has-nav .fx-bar{bottom:calc(88px + env(safe-area-inset-bottom))}
+.fx-bar button.emo{width:44px;height:40px;border-radius:12px;font-size:22px;background:rgba(255,255,255,.05);border:1px solid var(--vhair);flex:none;transition:transform .12s}
+.fx-bar button.emo:active{transform:scale(.85)}
+.fx-bar input{flex:1;min-width:0;background:rgba(255,255,255,.05);border:1px solid var(--vhair);border-radius:12px;padding:10px 13px;color:var(--vwhite);font-size:15px;font-family:inherit}
+.fx-bar input::placeholder{color:var(--vdim)}
+.fx-bar .snd{flex:none;padding:10px 16px;border-radius:12px;font-weight:700;font-size:15px;color:#04211D;background:linear-gradient(160deg,var(--tq-hi),var(--tq))}
+#vs-body{padding-bottom:74px}
+.fx-tray{position:fixed;left:12px;right:12px;bottom:calc(72px + env(safe-area-inset-bottom));z-index:56;max-width:496px;margin:0 auto;
   background:rgba(12,14,26,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1px solid var(--vhair);border-radius:20px;padding:12px;animation:trayUp .22s cubic-bezier(.22,1.2,.36,1)}
 @keyframes trayUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -330,13 +337,19 @@ body.has-nav .app{padding-bottom:96px}
   12%{transform:translateY(0) scale(1.25) rotate(8deg);opacity:1}
   55%{transform:translateY(-38vh) scale(1) rotate(-8deg);opacity:1}
   100%{transform:translateY(-62vh) scale(.85) rotate(10deg);opacity:0}}
-.fx-chatcol{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:55;max-width:496px;margin:0 auto;
+.fx-chatcol{position:fixed;left:12px;right:12px;bottom:calc(140px + env(safe-area-inset-bottom));z-index:55;max-width:496px;margin:0 auto;
   display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .fx-msg{align-self:flex-start;max-width:86%;background:rgba(12,14,26,.94);border:1px solid var(--vhair);border-radius:14px;
   padding:9px 13px;color:var(--vwhite);font-size:15px;line-height:1.45;animation:trayUp .2s ease;box-shadow:0 10px 26px -10px rgba(0,0,0,.7)}
 .fx-msg b{font-size:12.5px;display:block;margin-bottom:1px}
 .fx-msg.nino b{color:var(--tq)}.fx-msg.pino b{color:var(--lil)}
 .fx-msg.out{animation:msgOut .3s ease forwards}
+.vs-opts button{position:relative}
+.picktag{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:9px;pointer-events:none}
+.picktag.natan{background:rgba(45,212,191,.22);color:var(--tq-hi);border:1px solid rgba(45,212,191,.55)}
+.picktag.pino{background:rgba(196,165,250,.22);color:var(--lil);border:1px solid rgba(196,165,250,.55)}
+.picktag.natan.two{transform:translateY(-108%)}
+.picktag.pino.two{transform:translateY(8%)}
 @keyframes msgOut{to{opacity:0;transform:translateY(8px)}}
 .modal-box h3{margin:0 0 8px;font:500 18px "Heebo";color:var(--canvas)}
 .modal-box p{margin:0 0 12px;color:var(--dim);font-size:14px;line-height:1.5}
@@ -507,13 +520,13 @@ body.has-nav .app{padding-bottom:96px}
     <p>ממתינים לחיבור מחדש…<br>המשחק ייסגר אוטומטית בעוד <b id="vs-off-n">30</b> שניות.</p>
     <button class="vs-btn" style="max-width:280px" onclick="SFX.tap();vsAbortAndLeave()">סיים משחק וצא</button></div>
   </div>
-  <button id="fx-btn" onclick="fxToggle()">😜</button>
   <div class="fx-tray" id="fx-tray" hidden>
     <div class="fx-grid" id="fx-grid"></div>
-    <div class="fx-row">
-      <input id="fx-in" maxlength="80" placeholder="משהו…" enterkeyhint="send">
-      <button onclick="fxSendMsg()">שלח</button>
-    </div>
+  </div>
+  <div class="fx-bar" id="fx-bar">
+    <button class="emo" onclick="fxToggle()">😜</button>
+    <input id="fx-in" maxlength="80" autocomplete="off" enterkeyhint="send">
+    <button class="snd" onclick="fxSendMsg()">שלח</button>
   </div>
   <div class="fx-layer" id="fx-layer"></div>
   <div class="fx-chatcol" id="fx-chatcol"></div>
@@ -1156,6 +1169,7 @@ async function startVsLobby(){
   db.ref('.info/serverTimeOffset').on('value',s=>{VS.off=s.val()||0});
   VS.unsub.push(()=>db.ref('.info/serverTimeOffset').off());
   fxListen(db);
+  fxBarInit();
   const meRef=db.ref('versus/p/'+VS.who);
   meRef.onDisconnect().remove();
   meRef.set({ts:firebase.database.ServerValue.TIMESTAMP});
@@ -1214,10 +1228,12 @@ function fxToggle(){
   if(t.hidden){
     document.getElementById('fx-grid').innerHTML=FX_EMO.map(e=>'<button onclick="fxSendEmo(\''+e+'\')">'+e+'</button>').join('');
     t.hidden=false;
-    const inp=document.getElementById('fx-in');
-    inp.placeholder='משהו ל'+NAMES[VS.who==='natan'?'pino':'natan']+'?';
-    inp.onkeydown=ev=>{if(ev.key==='Enter')fxSendMsg()};
   }else t.hidden=true;
+}
+function fxBarInit(){
+  const inp=document.getElementById('fx-in');if(!inp)return;
+  inp.placeholder='משהו ל'+NAMES[VS.who==='natan'?'pino':'natan']+'?';
+  inp.onkeydown=ev=>{if(ev.key==='Enter'){fxSendMsg();inp.blur()}};
 }
 function fxSendEmo(e){
   if(!VS.db)return;
@@ -1424,8 +1440,10 @@ function renderReveal(i){
     VS.el().innerHTML=scoreHead(i)+
       '<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p><p class="vs-q">'+q.q+'</p>'+
       '<div class="vs-opts">'+ord.map(o=>{
-        let cls=o===0?'good':((mine&&mine.c===o&&o!==0)?'bad':'');
-        return '<button disabled class="'+cls+'">'+q.o[o]+'</button>'}).join('')+
+        let cls=o===0?'good':(((mine&&mine.c===o)||(hers&&hers.c===o))?'bad':'');
+        const pickers=['natan','pino'].filter(w=>a[w]&&a[w].c===o);
+        const tags=pickers.map(w=>'<span class="picktag '+w+(pickers.length>1?' two':'')+'">'+NAMES[w]+'</span>').join('');
+        return '<button disabled class="'+cls+'">'+q.o[o]+tags+'</button>'}).join('')+
       '</div></div>'+
       '<div class="vs-opp" style="color:var(--vwhite);font-size:15px;line-height:1.7">'+qWinBadge(a)+line(VS.who)+'<br>'+line(opp)+'</div>';
     const winners=['natan','pino'].filter(w=>a[w]&&a[w].ok);
