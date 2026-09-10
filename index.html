@@ -652,12 +652,16 @@ function newCount(){return pool().filter(i=>!P(i)||P(i).seen===0).length}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function beginRound(){idx=0;gotIt=0;requeue=[];hist=[];roundMiss=[];roundMeh=[];SFX.start();show('practice');next();}
 function startSession(){comboRun=0;
-  const now=Date.now(),p=pool();
+  const now=Date.now(),p=pool(),L=S.len||10;
   const due=shuffle(p.filter(i=>P(i)&&P(i).seen>0&&P(i).due<=now));
   const neu=shuffle(p.filter(i=>!P(i)||P(i).seen===0));
-  const NN=(S.newN===undefined?5:S.newN);
-  session=[...due,...neu.slice(0,NN)].slice(0,S.len||10);
-  if(session.length<(S.len||10)&&due.length===0)session=[...session,...neu.slice(NN)].slice(0,S.len||10);
+  const NN=Math.min(S.newN===undefined?5:S.newN,L);
+  /* new questions get RESERVED slots first; due fills the rest */
+  const takeNew=neu.slice(0,NN);
+  const takeDue=due.slice(0,Math.max(0,L-takeNew.length));
+  session=shuffle([...takeNew,...takeDue]);
+  if(session.length<L)session=shuffle([...session,...neu.slice(NN,NN+(L-session.length))]);
+  if(session.length<L)session=[...session,...due.slice(takeDue.length,takeDue.length+(L-session.length))];
   if(!session.length){startFree();return}
   freeMode=false;boostMode=false;
   beginRound();
