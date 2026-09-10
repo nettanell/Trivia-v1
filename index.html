@@ -174,6 +174,109 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 .modal{position:fixed;inset:0;background:rgba(5,4,3,.85);backdrop-filter:blur(4px);display:grid;place-items:center;padding:20px;z-index:70}
 .modal[hidden]{display:none}
 .modal-box{background:var(--wall);border:1px solid var(--hair);border-radius:18px;padding:20px;width:100%;max-width:440px;box-shadow:0 30px 80px rgba(0,0,0,.75);animation:screenIn .3s ease}
+
+/* ===== stability: no micro-jumps ===== */
+html{scroll-behavior:auto;overflow-anchor:none}
+body{overscroll-behavior-y:none}
+
+
+/* ===== HOME — aurora redesign (violet/cyan/mint, no gold) ===== */
+#home{position:relative}
+#home .aur{position:absolute;inset:-20px;z-index:0;pointer-events:none;overflow:hidden;border-radius:24px}
+#home .aur i{position:absolute;border-radius:50%;filter:blur(46px);opacity:.5;mix-blend-mode:screen}
+#home .aur i:nth-child(1){width:280px;height:280px;background:radial-gradient(circle,#7C5CFF,transparent 70%);top:-6%;right:-14%;animation:orbA 17s ease-in-out infinite}
+#home .aur i:nth-child(2){width:240px;height:240px;background:radial-gradient(circle,#22D3EE,transparent 70%);top:34%;left:-16%;animation:orbB 21s ease-in-out infinite}
+#home .aur i:nth-child(3){width:210px;height:210px;background:radial-gradient(circle,#34D399,transparent 70%);bottom:-4%;right:8%;animation:orbC 25s ease-in-out infinite;opacity:.36}
+@keyframes orbA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-42px,54px) scale(1.18)}}
+@keyframes orbB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(56px,-40px) scale(1.12)}}
+@keyframes orbC{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-34px,-46px) scale(1.22)}}
+#home>*{position:relative;z-index:1}
+#home .bar h1{color:#8B93C7}
+#home .streak{color:#22D3EE!important}
+#home .home-hero h2{background:linear-gradient(105deg,#F1F3FF 30%,#B7A6FF 70%,#7DE8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+#home .ring::before{background:conic-gradient(from 0deg,transparent,rgba(124,92,255,.4),rgba(34,211,238,.32),rgba(52,211,153,.24),transparent 62%);filter:blur(16px);animation:spin 11s linear infinite}
+#home .ring .halo{stroke:rgba(124,92,255,.35)}
+#home .primary{background:linear-gradient(160deg,#9F86FF 0%,#7C5CFF 45%,#2CB8E8 100%);color:#0B0620;
+  box-shadow:0 14px 38px -10px rgba(124,92,255,.55),0 4px 24px -8px rgba(34,211,238,.4),inset 0 1px 0 rgba(255,255,255,.4)}
+#home .secondary{border-color:rgba(124,92,255,.35)}
+#home .chip.on{border-color:#7C5CFF;color:#CDBFFF;box-shadow:0 0 16px -6px rgba(124,92,255,.6)}
+#home .chips-lbl{color:#5E6491}
+#home .home-sub{color:#8B93C7}
+#home .ring .num span{color:#8B93C7}
+#home .icon-btn{border-color:#232848;background:#12142A;color:#8B93C7}
+#home .ring .num b{text-shadow:0 0 30px rgba(124,92,255,.5)}
+
+/* ===== bottom nav ===== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;max-width:520px;margin:0 auto;
+  background:rgba(11,10,9,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--hair);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.nav[hidden]{display:none}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:14px;color:var(--dim2);font-size:11.5px;font-weight:500;transition:transform .12s,color .2s}
+.nav button:active{transform:scale(.92)}
+.nav button svg{width:24px;height:24px}
+.nav button.on.trv{color:var(--brass-hi)}
+.nav button.on.vsb{color:#2DD4BF;text-shadow:0 0 18px rgba(45,212,191,.5)}
+body.has-nav .app{padding-bottom:96px}
+
+/* ===== VERSUS — palette: turquoise / lilac / sky / white on deep dark ===== */
+.vs{--vbg:#07080F;--vbg2:#0C0E1A;--vpanel:#111426;--vhair:#1E2340;
+  --tq:#2DD4BF;--tq-hi:#7FF0E1;--lil:#C4A5FA;--sky:#8FD3FE;--vwhite:#F4F7FF;--vdim:#8C93B8;--vno:#FF7A8A}
+.vs-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(60% 42% at 22% 8%, rgba(45,212,191,.14), transparent 65%),
+  radial-gradient(55% 40% at 82% 14%, rgba(196,165,250,.13), transparent 65%),
+  radial-gradient(70% 55% at 50% 108%, rgba(143,211,254,.09), transparent 70%),
+  var(--vbg);animation:vsHue 12s ease-in-out infinite}
+@keyframes vsHue{0%,100%{opacity:1}50%{opacity:.85}}
+.vs .bar h1{color:var(--tq);letter-spacing:.2em}
+.vs-center{margin:auto 0;text-align:center;position:relative;z-index:1}
+.vs-title{font:500 34px/1.2 "Frank Ruhl Libre",serif;color:var(--vwhite);margin:0 0 8px}
+.vs-sub{color:var(--vdim);font-size:15.5px;line-height:1.6;margin:0 0 26px}
+.vs-pick{display:flex;gap:12px}
+.vs-pick button{flex:1;padding:26px 10px;border-radius:20px;font-weight:700;font-size:20px;color:var(--vwhite);background:var(--vpanel);border:1px solid var(--vhair);transition:transform .12s}
+.vs-pick button:active{transform:scale(.95)}
+.vs-pick .me{border-color:rgba(45,212,191,.5);box-shadow:0 0 40px -12px rgba(45,212,191,.4)}
+.vs-pick .her{border-color:rgba(196,165,250,.5);box-shadow:0 0 40px -12px rgba(196,165,250,.4)}
+.vs-pick small{display:block;font-weight:400;font-size:12.5px;color:var(--vdim);margin-top:6px}
+.vs-wait{position:relative;width:150px;height:150px;margin:0 auto 22px}
+.vs-wait::before,.vs-wait::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid transparent}
+.vs-wait::before{border-top-color:var(--tq);animation:vspin 1.2s linear infinite}
+.vs-wait::after{inset:12px;border-top-color:var(--lil);animation:vspin 1.9s linear infinite reverse}
+@keyframes vspin{to{transform:rotate(360deg)}}
+.vs-wait span{position:absolute;inset:0;display:grid;place-items:center;font-size:38px}
+.vs-cd{font:500 150px/1 "Frank Ruhl Libre",serif;color:var(--vwhite);text-shadow:0 0 60px rgba(45,212,191,.55);animation:cdPop .9s cubic-bezier(.22,1.4,.36,1)}
+@keyframes cdPop{0%{transform:scale(1.7);opacity:0}30%{transform:scale(1);opacity:1}}
+.vs-go{font:700 74px/1 "Heebo";background:linear-gradient(100deg,var(--tq),var(--sky),var(--lil));-webkit-background-clip:text;background-clip:text;color:transparent;animation:cdPop .8s cubic-bezier(.22,1.4,.36,1)}
+.vs-score{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.vs-score .pl{flex:1;background:var(--vpanel);border:1px solid var(--vhair);border-radius:16px;padding:10px 12px;text-align:center;transition:box-shadow .3s,border-color .3s}
+.vs-score .pl b{font:500 26px/1 "Frank Ruhl Libre",serif;display:block;color:var(--vwhite)}
+.vs-score .pl span{font-size:12.5px;color:var(--vdim)}
+.vs-score .pl.me-on{border-color:rgba(45,212,191,.6);box-shadow:0 0 26px -8px rgba(45,212,191,.5)}
+.vs-score .pl.her-on{border-color:rgba(196,165,250,.6);box-shadow:0 0 26px -8px rgba(196,165,250,.5)}
+.vs-score .rnd{font-size:12px;color:var(--vdim);letter-spacing:.1em;white-space:nowrap}
+.vs-timer{position:relative;z-index:1;height:7px;background:var(--vpanel);border-radius:4px;overflow:hidden;margin-bottom:18px}
+.vs-timer i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--tq),var(--sky));transition:width .1s linear}
+.vs-timer.hot i{background:linear-gradient(90deg,#FFB35C,var(--vno))}
+.vs-qcard{position:relative;z-index:1;background:linear-gradient(170deg,var(--vbg2),var(--vpanel));border:1px solid var(--vhair);border-radius:20px;padding:22px 20px;box-shadow:0 30px 70px -30px rgba(0,0,0,.9), 0 0 50px -20px rgba(45,212,191,.16)}
+.vs-qcard.in{animation:cardIn .3s cubic-bezier(.22,1.2,.36,1)}
+.vs-qcat{font-size:12px;color:var(--sky);letter-spacing:.14em;margin:0 0 10px}
+.vs-q{font:500 23px/1.4 "Frank Ruhl Libre",serif;color:var(--vwhite);margin:0 0 18px;min-height:64px}
+.vs-opts{display:grid;gap:10px}
+.vs-opts button{padding:15px 14px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--vhair);color:var(--vwhite);font-size:16.5px;font-weight:500;text-align:right;transition:transform .1s,border-color .15s,background .15s}
+.vs-opts button:active{transform:scale(.97)}
+.vs-opts button.sel{border-color:var(--tq);background:rgba(45,212,191,.12)}
+.vs-opts button.good{border-color:var(--tq);background:rgba(45,212,191,.18);color:var(--tq-hi)}
+.vs-opts button.bad{border-color:var(--vno);background:rgba(255,122,138,.12);color:var(--vno)}
+.vs-opts button:disabled{opacity:.92}
+.vs-opp{position:relative;z-index:1;text-align:center;font-size:13.5px;color:var(--lil);min-height:22px;margin-top:12px;animation:revealIn .3s ease}
+.vs-fb{position:relative;z-index:1;text-align:center;font-weight:700;font-size:17px;margin-top:12px;min-height:24px}
+.vs-fb.g{color:var(--tq-hi)}.vs-fb.b{color:var(--vno)}
+.vs-final{font:500 88px/1 "Frank Ruhl Libre",serif;margin:0 0 4px;background:linear-gradient(120deg,var(--tq),var(--sky),var(--lil));-webkit-background-clip:text;background-clip:text;color:transparent}
+.vs-btn{position:relative;z-index:1;width:100%;padding:17px;border-radius:16px;font-weight:700;font-size:17.5px;color:#04211D;
+  background:linear-gradient(160deg,var(--tq-hi),var(--tq) 55%,#17A08D);box-shadow:0 12px 34px -10px rgba(45,212,191,.45), inset 0 1px 0 rgba(255,255,255,.4);transition:transform .12s}
+.vs-btn:active{transform:scale(.97)}
+.vs-ghost{position:relative;z-index:1;width:100%;padding:13px;border-radius:14px;background:var(--vpanel);border:1px solid var(--vhair);color:var(--vdim);font-size:15px;margin-top:10px;transition:transform .12s}
+.vs-ghost:active{transform:scale(.97)}
+.vs-err{background:rgba(255,122,138,.1);border:1px solid rgba(255,122,138,.35);border-radius:14px;padding:12px 14px;color:var(--vno);font-size:14.5px;line-height:1.55}
 .modal-box h3{margin:0 0 8px;font:500 18px "Heebo";color:var(--canvas)}
 .modal-box p{margin:0 0 12px;color:var(--dim);font-size:14px;line-height:1.5}
 .modal-box textarea{width:100%;height:150px;border-radius:10px;border:1px solid var(--hair);background:var(--black);color:var(--canvas);padding:10px;font-size:12px;direction:ltr;font-family:monospace}
@@ -193,6 +296,7 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 
 <!-- HOME -->
 <section id="home" class="screen on">
+  <div class="aur"><i></i><i></i><i></i></div>
   <div class="bar">
     <h1>ידע כללי</h1>
     <div class="streak" id="streak-badge"></div>
@@ -210,8 +314,8 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
       <svg viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="44" stroke="#1E1913" stroke-width="7" fill="none"/>
         <circle class="halo" cx="50" cy="50" r="48.5" stroke="rgba(201,162,92,.22)" stroke-width="1" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/>
-        <circle id="ring-fg" cx="50" cy="50" r="44" stroke="url(#gBrass)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="276" stroke-dashoffset="276" style="transition:stroke-dashoffset .9s cubic-bezier(.22,1,.36,1)"/>
-        <defs><linearGradient id="gBrass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8CE96"/><stop offset="1" stop-color="#A98240"/></linearGradient></defs>
+        <circle id="ring-fg" cx="50" cy="50" r="44" stroke="url(#gAur)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="276" stroke-dashoffset="276" style="transition:stroke-dashoffset .9s cubic-bezier(.22,1,.36,1)"/>
+        <defs><linearGradient id="gAur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A6FF"/><stop offset=".55" stop-color="#7C5CFF"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs>
       </svg>
       <div class="num"><div><b id="today-n">0</b><span id="today-goal">מתוך 10 היום</span></div></div>
     </div>
@@ -325,7 +429,29 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
   <input type="file" id="restore-file" accept=".json,application/json,text/plain" hidden>
 </section>
 
+<!-- VERSUS -->
+<section id="versus" class="screen vs">
+  <div class="vs-bg"></div>
+  <div class="bar" style="position:relative;z-index:1">
+    <h1>ראש בראש</h1>
+    <button class="icon-btn" onclick="VS.leave();show('home')" aria-label="חזרה" style="background:var(--vpanel);border-color:var(--vhair)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+  </div>
+  <div id="vs-body" style="display:flex;flex-direction:column;flex:1;position:relative;z-index:1"></div>
+</section>
+
 </div>
+<nav class="nav" id="nav" hidden>
+  <button class="vsb" id="nav-vs" onclick="SFX.tap();openVersus()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/><path d="M9.5 6.5 21 18v3h-3L6.5 9.5"/><path d="M5 14l4 4"/><path d="M3 19l2 2"/></svg>
+    <span id="nav-vs-lbl">ראש בראש</span>
+  </button>
+  <button class="trv" id="nav-trv" onclick="SFX.tap();VS.leave();show('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3 3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8A3 3 0 0 0 6 13a3 3 0 0 0 2 2.8V17a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-1.2A3 3 0 0 0 18 13a3 3 0 0 0-.6-2.2c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3 3 3 0 0 0-3-3z"/><path d="M12 3v17"/></svg>
+    טריוויה
+  </button>
+</nav>
 <div class="confetti" id="confetti"></div>
 <div class="modal" id="modal" hidden>
   <div class="modal-box">
@@ -418,7 +544,17 @@ function P(i){return S.p[qid(i)]}
 function prog(i){return S.p[qid(i)]||(S.p[qid(i)]={box:0,due:0,seen:0,ok:0,run:0})}
 
 /* ================= NAV ================= */
+function setNav(id){
+  const nav=document.getElementById('nav');
+  const vis=(id==='home'||id==='versus');
+  nav.hidden=!vis;document.body.classList.toggle('has-nav',vis);
+  document.getElementById('nav-trv').classList.toggle('on',id==='home');
+  document.getElementById('nav-vs').classList.toggle('on',id==='versus');
+  const l=document.getElementById('nav-vs-lbl');
+  if(l)l.textContent=S.vsWho?('ראש בראש מול '+NAMES[S.vsWho==='natan'?'pino':'natan']):'ראש בראש';
+}
 function show(id){
+  setNav(id);
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById(id).classList.add('on');
   window.scrollTo(0,0);
@@ -821,6 +957,282 @@ function resetAll(){
     d.appendChild(s);
   }
 })();
+
+/* ================= VERSUS — ראש בראש ================= */
+const FB_CFG={
+  apiKey:"AIzaSyBf96fw-7jBlYPHRNP8l0qT1HqVObiaZDU",
+  authDomain:"trivia-caba4.firebaseapp.com",
+  databaseURL:"https://trivia-caba4-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"trivia-caba4",
+  storageBucket:"trivia-caba4.firebasestorage.app",
+  messagingSenderId:"79958843506",
+  appId:"1:79958843506:web:d55e432b1b6dd1411222eb"
+};
+const VS_Q=15000, VS_R=5000, VS_BREAK=7000, VS_PER_ROUND=6, VS_ROUNDS=3, VS_N=VS_PER_ROUND*VS_ROUNDS;
+const NAMES={natan:'נינו',pino:'פוניטה'};
+const GEN={natan:{win:'ניצח',ansd:'כבר ענה ⚡',lead:'נינו מוביל — הסבב הבא שלך.',enter:'ממתינים שנינו ייכנס למסך ראש בראש…',late:'לא ענה בזמן'},pino:{win:'ניצחה',ansd:'כבר ענתה ⚡',lead:'פוניטה מובילה — הסבב הבא שלך.',enter:'ממתינים שפוניטה תיכנס למסך ראש בראש…',late:'לא ענתה בזמן'}};
+let fbLoad=null;
+function loadFB(){
+  if(fbLoad)return fbLoad;
+  fbLoad=new Promise((res,rej)=>{
+    const add=(src,cb)=>{const s=document.createElement('script');s.src=src;s.onload=cb;s.onerror=()=>rej(new Error('net'));document.head.appendChild(s)};
+    add('https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js',()=>{
+      add('https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js',()=>{
+        try{firebase.initializeApp(FB_CFG);res(firebase.database())}catch(e){rej(e)}
+      });
+    });
+  });
+  fbLoad.catch(()=>{fbLoad=null});
+  return fbLoad;
+}
+const SFX_VS={
+  tick(){tone(880,0,.07,'square',.05)},
+  go(){tone(523,0,.14,'sine',.1);tone(784,.1,.16,'sine',.1);tone(1046,.2,.3,'sine',.11)},
+  fast(){tone(1318,0,.1,'sine',.08);tone(1568,.07,.14,'sine',.07)},
+  win(){[523,659,784,1046,1318,1568].forEach((f,i)=>tone(f,i*.09,.32,'sine',.1));[784,1046,1318].forEach(f=>tone(f,.66,.6,'sine',.05))},
+  lose(){tone(392,0,.2,'sine',.08);tone(330,.16,.24,'sine',.07);tone(262,.34,.4,'sine',.06)}
+};
+const VS={
+  db:null,off:0,who:null,game:null,ans:{},order:{},myPick:{},phase:null,pi:-1,loop:null,unsub:[],active:false,creating:false,ended:false,
+  el(){return document.getElementById('vs-body')},
+  now(){return Date.now()+VS.off},
+  qStart(i){return VS.game.start + i*(VS_Q+VS_R) + Math.floor(i/VS_PER_ROUND)*VS_BREAK},
+  gEnd(){return VS.qStart(VS_N-1)+VS_Q+VS_R},
+  score(w){
+    let s=0;for(let i=0;i<VS_N;i++){const a=VS.ans['q'+i]&&VS.ans['q'+i][w];
+      if(a&&a.ok)s+=100+Math.max(0,Math.round((VS_Q-a.ms)/100));}
+    return s;
+  },
+  leave(){
+    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;
+    if(VS.loop){clearInterval(VS.loop);VS.loop=null}
+    VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];
+    if(VS.db&&VS.who){try{VS.db.ref('versus/p/'+VS.who).remove()}catch(e){}}
+  }
+};
+function openVersus(){
+  show('versus');VS.active=true;
+  if(typeof VQ==='undefined'||!VQ.length){vsErr('גרסת השאלות ישנה — רענן את האפליקציה כשיש אינטרנט כדי לקבל את שאלות ראש בראש.');return}
+  if(!S.vsWho){renderVsPick();return}
+  VS.who=S.vsWho;startVsLobby();
+}
+function renderVsPick(){
+  VS.el().innerHTML=
+    '<div class="vs-center"><h2 class="vs-title">מי משחק בטלפון הזה?</h2>'+
+    '<p class="vs-sub">בחירה חד־פעמית — הטלפון יזכור.</p>'+
+    '<div class="vs-pick">'+
+    '<button class="me" onclick="vsPick(\'natan\')">אני נינו<small>הטלפון של נינו</small></button>'+
+    '<button class="her" onclick="vsPick(\'pino\')">אני פוניטה<small>הטלפון של פוניטה</small></button>'+
+    '</div></div>';
+}
+function vsPick(w){SFX.tap();S.vsWho=w;save();VS.who=w;startVsLobby();}
+async function startVsLobby(){
+  const opp=VS.who==='natan'?'pino':'natan';
+  VS.el().innerHTML='<div class="vs-center"><div class="vs-wait"><span>⚡</span></div>'+
+    '<h2 class="vs-title">היי '+NAMES[VS.who]+'</h2>'+
+    '<p class="vs-sub" id="vs-lobby-t">מתחבר…</p></div>';
+  if(!navigator.onLine){vsErr('אין חיבור לאינטרנט. משחק מרחוק דורש רשת אצל שניכם.');return}
+  let db;
+  try{db=await loadFB()}catch(e){vsErr('החיבור לשרת המשחק נכשל. בדקו אינטרנט ונסו שוב.');return}
+  if(!VS.active)return;
+  VS.db=db;
+  db.ref('.info/serverTimeOffset').on('value',s=>{VS.off=s.val()||0});
+  VS.unsub.push(()=>db.ref('.info/serverTimeOffset').off());
+  const meRef=db.ref('versus/p/'+VS.who);
+  meRef.onDisconnect().remove();
+  meRef.set({ts:firebase.database.ServerValue.TIMESTAMP});
+  const pRef=db.ref('versus/p');
+  const pCb=pRef.on('value',s=>{
+    if(!VS.active)return;
+    const p=s.val()||{};
+    const both=p[VS.who]&&p[opp];
+    const t=document.getElementById('vs-lobby-t');
+    if(t)t.textContent=both?'שניכם כאן — מתחילים!':GEN[opp].enter;
+    maybeCreate(both);
+  });
+  VS.unsub.push(()=>pRef.off('value',pCb));
+  const gRef=db.ref('versus/game');
+  const gCb=gRef.on('value',s=>{
+    if(!VS.active)return;
+    const g=s.val();
+    if(!g){if(VS.game){VS.game=null;VS.ended=false;stopLoop();VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];startVsLobby()}return}
+    if(VS.game&&VS.game.id===g.id)return;
+    if(g.start&&VS.now()<g.start-30000)return;
+    VS.game=g;VS.ans={};VS.order={};VS.myPick={};VS.phase=null;VS.pi=-1;VS.ended=false;
+    if(VS.now()>VS.gEnd()+60000){VS.game=null;return} /* stale leftover game */
+    runLoop();
+  });
+  VS.unsub.push(()=>gRef.off('value',gCb));
+  const aRef=db.ref('versus/game/ans');
+  const aCb=aRef.on('value',x=>{VS.ans=x.val()||{};onAnsUpdate()});
+  VS.unsub.push(()=>aRef.off('value',aCb));
+  function maybeCreate(both){
+    if(VS.who!=='natan'||!both||VS.creating)return;
+    const gameDone=!VS.game||VS.now()>VS.gEnd();
+    if(!gameDone)return;
+    VS.creating=true;
+    const idx=shuffle(VQ.map((_,i)=>i)).slice(0,VS_N);
+    db.ref('versus/game').set({id:Date.now(),start:VS.now()+5800,qs:idx,ans:null})
+      .then(()=>{VS.creating=false}).catch(()=>{VS.creating=false});
+  }
+}
+function vsErr(msg){
+  VS.el().innerHTML='<div class="vs-center"><h2 class="vs-title">אופס</h2>'+
+    '<p class="vs-err">'+msg+'</p>'+
+    '<button class="vs-btn" style="margin-top:20px" onclick="SFX.tap();openVersus()">נסה שוב</button></div>';
+}
+function stopLoop(){if(VS.loop){clearInterval(VS.loop);VS.loop=null}}
+function runLoop(){stopLoop();VS.loop=setInterval(vsTick,100);vsTick();}
+function vsTick(){
+  if(!VS.active||!VS.game){stopLoop();return}
+  const n=VS.now(),g=VS.game;
+  if(n<g.start){renderCountdown(Math.ceil((g.start-n)/1000));return}
+  if(n>=VS.gEnd()){renderEnd();stopLoop();return}
+  let i=0;
+  for(;i<VS_N;i++){if(n<VS.qStart(i)+VS_Q+VS_R)break}
+  const qs=VS.qStart(i);
+  if(n<qs){renderBreak(Math.floor(i/VS_PER_ROUND));return}
+  if(n<qs+VS_Q){renderQuestion(i,qs);updateTimer(i,qs);return}
+  renderReveal(i);
+}
+let cdShown=0;
+function renderCountdown(sec){
+  sec=Math.min(5,sec);
+  if(VS.phase==='cd'&&cdShown===sec)return;
+  const first=VS.phase!=='cd';VS.phase='cd';cdShown=sec;
+  if(sec<=5){SFX_VS.tick();buzz(15)}
+  VS.el().innerHTML='<div class="vs-center">'+
+    (sec>0?'<div class="vs-cd">'+sec+'</div><p class="vs-sub">מתכוננים…</p>'
+          :'<div class="vs-go">יאללה!</div>')+'</div>';
+  if(sec===0)SFX_VS.go();
+  if(first)setNav('none');
+}
+function scoreHead(i){
+  const r=Math.floor(i/VS_PER_ROUND)+1;
+  const me=VS.score(VS.who),her=VS.score(VS.who==='natan'?'pino':'natan');
+  const lead=me>her?'me':(her>me?'her':'');
+  return '<div class="vs-score">'+
+    '<div class="pl '+(lead==='me'?'me-on':'')+'"><b>'+me+'</b><span>'+NAMES[VS.who]+' (אני)</span></div>'+
+    '<div class="rnd">סבב '+r+'/'+VS_ROUNDS+'<br>שאלה '+(i%VS_PER_ROUND+1)+'/'+VS_PER_ROUND+'</div>'+
+    '<div class="pl '+(lead==='her'?'her-on':'')+'"><b>'+her+'</b><span>'+NAMES[VS.who==='natan'?'pino':'natan']+'</span></div></div>';
+}
+function renderQuestion(i,qs){
+  const key='q'+i;
+  if(VS.phase!=='q'+i){
+    VS.phase='q'+i;VS.pi=i;
+    if(!VS.order[key]){VS.order[key]=shuffle([0,1,2,3])}
+    const q=VQ[VS.game.qs[i]],ord=VS.order[key];
+    SFX.chip();
+    VS.el().innerHTML=scoreHead(i)+
+      '<div class="vs-timer" id="vs-tm"><i id="vs-tm-i" style="width:100%"></i></div>'+
+      '<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p><p class="vs-q">'+q.q+'</p>'+
+      '<div class="vs-opts" id="vs-opts">'+
+      ord.map(o=>'<button onclick="vsAnswer('+i+','+o+',this)">'+q.o[o]+'</button>').join('')+
+      '</div></div><div class="vs-opp" id="vs-opp"></div><div class="vs-fb" id="vs-fb"></div>';
+  }
+  onAnsUpdate();
+}
+function updateTimer(i,qs){
+  const el=document.getElementById('vs-tm-i');if(!el)return;
+  const left=Math.max(0,qs+VS_Q-VS.now()),pct=left/VS_Q*100;
+  el.style.width=pct+'%';
+  document.getElementById('vs-tm').classList.toggle('hot',left<5000);
+}
+function vsAnswer(i,orig,btn){
+  const key='q'+i;
+  if(VS.myPick[key]!==undefined)return;
+  const qs=VS.qStart(i),ms=Math.min(VS_Q,Math.max(0,VS.now()-qs));
+  const ok=orig===0?1:0;
+  VS.myPick[key]=orig;
+  document.querySelectorAll('#vs-opts button').forEach(b=>b.disabled=true);
+  btn.classList.add('sel');
+  if(ok){SFX.ok();buzz(30);if(ms<5000)SFX_VS.fast();
+    const fb=document.getElementById('vs-fb');if(fb){fb.textContent=ms<5000?'מהיר! +'+(100+Math.round((VS_Q-ms)/100)):'נכון! +'+(100+Math.round((VS_Q-ms)/100));fb.className='vs-fb g'}
+    popAt(btn);
+  }else{SFX.no();buzz([40,60,40]);
+    const fb=document.getElementById('vs-fb');if(fb){fb.textContent='לא נכון…';fb.className='vs-fb b'}
+  }
+  if(VS.db)VS.db.ref('versus/game/ans/'+key+'/'+VS.who).set({c:orig,ok:ok,ms:ms});
+}
+function popAt(btn){
+  const r=btn.getBoundingClientRect();
+  for(let k=0;k<10;k++){
+    const p=document.createElement('i');p.className='pop';
+    p.style.left=(r.left+r.width/2)+'px';p.style.top=(r.top+r.height/2)+'px';
+    p.style.background=['#2DD4BF','#8FD3FE','#C4A5FA','#F4F7FF'][k%4];
+    p.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    p.style.setProperty('--dy',(Math.random()*-120-20)+'px');
+    document.body.appendChild(p);setTimeout(()=>p.remove(),750);
+  }
+}
+function onAnsUpdate(){
+  if(VS.pi<0||!/^q\d+$/.test(String(VS.phase)))return;
+  const i=VS.pi,opp=VS.who==='natan'?'pino':'natan';
+  const a=VS.ans['q'+i]||{};
+  const el=document.getElementById('vs-opp');
+  if(el)el.textContent=a[opp]?NAMES[opp]+' '+GEN[opp].ansd:'';
+}
+function renderReveal(i){
+  if(VS.phase!=='r'+i){
+    VS.phase='r'+i;
+    const q=VQ[VS.game.qs[i]],ord=VS.order['q'+i]||[0,1,2,3];
+    const opp=VS.who==='natan'?'pino':'natan';
+    const a=VS.ans['q'+i]||{},mine=a[VS.who],hers=a[opp];
+    if(VS.myPick['q'+i]===undefined&&!mine){SFX.meh()}
+    const line=w=>{const x=a[w];if(!x)return NAMES[w]+': '+GEN[w].late;
+      return NAMES[w]+': '+(x.ok?'נכון ✓ +'+(100+Math.max(0,Math.round((VS_Q-x.ms)/100))):'טעות ✗')+' ('+(x.ms/1000).toFixed(1)+' שנ׳)'};
+    VS.el().innerHTML=scoreHead(i)+
+      '<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p><p class="vs-q">'+q.q+'</p>'+
+      '<div class="vs-opts">'+ord.map(o=>{
+        let cls=o===0?'good':((mine&&mine.c===o&&o!==0)?'bad':'');
+        return '<button disabled class="'+cls+'">'+q.o[o]+'</button>'}).join('')+
+      '</div></div>'+
+      '<div class="vs-opp" style="color:var(--vwhite);font-size:15px;line-height:1.7">'+line(VS.who)+'<br>'+line(opp)+'</div>';
+  }
+}
+function renderBreak(roundIdx){
+  if(VS.phase!=='b'+roundIdx){
+    VS.phase='b'+roundIdx;SFX.round();
+    const me=VS.score(VS.who),her=VS.score(VS.who==='natan'?'pino':'natan');
+    const opp=NAMES[VS.who==='natan'?'pino':'natan'];
+    const msg=me>her?'יתרון אצלך! שומרים על הקצב.':(her>me?GEN[VS.who==='natan'?'pino':'natan'].lead:'תיקו! הכול פתוח.');
+    VS.el().innerHTML='<div class="vs-center"><h2 class="vs-title">סוף סבב '+roundIdx+'</h2>'+
+      '<p class="vs-final" style="font-size:56px">'+me+' : '+her+'</p>'+
+      '<p class="vs-sub">'+msg+'<br>סבב '+(roundIdx+1)+' מתחיל עוד רגע…</p></div>';
+  }
+}
+function renderEnd(){
+  if(VS.ended)return;VS.ended=true;VS.phase='end';
+  const opp=VS.who==='natan'?'pino':'natan';
+  const me=VS.score(VS.who),her=VS.score(opp);
+  const iWin=me>her,tie=me===her;
+  if(iWin){SFX_VS.win();confettiVs();buzz([40,60,40,60,120])}else if(tie){SFX.round()}else{SFX_VS.lose()}
+  VS.el().innerHTML='<div class="vs-center">'+
+    '<h2 class="vs-title">'+(tie?'תיקו!':(iWin?'ניצחת! 🏆':NAMES[opp]+' '+GEN[opp].win+' 🏆'))+'</h2>'+
+    '<p class="vs-final">'+me+' : '+her+'</p>'+
+    '<p class="vs-sub">'+NAMES[VS.who]+' מול '+NAMES[opp]+' · '+VS_N+' שאלות</p>'+
+    '<button class="vs-btn" onclick="vsRematch()">משחק חוזר</button>'+
+    '<button class="vs-ghost" onclick="VS.leave();show(\'home\')">חזרה לתרגול</button></div>';
+  setNav('versus');
+}
+function vsRematch(){
+  SFX.tap();
+  if(!VS.db)return;
+  VS.db.ref('versus/game').remove(); /* both clients fall back to lobby; host auto-creates a fresh game */
+}
+function confettiVs(){
+  const w=document.getElementById('confetti');w.innerHTML='';
+  const colors=['#2DD4BF','#7FF0E1','#C4A5FA','#8FD3FE','#F4F7FF'];
+  for(let i=0;i<80;i++){
+    const s=document.createElement('i');
+    s.style.left=Math.random()*100+'%';s.style.top='-14px';
+    s.style.background=colors[i%colors.length];
+    s.style.animationDelay=Math.random()*.8+'s';
+    s.style.animationDuration=(1.4+Math.random()*1.3)+'s';
+    if(Math.random()<.4)s.style.borderRadius='50%';
+    w.appendChild(s);
+  }
+}
 
 /* ================= PWA ================= */
 if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
