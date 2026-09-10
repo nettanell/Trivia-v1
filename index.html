@@ -206,6 +206,21 @@ body{overscroll-behavior-y:none}
 #home .icon-btn{border-color:#232848;background:#12142A;color:#8B93C7}
 #home .ring .num b{text-shadow:0 0 30px rgba(124,92,255,.5)}
 
+/* ===== PRACTICE — effects (white / light-blue) ===== */
+#practice{position:relative}
+#practice .aur2{position:absolute;inset:-20px;z-index:0;pointer-events:none;overflow:hidden}
+#practice .aur2 i{position:absolute;border-radius:50%;filter:blur(52px);mix-blend-mode:screen}
+#practice .aur2 i:nth-child(1){width:250px;height:250px;background:radial-gradient(circle,rgba(125,211,254,.34),transparent 70%);top:-8%;left:-14%;animation:orbB 19s ease-in-out infinite}
+#practice .aur2 i:nth-child(2){width:220px;height:220px;background:radial-gradient(circle,rgba(244,247,255,.2),transparent 70%);bottom:-6%;right:-12%;animation:orbA 23s ease-in-out infinite}
+#practice>*{position:relative;z-index:1}
+#practice .progress{position:relative;overflow:hidden}
+#practice .progress::after{content:"";position:absolute;top:0;bottom:0;width:34%;left:-40%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-16deg);animation:sheen 3.4s ease-in-out infinite}
+.flash{position:fixed;inset:0;z-index:52;pointer-events:none;opacity:0;
+  background:radial-gradient(80% 60% at 50% 45%,transparent 55%,rgba(143,211,254,.28) 100%)}
+.flash.go{animation:flashGo .55s ease-out}
+@keyframes flashGo{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+
 /* ===== bottom nav ===== */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;max-width:520px;margin:0 auto;
   background:rgba(11,10,9,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -340,6 +355,7 @@ body.has-nav .app{padding-bottom:96px}
 
 <!-- PRACTICE -->
 <section id="practice" class="screen">
+  <div class="aur2"><i></i><i></i></div>
   <div class="bar">
     <button class="icon-btn" onclick="SFX.tap();show('home')" aria-label="חזרה">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -466,6 +482,7 @@ body.has-nav .app{padding-bottom:96px}
   </button>
 </nav>
 <div class="confetti" id="confetti"></div>
+<div class="flash" id="flash"></div>
 <div class="modal" id="modal" hidden>
   <div class="modal-box">
     <h3 id="m-title"></h3>
@@ -634,7 +651,7 @@ function newCount(){return pool().filter(i=>!P(i)||P(i).seen===0).length}
 /* ================= SESSION ================= */
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function beginRound(){idx=0;gotIt=0;requeue=[];hist=[];roundMiss=[];roundMeh=[];SFX.start();show('practice');next();}
-function startSession(){
+function startSession(){comboRun=0;
   const now=Date.now(),p=pool();
   const due=shuffle(p.filter(i=>P(i)&&P(i).seen>0&&P(i).due<=now));
   const neu=shuffle(p.filter(i=>!P(i)||P(i).seen===0));
@@ -764,6 +781,21 @@ function renderReview(){
   document.getElementById('p-counter').textContent='עיון בשאלה שנענתה';
 }
 function exitReview(){SFX.tap();reviewPos=-1;next();}
+const SKY=['#F4F7FF','#BFE7FF','#8FD3FE','#FFFFFF','#DDF3FF'];
+let comboRun=0;
+function flashGlow(){const f=document.getElementById('flash');if(!f)return;f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
+function confettiSky(n){
+  const w=document.getElementById('confetti');w.innerHTML='';
+  for(let i=0;i<(n||70);i++){
+    const c=document.createElement('i');
+    c.style.left=Math.random()*100+'%';c.style.top='-14px';
+    c.style.background=SKY[i%SKY.length];
+    c.style.animationDelay=Math.random()*.8+'s';
+    c.style.animationDuration=(1.4+Math.random()*1.3)+'s';
+    if(Math.random()<.5)c.style.borderRadius='50%';
+    w.appendChild(c);
+  }
+}
 function burst(el,color){
   const r=el.getBoundingClientRect();
   const cx=r.left+r.width/2,cy=r.top+r.height/2;
@@ -773,16 +805,18 @@ function burst(el,color){
     d.style.setProperty('--dx',Math.cos(ang)*dist+'px');
     d.style.setProperty('--dy',(Math.sin(ang)*dist-30)+'px');
     d.style.left=cx+'px';d.style.top=cy+'px';
-    d.style.background=color;
+    d.style.background=Array.isArray(color)?color[i%color.length]:color;
     document.body.appendChild(d);
     setTimeout(()=>d.remove(),750);
   }
 }
 function grade(g,btn){
   const p=prog(cur),now=Date.now(),day=86400000;
-  if(g===2){SFX.ok();buzz(18);if(btn)burst(btn,'#C9A25C');}
-  else if(g===1){SFX.meh();buzz(12);if(!roundMeh.includes(cur))roundMeh.push(cur);}
-  else{SFX.no();buzz([25,40,25]);if(!roundMiss.includes(cur))roundMiss.push(cur);}
+  if(g===2){SFX.ok();buzz(18);comboRun++;flashGlow();
+    if(btn){burst(btn,SKY);if(comboRun>=3){burst(btn,SKY);SFX_VS.fast();}}
+  }
+  else if(g===1){SFX.meh();buzz(12);comboRun=0;if(!roundMeh.includes(cur))roundMeh.push(cur);}
+  else{SFX.no();buzz([25,40,25]);comboRun=0;if(!roundMiss.includes(cur))roundMiss.push(cur);}
   if(freeMode){
     p.seen++;
     if(g===2){p.ok++;gotIt++;}
@@ -806,6 +840,10 @@ function grade(g,btn){
 function finish(){
   const t=dayKey(),n=S.days[t]||0;
   if(n<GOAL)SFX.round();
+  comboRun=0;
+  const acc=session.length?gotIt/session.length:0;
+  if(gotIt===session.length&&session.length>0){confettiSky(90);}
+  else if(acc>=0.8){confettiSky(40);}
   document.getElementById('d-n').textContent=gotIt+'/'+session.length;
   document.getElementById('d-title').textContent=n>=GOAL?'היעד היומי הושלם':'סבב הושלם';
   document.getElementById('d-sub').textContent=freeMode?'תרגול חופשי — לוח החזרות שלך לא השתנה.':((S.streak>1?S.streak+' ימים ברצף. ':'')+(n>=GOAL?'המוח ממשיך לעבד את זה ברקע.':'עוד '+(GOAL-n)+' שאלות ליעד.'));
