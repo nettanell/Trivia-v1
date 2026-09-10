@@ -299,6 +299,10 @@ body.has-nav .app{padding-bottom:96px}
 .vs-off h3{font:500 26px/1.3 "Frank Ruhl Libre",serif;color:var(--vwhite);margin:0 0 8px}
 .vs-off p{color:var(--vdim);font-size:15px;line-height:1.6;margin:0 0 22px}
 .vs-off b{color:#7FF0E1}
+.vs-spin{font-size:58px;display:inline-block;animation:vsSpin 5s linear infinite;margin-bottom:14px;filter:drop-shadow(0 8px 24px rgba(45,212,191,.3))}
+@keyframes vsSpin{0%{transform:rotate(0) scale(1)}25%{transform:rotate(90deg) scale(1.15)}50%{transform:rotate(180deg) scale(1)}75%{transform:rotate(270deg) scale(1.15)}100%{transform:rotate(360deg) scale(1)}}
+.vs-expose{font-size:15.5px;line-height:1.65;color:var(--vwhite);background:rgba(196,165,250,.08);border:1px solid rgba(196,165,250,.3);border-radius:14px;padding:12px 15px;margin:14px 0 0;animation:cdPop .5s cubic-bezier(.22,1.4,.36,1)}
+.vs-expose b{color:var(--lil)}
 .vs-roast{font-size:16px;line-height:1.6;color:var(--vwhite);background:rgba(255,255,255,.05);border:1px solid var(--vhair);border-radius:14px;padding:12px 16px;margin:0 0 18px;animation:cdPop .6s cubic-bezier(.22,1.4,.36,1)}
 .vs-rev{text-align:right;margin-top:26px}
 .vs-rev h4{font-size:14px;letter-spacing:.1em;margin:0 0 10px;display:flex;align-items:center;gap:8px}
@@ -1085,7 +1089,7 @@ const FB_CFG={
   messagingSenderId:"79958843506",
   appId:"1:79958843506:web:d55e432b1b6dd1411222eb"
 };
-const VS_Q=15000, VS_R=3200, VS_BREAK=5000, VS_PER_ROUND=6, VS_ROUNDS=3, VS_N=VS_PER_ROUND*VS_ROUNDS;
+const VS_Q=15000, VS_R=3200, VS_BREAK=9000, VS_PER_ROUND=10, VS_ROUNDS=3, VS_N=VS_PER_ROUND*VS_ROUNDS;
 const NAMES={natan:'נינו',pino:'פוניטה'};
 const GEN={natan:{win:'ניצח',ansd:'כבר ענה ⚡',lead:'נינו מוביל — הסבב הבא שלך.',enter:'ממתינים שנינו ייכנס למסך ראש בראש…',late:'לא ענה בזמן',dc:'נינו לא מחובר'},pino:{win:'ניצחה',ansd:'כבר ענתה ⚡',lead:'פוניטה מובילה — הסבב הבא שלך.',enter:'ממתינים שפוניטה תיכנס למסך ראש בראש…',late:'לא ענתה בזמן',dc:'פוניטה לא מחוברת'}};
 let fbLoad=null;
@@ -1125,7 +1129,7 @@ pino:["נינו, כל הידע הכללי שלך יצא להפסקת עישון 
 const LOSE_LINES={natan:["נינו… זה היה מביך. פשוט מביך 🤡","המסך הזה שלך נינו, תתרגל אליו 💩","אפילו הקהל בבית צוחק עליך עכשיו נינו 😂","נינו, המכביה מחכה לך. כצופה 🎫"],
 pino:["פוניטה… זה היה מביך. פשוט מביך 🤡","המסך הזה שלך פוניטה, תתרגלי אליו 💩","אפילו הקהל בבית צוחק עלייך עכשיו פוניטה 😂","פוניטה, אולי טריוויה זה לא הקטע. יש גם סודוקו 🔢"]};
 const VS={
-  db:null,off:0,who:null,game:null,ans:{},order:{},myPick:{},phase:null,pi:-1,loop:null,unsub:[],active:false,creating:false,ended:false,oppHere:false,absentAt:0,cur:null,curW:'',zoom:{},
+  db:null,off:0,who:null,game:null,ans:{},order:{},myPick:{},phase:null,pi:-1,loop:null,unsub:[],active:false,creating:false,ended:false,oppHere:false,absentAt:0,cur:null,curW:'',zoom:{},again:{},
   el(){return document.getElementById('vs-body')},
   now(){return Date.now()+VS.off},
   score(w){
@@ -1134,7 +1138,7 @@ const VS={
     return s;
   },
   leave(){
-    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.cur=null;VS.curW='';VS.zoom={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
+    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
     if(VS.loop){clearInterval(VS.loop);VS.loop=null}
     VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];
     if(VS.db&&VS.who){try{VS.db.ref('versus/p/'+VS.who).remove()}catch(e){}}
@@ -1189,11 +1193,18 @@ async function startVsLobby(){
     if(!VS.active)return;
     const g=s.val();
     if(!g){if(VS.game){VS.game=null;VS.ended=false;stopLoop();VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];startVsLobby()}return}
-    if(VS.game&&VS.game.id===g.id){if(g.cur)VS.cur=g.cur;return}
+    if(VS.game&&VS.game.id===g.id){
+      if(g.cur)VS.cur=g.cur;
+      VS.again=g.again||{};
+      vsAgainUI();
+      if(VS.who==='natan'&&VS.again.natan&&VS.again.pino&&VS.curW!=='rematch'){
+        VS.curW='rematch';vsAbort(); /* both agreed — clear game, lobby auto-creates fresh one */
+      }
+      return}
     if(g.start&&VS.now()<g.start-30000)return;
     if(VS.now()>g.start+1800000)return; /* stale leftover game (30 min) */
     VS.game=g;VS.cur=g.cur||{i:0,phase:'q',at:g.start};VS.curW='';
-    VS.ans={};VS.order={};VS.myPick={};VS.phase=null;VS.pi=-1;VS.ended=false;VS.zoom={};
+    VS.ans={};VS.order={};VS.myPick={};VS.phase=null;VS.pi=-1;VS.ended=false;VS.zoom={};VS.again={};
     runLoop();
   });
   VS.unsub.push(()=>gRef.off('value',gCb));
@@ -1464,15 +1475,43 @@ function qWinBadge(a){
   const col=w==='natan'?'var(--tq)':'var(--lil)';
   return '<div style="font-weight:700;font-size:16px;color:'+col+';margin-bottom:6px">⚡ '+NAMES[w]+' '+verb+' את השאלה</div>';
 }
+const REAL={natan:'נתנאל',pino:'שיראל'};
+function vsName(w){return Math.random()<0.35?REAL[w]:NAMES[w]}
+function vsExposeJoke(upto){
+  const bank=[];
+  for(let i=0;i<upto;i++){
+    const q=VQ[VS.game.qs[i]];if(!q)continue;
+    ['natan','pino'].forEach(w=>{
+      const a=(VS.ans['q'+i]||{})[w];
+      if(!a)bank.push({w,q:q.q,type:'tm'});
+      else if(!a.ok)bank.push({w,q:q.q,wrong:q.o[a.c],right:q.o[0],type:'wr'});
+    });
+  }
+  if(!bank.length)return 'שניכם בלי טעויות עד עכשיו. מלחיץ. מי יישבר ראשון? 👀';
+  const m=bank[Math.floor(Math.random()*bank.length)];
+  const n=vsName(m.w),f=m.w==='pino';
+  if(m.type==='tm'){
+    const T=['<b>'+n+'</b> פשוט לא '+(f?'ענתה':'ענה')+' בזמן על ״'+m.q+'״. '+(f?'נרדמה?':'נרדם?')+' 😴',
+             'דיווח חי: <b>'+n+'</b> ראה את ״'+m.q+'״ ובחר'+(f?'ה':'')+' בשתיקה 🦗'];
+    return T[Math.floor(Math.random()*T.length)];
+  }
+  const T=['חשיפה 📢: <b>'+n+'</b> '+(f?'בטוחה':'בטוח')+' ש״'+m.q+'״ — התשובה היא ״'+m.wrong+'״. כן. באמת.',
+           '<b>'+n+'</b> ענ'+(f?'תה':'ה')+' ״'+m.wrong+'״ על ״'+m.q+'״. התשובה: ״'+m.right+'״. אין מילים 🤦',
+           'רגע דומע: ״'+m.q+'״… ו־<b>'+n+'</b> הלכ'+(f?'ה':'')+' על ״'+m.wrong+'״ 🕯️'];
+  return T[Math.floor(Math.random()*T.length)];
+}
 function renderBreak(roundIdx){
   if(VS.phase!=='b'+roundIdx){
     VS.phase='b'+roundIdx;SFX.round();
     const me=VS.score(VS.who),her=VS.score(VS.who==='natan'?'pino':'natan');
-    const opp=NAMES[VS.who==='natan'?'pino':'natan'];
     const msg=me>her?'יתרון אצלך! שומרים על הקצב.':(her>me?GEN[VS.who==='natan'?'pino':'natan'].lead:'תיקו! הכול פתוח.');
-    VS.el().innerHTML='<div class="vs-center"><h2 class="vs-title">סוף סבב '+roundIdx+'</h2>'+
-      '<p class="vs-final" style="font-size:56px">'+me+' : '+her+'</p>'+
-      '<p class="vs-sub">'+msg+'<br>סבב '+(roundIdx+1)+' מתחיל עוד רגע…</p></div>';
+    const SP=['🤹','🎭','🥁','🎪','🌀','🎯'];
+    VS.el().innerHTML='<div class="vs-center"><div class="vs-spin">'+SP[roundIdx%SP.length]+'</div>'+
+      '<h2 class="vs-title" style="font-size:28px">סוף סבב '+roundIdx+'</h2>'+
+      '<p class="vs-final" style="font-size:52px">'+me+' : '+her+'</p>'+
+      '<p class="vs-sub" style="margin-bottom:0">'+msg+'</p>'+
+      '<p class="vs-expose">'+vsExposeJoke(roundIdx*VS_PER_ROUND)+'</p>'+
+      '<p class="vs-sub" style="margin-top:12px">סבב '+(roundIdx+1)+' מתחיל עוד רגע…</p></div>';
   }
 }
 function vsMistakes(w){
@@ -1513,16 +1552,28 @@ function renderEnd(){
     '<p class="vs-final">'+me+' : '+her+'</p>'+
     '<p class="vs-sub">'+NAMES[VS.who]+' מול '+NAMES[opp]+' · '+VS_N+' שאלות</p>'+
     '<p class="vs-roast">'+roast+'</p>'+
-    '<button class="vs-btn" onclick="vsRematch()">משחק חוזר — נקמה 🔄</button>'+
+    '<p id="vs-again-note" style="min-height:20px;color:var(--tq);font-weight:700;font-size:15px;margin:0 0 8px"></p>'+
+    '<button class="vs-btn" id="vs-again-btn" onclick="vsRematch()">משחק חוזר — נקמה 🔄</button>'+
     '<button class="vs-ghost" onclick="VS.leave();show(\'home\')">חזרה לתרגול</button>'+
     vsRevSection(VS.who,'me')+vsRevSection(opp,'her')+
     '</div>';
   setNav('versus');
+  vsAgainUI();
 }
 function vsRematch(){
   SFX.tap();
-  if(!VS.db)return;
-  VS.db.ref('versus/game').remove(); /* both clients fall back to lobby; host auto-creates a fresh game */
+  if(!VS.db||!VS.game)return;
+  VS.db.ref('versus/game/again/'+VS.who).set(true);
+  VS.again[VS.who]=true;vsAgainUI();
+}
+function vsAgainUI(){
+  if(VS.phase!=='end')return;
+  const opp=VS.who==='natan'?'pino':'natan';
+  const a=VS.again||{};
+  const btn=document.getElementById('vs-again-btn');
+  const note=document.getElementById('vs-again-note');
+  if(btn&&a[VS.who]){btn.disabled=true;btn.style.opacity=.6;btn.textContent=a[opp]?'מתחילים! ⚡':'ממתין ל'+NAMES[opp]+'…'}
+  if(note)note.textContent=(a[opp]&&!a[VS.who])?NAMES[opp]+' '+(opp==='pino'?'רוצה':'רוצה')+' נקמה! לוחצים? 🔥':'';
 }
 function confettiVs(){
   const w=document.getElementById('confetti');w.innerHTML='';
