@@ -365,6 +365,120 @@ body.has-nav .fx-bar{bottom:calc(88px + env(safe-area-inset-bottom))}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* ===== portals (home) ===== */
+.portals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 2px}
+.portal{position:relative;border-radius:18px;padding:13px 6px 11px;display:flex;flex-direction:column;align-items:center;gap:3px;border:1px solid transparent;transition:transform .15s ease}
+.portal:active{transform:scale(.95)}
+.portal .pic{font-size:22px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.55))}
+.portal b{font-size:13px;font-weight:600;letter-spacing:.01em}
+.portal small{font-size:10.5px;opacity:.72;line-height:1.2}
+.portal.daily{background:linear-gradient(165deg,#3A1226,#1D0913);border-color:rgba(255,110,160,.34);color:#FFD9E6;box-shadow:0 14px 34px -16px rgba(255,90,150,.5)}
+.portal.vsx{background:linear-gradient(165deg,#0E2129,#091019);border-color:rgba(45,212,191,.3);color:#BFF3EA;box-shadow:0 14px 34px -16px rgba(45,212,191,.35)}
+.portal.pth{background:linear-gradient(165deg,#11291B,#08150D);border-color:rgba(88,214,148,.3);color:#CDEFD9;box-shadow:0 14px 34px -16px rgba(88,214,148,.35)}
+.portal .dot{position:absolute;top:9px;left:9px;width:9px;height:9px;border-radius:50%;background:#FF5A93;box-shadow:0 0 10px #FF5A93;animation:dotPulse 1.5s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.65}}
+
+/* ===== per-screen atmospheres ===== */
+body.thm-daily{background:#170812}
+body.thm-daily .light{background:radial-gradient(52% 36% at 50% 18%,rgba(255,120,170,.15),rgba(255,120,170,.04) 55%,transparent 72%),radial-gradient(120% 90% at 50% 110%,transparent 40%,rgba(0,0,0,.55) 100%)}
+body.thm-daily .dust i{background:rgba(255,140,180,.55)}
+body.thm-paths{background:#08130C}
+body.thm-paths .light{background:radial-gradient(52% 36% at 50% 18%,rgba(96,224,156,.12),rgba(96,224,156,.035) 55%,transparent 72%),radial-gradient(120% 90% at 50% 110%,transparent 40%,rgba(0,0,0,.55) 100%)}
+body.thm-paths .dust i{background:rgba(120,224,168,.5)}
+body.thm-stats{background:#0B0F16}
+body.thm-stats .light{background:radial-gradient(52% 36% at 50% 18%,rgba(140,180,255,.11),rgba(140,180,255,.03) 55%,transparent 72%),radial-gradient(120% 90% at 50% 110%,transparent 40%,rgba(0,0,0,.55) 100%)}
+body.thm-stats .dust i{background:rgba(150,190,255,.5)}
+
+/* ===== stats — ice restyle ===== */
+#stats .bar h1{color:#AFC6E8}
+#stats .stat{background:linear-gradient(172deg,#121826,#0E1420);border-color:#1D2740}
+#stats .stat b{color:#8FC1FF;text-shadow:0 0 26px rgba(110,170,255,.4)}
+#stats .stat span{color:#7C8AAD}
+#stats .stats h3,#stats h3{color:#7C8AAD}
+#stats .catrow .track{background:#141B2B}
+#stats .catrow .track i{background:linear-gradient(90deg,#3E6ED8,#7FB4FF)}
+#stats .catrow .n{color:#7C8AAD}
+#stats .weak{background:linear-gradient(172deg,#121826,#0E1420);border-color:#1D2740}
+#stats .weak p{color:#7C8AAD}
+#stats .gold-btn{background:linear-gradient(165deg,#9CC5FF,#5B8EE8 45%,#3E6ED8)!important;color:#081020!important}
+#stats .secondary{border-color:#233151;color:#AFC6E8}
+#stats .tiny{color:#5B6786}
+
+/* ===== daily — love ===== */
+.dy .bar h1{color:#FFA9C8}
+.dy-hearts{position:absolute;inset:-10px;z-index:0;pointer-events:none;overflow:hidden}
+.dy-hearts i{position:absolute;bottom:-8%;font-style:normal;color:rgba(255,110,160,.16);filter:blur(1px);animation:heartUp linear infinite}
+.dy-hearts i:nth-child(1){left:8%;font-size:34px;animation-duration:13s}
+.dy-hearts i:nth-child(2){left:26%;font-size:20px;animation-duration:17s;animation-delay:3s}
+.dy-hearts i:nth-child(3){left:47%;font-size:44px;animation-duration:21s;animation-delay:1s;color:rgba(255,90,150,.1)}
+.dy-hearts i:nth-child(4){left:66%;font-size:24px;animation-duration:15s;animation-delay:6s}
+.dy-hearts i:nth-child(5){left:84%;font-size:30px;animation-duration:19s;animation-delay:4s}
+.dy-hearts i:nth-child(6){left:58%;font-size:16px;animation-duration:12s;animation-delay:8s}
+@keyframes heartUp{0%{transform:translateY(0) rotate(-6deg);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-105vh) rotate(8deg);opacity:0}}
+#daily>*{position:relative;z-index:1}
+.dy-hero{text-align:center;margin-top:2vh}
+.dy-names{font:500 30px/1.2 "Frank Ruhl Libre",serif;background:linear-gradient(105deg,#FFE3EE 25%,#FF9EC4 60%,#FF6FA5);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 0 6px}
+.dy-date{font-size:14px;color:#B8798F;margin:0 0 18px}
+.dy-sub{font-size:15px;color:#D9A9BC;line-height:1.6;margin:0 auto 22px;max-width:300px}
+.dy-start{width:100%;background:linear-gradient(160deg,#FF9EC4,#FF5A93 55%,#D63B77);color:#2A0714;font-weight:700;font-size:17px;border-radius:16px;padding:15px;box-shadow:0 16px 40px -14px rgba(255,90,150,.65)}
+.dy-pickbtn{width:100%;background:#2A1420;border:1px solid #4A2438;border-radius:16px;padding:15px;font-size:16.5px;color:#FFD9E6;margin:0 0 10px}
+.dy-prog{display:flex;justify-content:center;gap:7px;margin:2px 0 16px}
+.dy-prog i{font-style:normal;font-size:15px;color:#3C1B2B;transition:.2s}
+.dy-prog i.f{color:#FF5A93;text-shadow:0 0 12px rgba(255,90,150,.7)}
+.dy-prog i.x{color:#6E3B4D}
+.dy-qcard{background:linear-gradient(170deg,#261019,#170A10);border:1px solid rgba(255,120,170,.24);border-radius:20px;padding:20px 18px;box-shadow:0 26px 60px -26px rgba(0,0,0,.9),0 0 44px -18px rgba(255,90,150,.2);animation:cardIn .3s cubic-bezier(.22,1.2,.36,1)}
+.dy-qcat{font-size:12px;color:#E886AC;letter-spacing:.14em;margin:0 0 8px}
+.dy-q{font:500 21.5px/1.4 "Frank Ruhl Libre",serif;color:#FFEAF2;margin:0 0 16px}
+.dy-opt{display:block;width:100%;text-align:right;background:#2C1521;border:1px solid #442133;border-radius:14px;padding:13px 14px;margin:0 0 9px;font-size:16px;color:#F6DEE9;transition:.15s}
+.dy-opt:active{transform:scale(.985)}
+.dy-opt.ok{background:#173224;border-color:#4CAF7D;color:#D9FFE9}
+.dy-opt.no{background:#3E1420;border-color:#C9536B;color:#FFC3CF}
+.dy-opt:disabled{opacity:.55}
+.dy-opt.ok:disabled,.dy-opt.no:disabled{opacity:1}
+.dy-score{text-align:center;margin:2vh 0 8px}
+.dy-score .hg{font-size:44px;line-height:1;filter:drop-shadow(0 8px 24px rgba(255,90,150,.5))}
+.dy-score b{display:block;font:500 42px/1.1 "Frank Ruhl Libre",serif;color:#FFEAF2;margin:8px 0 2px}
+.dy-score span{font-size:14px;color:#B8798F}
+.dy-love{font:500 17.5px/1.55 "Frank Ruhl Libre",serif;color:#FFB9D2;text-align:center;margin:12px auto 18px;max-width:320px}
+.dy-panel{background:linear-gradient(172deg,#241019,#170A10);border:1px solid rgba(255,120,170,.2);border-radius:18px;padding:16px;margin:0 0 12px}
+.dy-panel h4{margin:0 0 10px;font:500 15px "Heebo";color:#E886AC;letter-spacing:.04em}
+.dy-wait{text-align:center;color:#D9A9BC;font-size:15px;line-height:1.6}
+.dy-wait .env{font-size:30px;display:block;margin-bottom:8px;animation:dotPulse 1.8s ease-in-out infinite}
+.dy-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#D9A9BC;padding:7px 0;border-bottom:1px dashed #331824}
+.dy-row:last-child{border-bottom:0}
+.dy-row .qt{flex:1;line-height:1.35}
+.dy-row .mk{flex:none;width:44px;text-align:center;font-size:15px}
+.dy-streak{display:inline-flex;align-items:center;gap:6px;background:#2A1420;border:1px solid #4A2438;border-radius:999px;padding:7px 14px;font-size:13.5px;color:#FFD9E6;margin:4px 0 14px}
+.dy-vs-head{display:flex;justify-content:space-around;align-items:center;margin:0 0 6px}
+.dy-vs-head .pl b{display:block;font:500 30px/1 "Frank Ruhl Libre",serif;color:#FFEAF2}
+.dy-vs-head .pl{text-align:center;font-size:13px;color:#B8798F}
+.dy-vs-head .ht{font-size:22px}
+
+/* ===== paths — expedition ===== */
+.pth .bar h1{color:#9FE0B8}
+.pth-sub{font-size:14.5px;color:#8FBFA0;line-height:1.6;margin:0 0 18px}
+.pth-card{display:block;width:100%;text-align:right;background:linear-gradient(168deg,#122A1B,#0B1A10);border:1px solid rgba(88,214,148,.24);border-radius:18px;padding:16px;margin:0 0 12px;color:#DFF5E7;box-shadow:0 18px 44px -20px rgba(0,0,0,.8);transition:transform .15s}
+.pth-card:active{transform:scale(.98)}
+.pth-card .hd{display:flex;align-items:center;gap:10px;margin:0 0 6px}
+.pth-card .ico{font-size:24px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+.pth-card b{font:500 19px/1.25 "Frank Ruhl Libre",serif}
+.pth-card small{display:block;font-size:13px;color:#8FBFA0;margin:0 0 12px;line-height:1.45}
+.pth-track{height:7px;background:#132218;border-radius:4px;overflow:hidden}
+.pth-track i{display:block;height:100%;background:linear-gradient(90deg,#2FA968,#6FE8A5);border-radius:4px;transition:width .7s cubic-bezier(.22,1,.36,1)}
+.pth-st{font-size:12px;color:#7FBF97;margin:7px 0 0}
+.pr-chap{font-size:12px;color:#7FBF97;letter-spacing:.16em;margin:2px 0 10px;text-align:center}
+.pr-story{background:rgba(88,214,148,.08);border:1px solid rgba(88,214,148,.2);border-radius:16px;padding:15px 15px 13px;color:#D6EEDC;font-size:15.5px;line-height:1.7;margin:0 0 14px}
+.pr-story b{font:500 17px "Frank Ruhl Libre",serif;color:#B9F0CE;display:block;margin:0 0 5px}
+.pr-next{width:100%;background:linear-gradient(160deg,#6FE8A5,#2FA968 60%,#1F7A4A);color:#04150B;font-weight:700;font-size:16.5px;border-radius:16px;padding:14px;margin-top:14px;box-shadow:0 16px 38px -14px rgba(88,214,148,.55);animation:revealIn .35s ease}
+.pr-dots{display:flex;justify-content:center;gap:5px;margin:12px 0 4px}
+.pr-dots i{width:7px;height:7px;border-radius:50%;background:#173321}
+.pr-dots i.f{background:#6FE8A5;box-shadow:0 0 8px rgba(111,232,165,.7)}
+.pth-done{text-align:center;margin-top:4vh}
+.pth-done .big{font-size:52px;margin:0 0 10px}
+.pth-done h2{font:500 26px/1.3 "Frank Ruhl Libre",serif;color:#DFF5E7;margin:0 0 8px}
+.pth-done p{color:#8FBFA0;font-size:15px;line-height:1.6;margin:0 0 22px}
+
 </style>
 </head>
 <body>
@@ -400,6 +514,11 @@ body.has-nav .fx-bar{bottom:calc(88px + env(safe-area-inset-bottom))}
     <p class="home-sub" id="home-sub"></p>
     <button class="primary" id="main-btn" onclick="startSession()">התחל תרגול</button>
     <button class="secondary" id="boost-btn" onclick="startBoost()" hidden>חיזוק נקודות חלשות</button>
+    <div class="portals">
+      <button class="portal daily" onclick="SFX.tap();show('daily')"><i class="dot" id="pt-daily-dot" hidden></i><span class="pic">💘</span><b>אתגר יומי</b><small>נינו ♥ פוניטה</small></button>
+      <button class="portal vsx" onclick="SFX.tap();openVersus()"><span class="pic">⚔️</span><b>ראש בראש</b><small>קרב בזמן אמת</small></button>
+      <button class="portal pth" onclick="SFX.tap();show('paths')"><span class="pic">🧭</span><b>מסלולי למידה</b><small>נושא, צעד־צעד</small></button>
+    </div>
     <p class="chips-lbl">אורך סבב</p>
     <div class="chips" id="len-chips"></div>
     <p class="chips-lbl" id="new-lbl">שאלות חדשות בכל סבב</p>
@@ -537,6 +656,43 @@ body.has-nav .fx-bar{bottom:calc(88px + env(safe-area-inset-bottom))}
 </section>
 
 </div>
+<!-- DAILY -->
+<section id="daily" class="screen dy">
+  <div class="dy-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div>
+  <div class="bar">
+    <button class="icon-btn" onclick="SFX.tap();show('home')" aria-label="חזרה">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <h1>האתגר היומי</h1>
+    <span style="width:40px"></span>
+  </div>
+  <div id="dy-body"></div>
+</section>
+
+<!-- PATHS -->
+<section id="paths" class="screen pth">
+  <div class="bar">
+    <button class="icon-btn" onclick="SFX.tap();show('home')" aria-label="חזרה">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <h1>מסלולי למידה</h1>
+    <span style="width:40px"></span>
+  </div>
+  <p class="pth-sub">כל מסלול בונה נושא אחד מהיסוד — סיפור קצר, ואז שאלה שמקבעת. ההתקדמות נשמרת.</p>
+  <div id="pth-list"></div>
+</section>
+
+<section id="pathrun" class="screen pth">
+  <div class="bar">
+    <button class="icon-btn" onclick="SFX.tap();show('paths')" aria-label="חזרה">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <h1 id="pr-title"></h1>
+    <span style="width:40px"></span>
+  </div>
+  <div id="pr-body"></div>
+</section>
+
 <nav class="nav" id="nav" hidden>
   <button class="vsb" id="nav-vs" onclick="SFX.tap();openVersus()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/><path d="M9.5 6.5 21 18v3h-3L6.5 9.5"/><path d="M5 14l4 4"/><path d="M3 19l2 2"/></svg>
@@ -651,12 +807,17 @@ function setNav(id){
 }
 function show(id){
   setNav(id);
+  document.body.classList.toggle('thm-daily',id==='daily');
+  document.body.classList.toggle('thm-paths',id==='paths'||id==='pathrun');
+  document.body.classList.toggle('thm-stats',id==='stats');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById(id).classList.add('on');
   window.scrollTo(0,0);
-  if(id==='home')renderHome();
+  if(id==='home'){renderHome();dyDot();}
   if(id==='stats')renderStats();
   if(id==='missed')renderMissed();
+  if(id==='daily')renderDaily();
+  if(id==='paths')renderPaths();
 }
 
 /* ================= HOME ================= */
@@ -1662,6 +1823,158 @@ if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
 }
 
 load().then(()=>{renderHome();setNav('home')});
+
+/* ================= DAILY — האתגר של נינו ופוניטה ================= */
+const DY_TOTAL=10;
+S.dy=S.dy||null; S.pt=S.pt||{};
+function dyKey(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dyHash(str){let h=9;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),387420489)}return (h^h>>>9)>>>0}
+function dyQs(){return sshuffle([...Array(VQ.length).keys()],dyHash('daily-'+dyKey())).slice(0,DY_TOTAL)}
+function dyOrd(i){return sshuffle([0,1,2,3],dyHash('ord-'+dyKey())+i*131+7)}
+function dyDot(){const el=document.getElementById('pt-daily-dot');if(el)el.hidden=!!(S.dy&&S.dy.date===dyKey()&&S.dy.done)}
+function dyHebDate(){return new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'})}
+const DY_WIN={natan:["נינו לקח את היום 👑 פוניטה — מחר את חוזרת בגדול 💘","הכתר של היום אצל נינו. הלב? נשאר חצי־חצי 💞","נינו ניצח בידע — פוניטה מנצחת בכל השאר 🥰","איזה מוח יש לנינו! פוניטה, לפחות בחרת נכון 😏💗","נינו חכם היום. פוניטה יפה תמיד. תיקו בחיים 💑"],
+pino:["פוניטה לקחה את היום 👑 נינו — מחר אתה חוזר בגדול 💘","הכתר של היום אצל פוניטה. הלב? נשאר חצי־חצי 💞","פוניטה ניצחה בידע — נינו מנצח בכל השאר 🥰","איזה מוח יש לפוניטה! נינו, לפחות בחרת נכון 😏💗","פוניטה חכמה היום. נינו חמוד תמיד. תיקו בחיים 💑"]};
+const DY_TIE=["תיקו מושלם — מוחות תאומים 🧠💞","אותו ציון בדיוק. זה גורל 🔮❤️","שוויון — בדיוק כמו שזוג צריך 💑","תיקו! הפרס: דייט 🍷💘"];
+let DYRUN=null, DYREF=null;
+function dyEnsure(){const t=dyKey();if(!S.dy||S.dy.date!==t){S.dy={date:t,res:[],done:0,sync:0};save()}}
+function renderDaily(){
+  const b=document.getElementById('dy-body');
+  if(typeof VQ==='undefined'||!VQ.length){b.innerHTML='<p class="dy-sub" style="margin-top:6vh">גרסת השאלות ישנה — רענן את האפליקציה כשיש אינטרנט.</p>';return}
+  if(!S.vsWho){
+    b.innerHTML='<div class="dy-hero"><p class="dy-names">מי כאן? 💕</p><p class="dy-sub">פעם אחת בלבד — כדי שנדע מול מי משווים.</p>'+
+      '<button class="dy-pickbtn" onclick="SFX.tap();S.vsWho=\'natan\';save();renderDaily()">אני נינו</button>'+
+      '<button class="dy-pickbtn" onclick="SFX.tap();S.vsWho=\'pino\';save();renderDaily()">אני פוניטה</button></div>';
+    return;
+  }
+  dyEnsure();
+  if(S.dy.done){dyResult();return}
+  if(DYRUN&&DYRUN.date===S.dy.date&&S.dy.res.length>0&&S.dy.res.length<DY_TOTAL){dyQuestion();return}
+  DYRUN={date:S.dy.date,qs:dyQs()};
+  if(S.dy.res.length>0&&S.dy.res.length<DY_TOTAL){dyQuestion();return}
+  b.innerHTML='<div class="dy-hero"><p class="dy-names">נינו ♥ פוניטה</p><p class="dy-date">'+dyHebDate()+'</p>'+
+    '<p class="dy-sub">10 שאלות. אותן שאלות בדיוק גם אצל '+NAMES[S.vsWho==='natan'?'pino':'natan']+' — כל אחד עונה מתי שמתאים לו, ובסוף משווים 💘</p>'+
+    '<button class="dy-start" onclick="SFX.tap();dyStart()">מתחילים 💘</button></div>';
+}
+function dyStart(){dyEnsure();if(!DYRUN||DYRUN.date!==S.dy.date)DYRUN={date:S.dy.date,qs:dyQs()};dyQuestion()}
+function dyProg(){let h='';for(let k=0;k<DY_TOTAL;k++){const r=S.dy.res[k];h+='<i class="'+(r===1?'f':(r===0?'x':''))+'">♥</i>'}return '<div class="dy-prog">'+h+'</div>'}
+function dyQuestion(){
+  const b=document.getElementById('dy-body'), i=S.dy.res.length, q=VQ[DYRUN.qs[i]], ord=dyOrd(i);
+  b.innerHTML=dyProg()+'<div class="dy-qcard"><p class="dy-qcat">'+q.c+' · שאלה '+(i+1)+'/'+DY_TOTAL+'</p><p class="dy-q">'+q.q+'</p>'+
+    ord.map((oi,k)=>'<button class="dy-opt" data-oi="'+oi+'" onclick="dyPick(this,'+i+')">'+q.o[oi]+'</button>').join('')+'</div>';
+}
+function dyPick(btn,i){
+  if(S.dy.res.length!==i)return;
+  const ok=btn.dataset.oi==='0';
+  document.querySelectorAll('.dy-opt').forEach(x=>{x.disabled=true;if(x.dataset.oi==='0')x.classList.add('ok')});
+  if(!ok)btn.classList.add('no');
+  if(ok){SFX.ok&&SFX.ok()}else{SFX.no&&SFX.no()}
+  S.dy.res.push(ok?1:0);save();
+  setTimeout(()=>{if(S.dy.res.length>=DY_TOTAL){S.dy.done=1;save();dyDot();dySync();dyResult()}else dyQuestion()},950);
+}
+function dySync(){
+  if(!S.dy.done||S.dy.sync)return;
+  loadFB().then(db=>{
+    db.ref('daily/'+S.dy.date+'/'+S.vsWho).set({s:S.dy.res.reduce((a,b)=>a+b,0),a:S.dy.res.join(''),ts:firebase.database.ServerValue.TIMESTAMP})
+      .then(()=>{S.dy.sync=1;save();const n=document.getElementById('dy-sync-note');if(n)n.textContent=''});
+  }).catch(()=>{});
+}
+function dyResult(){
+  const b=document.getElementById('dy-body'), me=S.dy.res.reduce((a,c)=>a+c,0), opp=S.vsWho==='natan'?'pino':'natan';
+  b.innerHTML=dyProg()+
+    '<div class="dy-score"><span class="hg">💘</span><b>'+me+'/'+DY_TOTAL+'</b><span>הציון שלך היום, '+NAMES[S.vsWho]+'</span></div>'+
+    '<p class="dy-sub" id="dy-sync-note" style="margin:0 auto 10px">'+(S.dy.sync?'':'מסנכרן… אם אין אינטרנט, זה יעלה בפתיחה הבאה')+'</p>'+
+    '<div class="dy-panel" id="dy-opp"><h4>'+NAMES[opp]+'</h4><div class="dy-wait"><span class="env">💌</span>עוד לא שיחק/ה היום — ברגע שתסיים, תראו כאן את ההשוואה</div></div>'+
+    '<div id="dy-streak-wrap" style="text-align:center"></div>'+
+    '<button class="secondary" onclick="SFX.tap();show(\'home\')" style="margin-top:6px">חזרה הביתה</button>';
+  dySync();
+  loadFB().then(db=>{
+    if(DYREF)DYREF.off();
+    DYREF=db.ref('daily/'+S.dy.date+'/'+opp);
+    DYREF.on('value',sn=>{const v=sn.val();if(v)dyCompare(v);});
+    db.ref('daily').orderByKey().limitToLast(60).once('value').then(sn=>dyStreak(sn.val()||{}));
+  }).catch(()=>{});
+}
+function dyCompare(v){
+  const el=document.getElementById('dy-opp');if(!el)return;
+  const me=S.dy.res.reduce((a,c)=>a+c,0), opp=S.vsWho==='natan'?'pino':'natan';
+  const os=v.s|0, oa=(v.a||'').split('').map(Number);
+  const qs=DYRUN&&DYRUN.date===S.dy.date?DYRUN.qs:dyQs();
+  let line;
+  const R=srand(dyHash(S.dy.date+'-'+me+'-'+os));
+  if(me===os)line=DY_TIE[Math.floor(R()*DY_TIE.length)];
+  else{const w=(S.vsWho==='natan')===(me>os)?'natan':'pino';line=DY_WIN[w][Math.floor(R()*DY_WIN[w].length)]}
+  let rows='';
+  for(let i=0;i<DY_TOTAL;i++){
+    const qt=(VQ[qs[i]].q.length>52?VQ[qs[i]].q.slice(0,50)+'…':VQ[qs[i]].q);
+    rows+='<div class="dy-row"><span class="mk">'+(S.dy.res[i]?'💚':'✗')+'</span><span class="qt">'+qt+'</span><span class="mk">'+(oa[i]?'💚':'✗')+'</span></div>';
+  }
+  el.innerHTML='<div class="dy-vs-head"><div class="pl"><b>'+me+'</b>'+NAMES[S.vsWho]+'</div><span class="ht">💞</span><div class="pl"><b>'+os+'</b>'+NAMES[opp]+'</div></div>'+
+    '<p class="dy-love">'+line+'</p>'+
+    '<div class="dy-row" style="border-bottom:1px solid #331824;color:#E886AC;font-size:12px"><span class="mk">'+NAMES[S.vsWho]+'</span><span class="qt" style="text-align:center">השאלה</span><span class="mk">'+NAMES[opp]+'</span></div>'+rows;
+}
+function dyStreak(all){
+  const wrap=document.getElementById('dy-streak-wrap');if(!wrap)return;
+  let n=0,d=new Date();
+  while(true){const k=dyKey(d);const e=all[k];if(e&&e.natan&&e.pino){n++;d.setDate(d.getDate()-1)}else{if(k===dyKey()){d.setDate(d.getDate()-1);continue}break}}
+  if(n>0)wrap.innerHTML='<span class="dy-streak">🔥 רצף משותף: '+n+' '+(n===1?'יום':'ימים')+' של אהבה וידע</span>';
+}
+
+/* ================= PATHS — מסלולי למידה ================= */
+let PR={id:null,i:0,rev:false,hint:false};
+function pathById(id){return PATHS.find(p=>p.id===id)}
+function renderPaths(){
+  const l=document.getElementById('pth-list');
+  if(typeof PATHS==='undefined'){l.innerHTML='<p class="pth-sub">גרסת התוכן ישנה — רענן את האפליקציה כשיש אינטרנט.</p>';return}
+  l.innerHTML=PATHS.map(p=>{
+    const done=S.pt[p.id]||0, tot=p.steps.length, pc=Math.round(done/tot*100);
+    const st=done>=tot?'המסע הושלם ✓ — אפשר לעבור שוב':(done>0?'תחנה '+(done+1)+' מתוך '+tot:'עוד לא יצאת לדרך');
+    return '<button class="pth-card" onclick="SFX.tap();openPath(\''+p.id+'\')"><div class="hd"><span class="ico">'+p.icon+'</span><b>'+p.title+'</b></div>'+
+      '<small>'+p.sub+'</small><div class="pth-track"><i style="width:'+pc+'%"></i></div><p class="pth-st">'+st+'</p></button>';
+  }).join('');
+}
+function openPath(id){
+  const p=pathById(id), done=S.pt[id]||0;
+  PR={id:id,i:done>=p.steps.length?0:done,rev:false,hint:false};
+  document.getElementById('pr-title').textContent=p.title;
+  show('pathrun');prStep();
+}
+function prStep(){
+  const p=pathById(PR.id), st=p.steps[PR.i], b=document.getElementById('pr-body');
+  PR.rev=false;PR.hint=false;
+  let dots='';for(let k=0;k<p.steps.length;k++)dots+='<i class="'+(k<=PR.i?'f':'')+'"></i>';
+  b.innerHTML='<div class="pr-dots">'+dots+'</div><p class="pr-chap">תחנה '+(PR.i+1)+' מתוך '+p.steps.length+'</p>'+
+    '<div class="pr-story"><b>'+st.t+'</b>'+st.txt+'</div>'+
+    '<div class="card"><p class="cat" style="font-size:12px;color:#8A7B58;letter-spacing:.12em;margin:0 0 8px">עצור וחשוב</p>'+
+    '<p style="font:500 20px/1.45 \'Frank Ruhl Libre\',serif;margin:0">'+st.q+'</p>'+
+    '<div class="reveal" id="pr-hint" hidden><p class="lbl">רמז</p><p>'+st.h+'</p></div>'+
+    '<div class="reveal ans" id="pr-ans" hidden><p class="lbl">תשובה</p><p>'+st.a+'</p>'+(st.m?'<p class="more">'+st.m+'</p>':'')+'</div>'+
+    '<div class="rowbtns" id="pr-btns" style="margin-top:16px"><button onclick="SFX.tap();prHint()">רמז</button><button class="amber" onclick="SFX.tap();prReveal()">תשובה</button></div></div>'+
+    '<div id="pr-nextwrap"></div>';
+  window.scrollTo(0,0);
+}
+function prHint(){document.getElementById('pr-hint').hidden=false}
+function prReveal(){
+  if(PR.rev)return;PR.rev=true;
+  document.getElementById('pr-ans').hidden=false;
+  document.getElementById('pr-btns').style.display='none';
+  const p=pathById(PR.id), last=PR.i>=p.steps.length-1;
+  document.getElementById('pr-nextwrap').innerHTML='<button class="pr-next" onclick="SFX.tap();prNext()">'+(last?'סיום המסע 🏁':'לתחנה הבאה ←')+'</button>';
+}
+function prNext(){
+  const p=pathById(PR.id);
+  if(PR.i+1>(S.pt[PR.id]||0)){S.pt[PR.id]=PR.i+1;save()}
+  if(PR.i>=p.steps.length-1){S.pt[PR.id]=p.steps.length;save();prDone();return}
+  PR.i++;prStep();
+}
+function prDone(){
+  const p=pathById(PR.id), b=document.getElementById('pr-body');
+  confetti();
+  b.innerHTML='<div class="pth-done"><p class="big">'+p.icon+'</p><h2>השלמת את ״'+p.title+'״</h2>'+
+    '<p>'+p.steps.length+' תחנות של ידע שעכשיו אצלך בראש.<br>שווה לחזור אליו בעוד שבוע — חזרה מקבעת.</p>'+
+    '<button class="pr-next" onclick="SFX.tap();show(\'paths\')">חזרה למסלולים</button></div>';
+}
+
 </script>
 </body>
 </html>
