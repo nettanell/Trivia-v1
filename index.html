@@ -410,7 +410,7 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 .dy-hearts i:nth-child(5){left:84%;font-size:30px;animation-duration:19s;animation-delay:4s}
 .dy-hearts i:nth-child(6){left:58%;font-size:16px;animation-duration:12s;animation-delay:8s}
 @keyframes heartUp{0%{transform:translateY(0) rotate(-6deg);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-105vh) rotate(8deg);opacity:0}}
-#daily>*{position:relative;z-index:1}
+#daily>*:not(.dy-hearts){position:relative;z-index:1}
 .dy-hero{text-align:center;margin-top:2vh}
 .dy-names{font:500 30px/1.2 "Frank Ruhl Libre",serif;background:linear-gradient(105deg,#FFE3EE 25%,#FF9EC4 60%,#FF6FA5);-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 0 6px}
 .dy-date{font-size:14px;color:#B8798F;margin:0 0 18px}
@@ -644,7 +644,6 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
   <div class="fx-chatcol" id="fx-chatcol"></div>
 </section>
 
-</div>
 <!-- DAILY -->
 <section id="daily" class="screen dy">
   <div class="dy-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div>
@@ -681,6 +680,7 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
   </div>
   <div id="pr-body"></div>
 </section>
+</div>
 
 <nav class="nav" id="nav" hidden>
   <button class="trv" id="nav-trv" onclick="navGo('home')">
