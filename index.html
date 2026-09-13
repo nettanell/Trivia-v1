@@ -473,11 +473,175 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 .pth-done h2{font:500 26px/1.3 "Frank Ruhl Libre",serif;color:#DFF5E7;margin:0 0 8px}
 .pth-done p{color:#8FBFA0;font-size:15px;line-height:1.6;margin:0 0 22px}
 
+
+/* ===== versus v19 — סוגי שאלות אקטיביים ===== */
+.vs-type{font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin-right:8px;vertical-align:1px}
+.vs-type.t-o{background:rgba(143,211,254,.14);color:var(--sky);border:1px solid rgba(143,211,254,.4)}
+.vs-type.t-s{background:rgba(45,212,191,.12);color:var(--tq-hi);border:1px solid rgba(45,212,191,.4)}
+.vs-type.t-n{background:rgba(255,196,110,.12);color:#FFC46E;border:1px solid rgba(255,196,110,.4)}
+.vs-type.t-p{background:rgba(196,165,250,.14);color:var(--lil);border:1px solid rgba(196,165,250,.42)}
+.vs-type.t-d{background:linear-gradient(120deg,rgba(255,196,110,.2),rgba(196,165,250,.2));color:#FFD9A0;border:1px solid rgba(255,196,110,.5)}
+.vs-inst{font-size:13px;color:var(--vdim);margin:-8px 0 14px;line-height:1.5}
+.vs-qimg{width:100%;max-height:210px;object-fit:cover;border-radius:14px;margin:0 0 14px;display:block;background:#0C0E1A;border:1px solid var(--vhair)}
+.vs-qcard.act .vs-q{min-height:0;margin-bottom:14px}
+.vs-actrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
+.vs-send{flex:1;padding:13px;border-radius:13px;font-weight:700;font-size:16px;color:#04211D;background:linear-gradient(160deg,var(--tq-hi),var(--tq) 60%,#17A08D);opacity:.35;transition:opacity .2s,transform .12s}
+.vs-send.on,.vs-send:not(:disabled){opacity:1}
+.vs-send.on{animation:sendPulse 1.1s ease-in-out infinite}
+.vs-send:active{transform:scale(.96)}
+@keyframes sendPulse{0%,100%{box-shadow:0 0 0 0 rgba(45,212,191,.45)}55%{box-shadow:0 0 0 12px rgba(45,212,191,0)}}
+.vs-clear{flex:none;padding:12px 16px;border-radius:13px;background:rgba(255,255,255,.05);border:1px solid var(--vhair);color:var(--vdim);font-size:14px}
+.vs-count{font-size:13.5px;color:var(--vdim)}
+/* סידור */
+.vs-ordopts button{position:relative;padding-right:46px}
+.vs-ordopts button.picked{border-color:var(--sky);background:rgba(143,211,254,.1)}
+.ordb{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:14px;font-weight:800;background:linear-gradient(160deg,var(--sky),#4FA8E8);color:#06121F}
+/* סמנו הכל */
+.vs-selopts button{position:relative;padding-right:44px}
+.vs-selopts .ck{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:7px;border:2px solid var(--vhair);display:grid;place-items:center;font-size:13px;color:transparent;transition:.15s}
+.vs-selopts button.on{border-color:var(--tq);background:rgba(45,212,191,.1)}
+.vs-selopts button.on .ck{border-color:var(--tq);background:var(--tq);color:#04211D}
+.vs-selopts button.on .ck::after{content:"✓";font-weight:800}
+.vs-selopts button.good .ck{border-color:var(--tq);background:var(--tq);color:#04211D}
+.vs-selopts button.good .ck::after{content:"✓";font-weight:800}
+/* מי קרוב יותר */
+.vs-numwrap{position:relative;margin:4px 0 2px}
+.vs-numwrap input{width:100%;box-sizing:border-box;direction:ltr;text-align:center;font:700 30px/1.2 "Heebo";letter-spacing:.02em;background:rgba(255,255,255,.045);border:1px solid var(--vhair);border-radius:16px;padding:16px 14px;color:var(--vwhite);outline:none}
+.vs-numwrap input:focus{border-color:rgba(255,196,110,.6);box-shadow:0 0 0 3px rgba(255,196,110,.12)}
+.vs-numwrap input::placeholder{font-size:17px;font-weight:400;color:var(--vdim);letter-spacing:0}
+.vs-unit{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--vdim)}
+.vs-numwrap input.shake{animation:numShake .35s ease}
+@keyframes numShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.vs-truth{text-align:center;margin:6px 0 12px}
+.vs-truth span{display:block;font-size:12px;letter-spacing:.14em;color:#FFC46E;margin-bottom:2px}
+.vs-truth b{font:700 40px/1.1 "Heebo";direction:ltr;display:inline-block;background:linear-gradient(120deg,#FFD9A0,#FFC46E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vs-guesses{display:flex;gap:10px}
+.vs-guess{flex:1;background:rgba(255,255,255,.035);border:1px solid var(--vhair);border-radius:14px;padding:11px;text-align:center}
+.vs-guess b{display:block;font:700 22px/1.1 "Heebo";direction:ltr;color:var(--vwhite)}
+.vs-guess span{font-size:12px;color:var(--vdim)}
+.vs-guess.natan{border-color:rgba(45,212,191,.4)}
+.vs-guess.pino{border-color:rgba(196,165,250,.4)}
+/* זוגות */
+.vs-pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vs-pcol{display:grid;gap:8px;align-content:start}
+.vs-pcol button{padding:13px 10px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid var(--vhair);color:var(--vwhite);font-size:14.5px;font-weight:500;text-align:center;transition:transform .1s,border-color .15s,background .15s;min-height:52px}
+.vs-pcol button:active{transform:scale(.96)}
+.vs-pcol button.lsel{border-color:#FFC46E;background:rgba(255,196,110,.12);box-shadow:0 0 0 2px rgba(255,196,110,.2)}
+.vs-pcol button.pc0{border-color:var(--tq);background:rgba(45,212,191,.13)}
+.vs-pcol button.pc1{border-color:var(--lil);background:rgba(196,165,250,.13)}
+.vs-pcol button.pc2{border-color:var(--sky);background:rgba(143,211,254,.13)}
+.vs-pcol button.pc3{border-color:#FFC46E;background:rgba(255,196,110,.13)}
+/* חשיפת סדר/זוגות */
+.vs-seq .row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.035);border:1px solid var(--vhair);border-radius:12px;padding:11px 13px;margin-bottom:8px;font-size:15px;color:var(--vwhite)}
+.vs-seq .row b{flex:none;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:13px;background:rgba(45,212,191,.16);color:var(--tq-hi);border:1px solid rgba(45,212,191,.4)}
+.vs-seq .row span{flex:1;line-height:1.4}
+.vs-seq .sq{flex:none;font-style:normal;font-size:12px;font-weight:800;width:22px;height:22px;border-radius:8px;display:grid;place-items:center}
+.vs-seq .sq.natan{background:rgba(45,212,191,.18);color:var(--tq-hi)}
+.vs-seq .sq.pino{background:rgba(196,165,250,.18);color:var(--lil)}
+/* דאבל */
+.dcard{border-color:rgba(255,196,110,.45);box-shadow:0 30px 70px -30px rgba(0,0,0,.9),0 0 60px -18px rgba(255,196,110,.3)}
+.dcard.locked{opacity:.96}
+.dcard .vs-opts button.dim{opacity:.5}
+.vs-dnote{font-size:12px;color:#FFD9A0;margin-right:8px}
+.vs-lockrib{font-size:13.5px;color:#FFD9A0;background:rgba(255,196,110,.09);border:1px dashed rgba(255,196,110,.4);border-radius:11px;padding:9px 12px;margin:-6px 0 14px;line-height:1.5}
+.vs-dnext{text-align:center;font-size:14.5px;font-weight:700;color:#FFD9A0;margin-top:12px;animation:cdPop .5s cubic-bezier(.22,1.4,.36,1)}
+/* ספירה לוהטת בין סבבים — שונה לגמרי מהפתיחה */
+.vs-bcd-wrap{position:relative}
+.vs-bcd-lbl{font-size:13px;letter-spacing:.3em;color:#FF9E6E;margin:0 0 10px;font-weight:700}
+.vs-bcd{position:relative;width:170px;height:170px;margin:0 auto;display:grid;place-items:center}
+.vs-bcd b{font:800 96px/1 "Heebo";background:linear-gradient(160deg,#FFE3B0 10%,#FF9E6E 55%,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(255,140,90,.55));animation:bcdPop .96s cubic-bezier(.22,1.5,.36,1)}
+.vs-bcd .ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,158,110,.55);animation:bcdRing .96s ease-out}
+.vs-bcd::after{content:"";position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,rgba(255,140,90,.22),transparent 65%);animation:bcdGlow .96s ease-out}
+@keyframes bcdPop{0%{transform:scale(1.9);opacity:0}35%{transform:scale(1);opacity:1}}
+@keyframes bcdRing{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
+@keyframes bcdGlow{0%{opacity:1}100%{opacity:.25}}
+.vs-bcd.go b{font-size:64px;background:linear-gradient(120deg,#FFE3B0,#FF9E6E,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vs-bcd-sub{color:#C9836B;font-size:14px;letter-spacing:.1em;margin-top:10px}
+/* תיקון צבע שם בצ׳אט */
+.fx-msg.natan b{color:var(--tq)}
+
+/* ===== v18 — ניווט: אינדיקטור מחליק + צבעים רכים ===== */
+.nav{position:fixed}
+.nav-ind{position:absolute;top:0;height:3px;border-radius:0 0 3px 3px;background:#D9C69A;transition:right .32s cubic-bezier(.22,1,.36,1),width .32s cubic-bezier(.22,1,.36,1),background .3s;box-shadow:0 1px 10px rgba(217,198,154,.5)}
+.nav button.on.trv{color:#D9C69A;text-shadow:none}
+.nav button.on.vsb{color:#6ECFC2;text-shadow:none}
+.nav button.on.dyb{color:#D89AB4;text-shadow:none}
+.nav button.on.ptb{color:#E8CE96;text-shadow:none}
+
+/* ===== v18 — מסלולים: ניווט לילי (נייבי + שמפניה + כוכבים) ===== */
+body.thm-paths{background:#060B14}
+body.thm-paths .light{background:radial-gradient(52% 36% at 50% 16%,rgba(232,206,150,.09),rgba(140,170,230,.04) 55%,transparent 72%),radial-gradient(120% 90% at 50% 110%,transparent 40%,rgba(0,0,0,.6) 100%)}
+body.thm-paths .dust i{background:rgba(232,206,150,.45)}
+.starfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;display:none}
+body.thm-paths .starfield{display:block}
+.starfield i{position:absolute;border-radius:50%;background:#EAF0FF;opacity:.5;animation:twinkle ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:.85;transform:scale(1.15)}}
+.pth .bar h1{color:#E8CE96}
+.pth-sub{color:#8C96B8}
+.pth-card{background:linear-gradient(168deg,#0C1425,#070C17);border:1px solid rgba(232,206,150,.2);color:#E9EDF7;box-shadow:0 22px 50px -22px rgba(0,0,0,.9),0 0 44px -22px rgba(232,206,150,.18)}
+.pth-card b{color:#F2E9D4}
+.pth-card small{color:#8C96B8}
+.pth-st{color:#C9B989}
+.pth-route{width:100%;height:52px;display:block;margin:4px 0 2px}
+.pth-route .trail{fill:none;stroke:#1C2742;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1 7}
+.pth-route .trail.lit{stroke:#C9A25C;stroke-dasharray:1 7;filter:drop-shadow(0 0 4px rgba(232,206,150,.6))}
+.pth-route .st{fill:#141D33;stroke:#2A3350;stroke-width:1.5}
+.pth-route .st.done{fill:#C9A25C;stroke:#E8CE96}
+.pth-route .st.cur{fill:#E8CE96;stroke:#FFF3D8;animation:curPulse 1.8s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes curPulse{0%,100%{filter:drop-shadow(0 0 3px rgba(232,206,150,.8))}50%{filter:drop-shadow(0 0 10px rgba(232,206,150,1))}}
+.pr-chap{color:#C9B989}
+.pr-story{background:rgba(232,206,150,.06);border:1px solid rgba(232,206,150,.18);color:#D9DFF0}
+.pr-story b{color:#E8CE96}
+.pr-next{background:linear-gradient(160deg,#E8CE96,#C9A25C 60%,#A98240);color:#1B1408;box-shadow:0 16px 38px -14px rgba(201,162,92,.55)}
+.pr-dots i{background:#1C2742}
+.pr-dots i.f{background:#E8CE96;box-shadow:0 0 8px rgba(232,206,150,.7)}
+.pth-done h2{color:#F2E9D4}
+.pth-done p{color:#8C96B8}
+.pth-track{background:#141D33}
+.pth-track i{background:linear-gradient(90deg,#A98240,#E8CE96)}
+
+/* ===== v18 — אתגר יומי: עדין ומעודן ===== */
+body.thm-daily{background:#130A10}
+body.thm-daily .light{background:radial-gradient(52% 36% at 50% 18%,rgba(216,154,180,.1),rgba(216,154,180,.03) 55%,transparent 72%),radial-gradient(120% 90% at 50% 110%,transparent 40%,rgba(0,0,0,.6) 100%)}
+body.thm-daily .dust i{background:rgba(216,154,180,.4)}
+.dy .bar h1{color:#D89AB4}
+.dy-names{background:linear-gradient(105deg,#F4E9EE 30%,#E4BACB 65%,#D89AB4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dy-names .ht{font-size:.55em;vertical-align:.25em;padding:0 2px}
+.dy-date{color:#9A7386}
+.dy-sub{color:#C7A3B3}
+.dy-start{background:linear-gradient(160deg,#D89AB4,#B76E8F 60%,#96536F);color:#26101B;box-shadow:0 14px 34px -14px rgba(183,110,143,.55)}
+.dy-pickbtn{background:#221119;border-color:#3A2230;color:#EFDBE4}
+.dy-seg{display:flex;gap:5px;margin:2px 0 16px}
+.dy-seg i{flex:1;height:6px;border-radius:3px;background:#241521;transition:.25s}
+.dy-seg i.f{background:#D89AB4;box-shadow:0 0 8px rgba(216,154,180,.5)}
+.dy-seg i.x{background:#573444}
+.dy-qcard{background:linear-gradient(170deg,#1F0F17,#150A10);border-color:rgba(216,154,180,.22);box-shadow:0 26px 60px -26px rgba(0,0,0,.9),0 0 40px -20px rgba(216,154,180,.16)}
+.dy-qcat{color:#C793AB}
+.dy-q{color:#F6ECF1}
+.dy-opt{background:#251320;border-color:#3A2230;color:#EFDBE4}
+.dy-opt.ok{background:#15291F;border-color:#4E8A6C;color:#D5F0E1}
+.dy-opt.no{background:#351220;border-color:#A05A72;color:#F1C6D2}
+.dy-score .hg{filter:drop-shadow(0 8px 20px rgba(216,154,180,.4));font-size:38px}
+.dy-score b{color:#F6ECF1}
+.dy-score span{color:#9A7386}
+.dy-love{color:#DDB4C6;font-size:16.5px}
+.dy-panel{background:linear-gradient(172deg,#1E0F16,#150A10);border-color:rgba(216,154,180,.18)}
+.dy-panel h4{color:#C793AB}
+.dy-wait{color:#C7A3B3}
+.dy-row{color:#C7A3B3;border-bottom:1px dashed #2C1822}
+.dy-row .mk .okm{color:#9FCDB4;font-weight:800;font-style:normal}
+.dy-row .mk .nom{color:#B76E8F;font-weight:800;font-style:normal}
+.dy-streak{background:#221119;border-color:#3A2230;color:#EFDBE4}
+.dy-vs-head .pl b{color:#F6ECF1}
+.dy-vs-head .pl{color:#9A7386}
+.dy-vs-head .ht{font-size:16px;color:#D89AB4}
+
 </style>
 </head>
 <body>
 <div class="light"></div>
 <div class="dust" id="dust"></div>
+<div class="starfield" id="starfield" aria-hidden="true"></div>
 <div class="app">
 
 <!-- HOME -->
@@ -646,7 +810,6 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 
 <!-- DAILY -->
 <section id="daily" class="screen dy">
-  <div class="dy-hearts" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></div>
   <div class="bar">
     <button class="icon-btn" onclick="SFX.tap();show('home')" aria-label="חזרה">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -683,6 +846,7 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 </div>
 
 <nav class="nav" id="nav" hidden>
+  <i class="nav-ind" id="nav-ind"></i>
   <button class="trv" id="nav-trv" onclick="navGo('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3 3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8A3 3 0 0 0 6 13a3 3 0 0 0 2 2.8V17a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-1.2A3 3 0 0 0 18 13a3 3 0 0 0-.6-2.2c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3 3 3 0 0 0-3-3z"/><path d="M12 3v17"/></svg>
     טריוויה
@@ -803,6 +967,20 @@ function setNav(id){
   document.getElementById('nav-dy').classList.toggle('on',id==='daily');
   document.getElementById('nav-pth').classList.toggle('on',id==='paths');
   if(vis)dyDot();
+  navInd(id,vis);
+}
+function navInd(id,vis){
+  const ind=document.getElementById('nav-ind');if(!ind)return;
+  const map={home:'nav-trv',versus:'nav-vs',daily:'nav-dy',paths:'nav-pth'};
+  const col={home:'#D9C69A',versus:'#6ECFC2',daily:'#D89AB4',paths:'#E8CE96'};
+  if(!vis||!map[id]){ind.style.opacity=0;return}
+  requestAnimationFrame(()=>{
+    const b=document.getElementById(map[id]),nv=document.getElementById('nav');if(!b||!nv)return;
+    ind.style.opacity=1;
+    ind.style.width=b.offsetWidth+'px';
+    ind.style.right=(nv.clientWidth-b.offsetLeft-b.offsetWidth)+'px';
+    ind.style.background=col[id];ind.style.boxShadow='0 1px 10px '+col[id]+'66';
+  });
 }
 function navGo(id){
   SFX.tap();
@@ -1269,9 +1447,20 @@ const FB_CFG={
   messagingSenderId:"79958843506",
   appId:"1:79958843506:web:d55e432b1b6dd1411222eb"
 };
-const VS_Q=15000, VS_R=3200, VS_BREAK=9000, VS_PER_ROUND=10, VS_ROUNDS=3, VS_N=VS_PER_ROUND*VS_ROUNDS;
+/* זמנים: לכל סוג שאלה טיימר משלו */
+const VS_PER_ROUND=10, VS_ROUNDS=3, VS_N=VS_PER_ROUND*VS_ROUNDS;
+const VS_BREAK=6500; /* הפסקת סבב קצרה: לוח תוצאות ואז 3־2־1 לוהט */
+const DURQ={m:15000,o:25000,s:22000,n:20000,p:25000,d:12000};
+const RDURQ={m:3200,o:5200,s:5000,n:4600,p:5200,e:3200};
+const VS_ACT_N=9; /* שאלות אקטיביות למשחק */
 const NAMES={natan:'נינו',pino:'פוניטה'};
-const GEN={natan:{win:'ניצח',ansd:'כבר ענה ⚡',lead:'נינו מוביל — הסבב הבא שלך.',enter:'ממתינים שנינו ייכנס למסך ראש בראש…',late:'לא ענה בזמן',dc:'נינו לא מחובר'},pino:{win:'ניצחה',ansd:'כבר ענתה ⚡',lead:'פוניטה מובילה — הסבב הבא שלך.',enter:'ממתינים שפוניטה תיכנס למסך ראש בראש…',late:'לא ענתה בזמן',dc:'פוניטה לא מחוברת'}};
+const GEN={natan:{win:'ניצח',ansd:'כבר ענה ⚡',lead:'נינו מוביל — הסבב הבא שלך.',enter:'ממתינים שנינו ייכנס למסך ראש בראש…',late:'לא ענה בזמן',dc:'נינו לא מחובר',sent:'כבר שלח ⚡'},pino:{win:'ניצחה',ansd:'כבר ענתה ⚡',lead:'פוניטה מובילה — הסבב הבא שלך.',enter:'ממתינים שפוניטה תיכנס למסך ראש בראש…',late:'לא ענתה בזמן',dc:'פוניטה לא מחוברת',sent:'כבר שלחה ⚡'}};
+const TYPE_META={m:{tag:'',inst:''},
+  o:{tag:'🧩 סידור',inst:'לחצו על התשובות לפי הסדר הנכון'},
+  s:{tag:'☑️ סמנו הכל',inst:'סמנו את כל הנכונות — ואז שלחו'},
+  n:{tag:'🎯 מי קרוב יותר',inst:'נחשו מספר — הקרוב יותר לוקח את הנקודות'},
+  p:{tag:'🔗 זוגות',inst:'לחצו פריט מימין ואז את בן הזוג שלו משמאל'},
+  d:{tag:'⚡ שאלת בונוס',inst:''}};
 let fbLoad=null;
 function loadFB(){
   if(fbLoad)return fbLoad;
@@ -1288,8 +1477,14 @@ function loadFB(){
 }
 const SFX_VS={
   tick(){tone(880,0,.07,'square',.05)},
+  btick(){tone(392,0,.09,'square',.07);tone(587,.02,.11,'triangle',.06)},
   go(){tone(523,0,.14,'sine',.1);tone(784,.1,.16,'sine',.1);tone(1046,.2,.3,'sine',.11)},
   fast(){tone(1318,0,.1,'sine',.08);tone(1568,.07,.14,'sine',.07)},
+  pick(n){tone(520+n*110,0,.07,'triangle',.06)},
+  link(){tone(659,0,.07,'sine',.06);tone(988,.05,.09,'sine',.06)},
+  send(){tone(523,0,.06,'sine',.07);tone(784,.05,.08,'sine',.08);tone(1175,.1,.12,'sine',.08)},
+  bonus(){tone(659,0,.1,'square',.05);tone(880,.08,.12,'square',.055);tone(1318,.17,.2,'square',.06)},
+  lock(){tone(233,0,.16,'sine',.06);tone(196,.12,.2,'sine',.05)},
   win(){[523,659,784,1046,1318,1568].forEach((f,i)=>tone(f,i*.09,.32,'sine',.1));[784,1046,1318].forEach(f=>tone(f,.66,.6,'sine',.05))},
   lose(){tone(392,0,.2,'sine',.08);tone(330,.16,.24,'sine',.07);tone(262,.34,.4,'sine',.06)}
 };
@@ -1353,24 +1548,59 @@ const CLEAN_LINES=["שניכם בלי טעויות עד עכשיו. מלחיץ. 
 "נקי עד עכשיו. חבל, אין את מי להשפיל. בינתיים 😈","שני מסלולים מושלמים. אחד מכם ישקר בקרוב 🎯"];
 const LEAD_TAUNTS=["הלחץ עובר צד 😏","הפער מדבר בעד עצמו 📊","מישהו פה מזיע 💦","עוד לא נגמר… אבל כמעט 😜","נראה טוב. לאחד מכם 😎","הרגע הזה שאתם מבינים מי הבוס 🫵"];
 const VS={
-  db:null,off:0,who:null,game:null,ans:{},order:{},myPick:{},phase:null,pi:-1,loop:null,unsub:[],active:false,creating:false,ended:false,oppHere:false,absentAt:0,cur:null,curW:'',zoom:{},again:{},
+  db:null,off:0,who:null,game:null,ans:{},order:{},myPick:{},work:{},autoT:{},phase:null,pi:-1,loop:null,unsub:[],active:false,creating:false,ended:false,oppHere:false,absentAt:0,cur:null,curW:'',zoom:{},again:{},
   el(){return document.getElementById('vs-body')},
   now(){return Date.now()+VS.off},
   score(w){
-    let s=0;for(let i=0;i<VS_N;i++){const a=VS.ans['q'+i]&&VS.ans['q'+i][w];
-      if(a&&a.ok)s+=100+Math.max(0,Math.round((VS_Q-a.ms)/100));}
+    let s=0;
+    for(let i=0;i<VS_N;i++){
+      s+=vsPts(i,w);
+      const it=VS.game&&VS.game.qs?VS.game.qs[i]:null;
+      if(it&&it.dd)s+=vsDPts(i,w);
+    }
     return s;
   },
   leave(){
-    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
+    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};VS.work={};VS.autoT={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
     if(VS.loop){clearInterval(VS.loop);VS.loop=null}
     VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];
     if(VS.db&&VS.who){try{VS.db.ref('versus/p/'+VS.who).remove()}catch(e){}}
   }
 };
+function vsBankSig(){return [VQ.length,VORD.length,VSEL.length,VNUM.length,VPAIR.length].join('.')}
+function vsBanksOk(){return typeof VQ!=='undefined'&&VQ.length&&typeof VORD!=='undefined'&&typeof VSEL!=='undefined'&&typeof VNUM!=='undefined'&&typeof VPAIR!=='undefined'}
+function vsItem(i){return VS.game&&VS.game.qs?VS.game.qs[i]:null}
+function vsData(it){
+  if(!it)return null;
+  const t=it.t||'m';
+  return t==='m'?VQ[it.j]:t==='o'?VORD[it.j]:t==='s'?VSEL[it.j]:t==='n'?VNUM[it.j]:VPAIR[it.j];
+}
+function durOf(it){return DURQ[(it&&it.t)||'m']}
+function rdurOf(it){return RDURQ[(it&&it.t)||'m']}
+function spdBonus(t,ms){const d=DURQ[t]||15000;const cap=t==='m'?150:100;return Math.max(0,Math.min(cap,Math.round((d-ms)/(d/cap))))}
+function vsPts(i,w){
+  const it=vsItem(i);if(!it)return 0;const t=it.t||'m';
+  const A=VS.ans['q'+i]||{};const a=A[w];if(!a)return 0;
+  if(t==='m')return a.ok?100+spdBonus('m',a.ms):0;
+  if(t==='o'||t==='p')return a.ok?100+spdBonus(t,a.ms):(a.pc||0)*25;
+  if(t==='s')return a.ok?100+spdBonus('s',a.ms):Math.max(0,((a.hit||0)-(a.miss||0))*25);
+  if(t==='n'){
+    const q=VNUM[it.j];if(typeof a.v!=='number'||isNaN(a.v))return 0;
+    const opp=w==='natan'?'pino':'natan';const b=A[opp];
+    const d1=Math.abs(a.v-q.a);const ex=d1<1e-9?50:0;
+    if(!b||typeof b.v!=='number'||isNaN(b.v))return 100+ex;
+    const d2=Math.abs(b.v-q.a);
+    if(d1<d2-1e-9)return 100+ex;
+    if(d1>d2+1e-9)return 0;
+    return 60+ex;
+  }
+  return 0;
+}
+function vsDPts(i,w){const a=(VS.ans['d'+i]||{})[w];return a&&a.ok?100+spdBonus('d',a.ms):0}
+function vsWinners(i){const A=VS.ans['q'+i]||{};return ['natan','pino'].filter(w=>A[w]&&A[w].ok)}
 function openVersus(){
   show('versus');VS.active=true;
-  if(typeof VQ==='undefined'||!VQ.length){vsErr('גרסת השאלות ישנה — רענן את האפליקציה כשיש אינטרנט כדי לקבל את שאלות ראש בראש.');return}
+  if(!vsBanksOk()){vsErr('גרסת השאלות ישנה — רענן את האפליקציה כשיש אינטרנט כדי לקבל את שאלות ראש בראש החדשות.');return}
   if(!S.vsWho){renderVsPick();return}
   VS.who=S.vsWho;startVsLobby();
 }
@@ -1384,6 +1614,56 @@ function renderVsPick(){
     '</div></div>';
 }
 function vsPick(w){SFX.tap();S.vsWho=w;save();VS.who=w;startVsLobby();}
+/* --- זיכרון בין משחקים: לא חוזרים על שאלות מהמשחקים האחרונים --- */
+const VS_USED_KEY='trivia-vs-used-v1';
+function vsHash(t){let h=0;for(let j=0;j<t.length;j++)h=(h*31+t.charCodeAt(j))>>>0;return h.toString(36)}
+function vsHashOf(t,j){
+  return t==='m'?vsHash(VQ[j].q+(VQ[j].img||'')):t==='o'?vsHash(VORD[j].q+VORD[j].items[0]):t==='s'?vsHash(VSEL[j].q+VSEL[j].o[0]):t==='n'?vsHash(VNUM[j].q):vsHash(VPAIR[j].q+VPAIR[j].l[0]);
+}
+function vsUsedLoad(){try{return JSON.parse(localStorage.getItem(VS_USED_KEY))||{}}catch(e){return {}}}
+function vsUsedSave(items){
+  try{
+    const u=vsUsedLoad();
+    items.forEach(it=>{const t=it.t||'m';u[t]=u[t]||[];u[t].push(vsHashOf(t,it.j))});
+    const CAP={m:110,o:10,s:10,n:10,p:8};
+    for(const t in u)u[t]=u[t].slice(-(CAP[t]||10));
+    localStorage.setItem(VS_USED_KEY,JSON.stringify(u));
+  }catch(e){}
+}
+function vsPickN(t,cands,n){
+  const u=new Set((vsUsedLoad()[t])||[]);
+  let free=cands.filter(j=>!u.has(vsHashOf(t,j)));
+  if(free.length<n){
+    /* המאגר קטן מדי אחרי סינון — משחררים ישנים */
+    const rest=shuffle(cands.filter(j=>u.has(vsHashOf(t,j))));
+    free=free.concat(rest);
+  }
+  return shuffle(free.slice()).slice(0,n);
+}
+/* הרכב משחק: 21 אמריקאיות (מתוכן 4 דאבל) + 9 אקטיביות, מפוזרות 3 בכל סבב */
+function vsCompose(){
+  const types=shuffle(['o','s','n','p']);
+  const counts={};types.forEach((t,ix)=>counts[t]=ix===0?3:2);
+  const act=[];
+  act.push(...vsPickN('o',VORD.map((_,j)=>j),counts.o).map(j=>({t:'o',j})));
+  act.push(...vsPickN('s',VSEL.map((_,j)=>j),counts.s).map(j=>({t:'s',j})));
+  act.push(...vsPickN('n',VNUM.map((_,j)=>j),counts.n).map(j=>({t:'n',j})));
+  act.push(...vsPickN('p',VPAIR.map((_,j)=>j),counts.p).map(j=>({t:'p',j})));
+  shuffle(act);
+  const all=VQ.map((_,j)=>j);
+  const dSel=vsPickN('m',all.filter(j=>VQ[j].d),4);
+  const dSet=new Set(dSel);
+  const mSel=vsPickN('m',all.filter(j=>!dSet.has(j)),VS_N-VS_ACT_N-4);
+  const mc=shuffle(dSel.map(j=>({t:'m',j,dd:1})).concat(mSel.map(j=>({t:'m',j}))));
+  const items=[];let ai=0,mi=0;
+  for(let r=0;r<VS_ROUNDS;r++){
+    let pos=shuffle([...Array(VS_PER_ROUND).keys()]).filter(p=>!(r===0&&p===0)).slice(0,3);
+    const set=new Set(pos);
+    for(let k=0;k<VS_PER_ROUND;k++)items.push(set.has(k)?act[ai++]:mc[mi++]);
+  }
+  vsUsedSave(items);
+  return items;
+}
 async function startVsLobby(){
   const opp=VS.who==='natan'?'pino':'natan';
   VS.el().innerHTML='<div class="vs-center"><div class="vs-wait"><span>⚡</span></div>'+
@@ -1427,8 +1707,9 @@ async function startVsLobby(){
       return}
     if(g.start&&VS.now()<g.start-30000)return;
     if(VS.now()>g.start+1800000)return; /* stale leftover game (30 min) */
+    if(g.bk!==vsBankSig()){vsErr('גרסאות שאלות שונות בין הטלפונים — רעננו את האפליקציה בשני המכשירים ונסו שוב.');return}
     VS.game=g;VS.cur=g.cur||{i:0,phase:'q',at:g.start};VS.curW='';
-    VS.ans={};VS.order={};VS.myPick={};VS.phase=null;VS.pi=-1;VS.ended=false;VS.zoom={};VS.again={};
+    VS.ans={};VS.order={};VS.myPick={};VS.work={};VS.autoT={};VS.phase=null;VS.pi=-1;VS.ended=false;VS.zoom={};VS.again={};
     runLoop();
   });
   VS.unsub.push(()=>gRef.off('value',gCb));
@@ -1444,9 +1725,9 @@ async function startVsLobby(){
     if(!gameDone)return;
     VS.creating=true;
     db.ref('versus/fx').remove();
-    const idx=shuffle(VQ.map((_,i)=>i)).slice(0,VS_N);
+    const items=vsCompose();
     const st=VS.now()+5800;
-    db.ref('versus/game').set({id:Date.now(),start:st,qs:idx,cur:{i:0,phase:'q',at:st},ans:null})
+    db.ref('versus/game').set({id:Date.now(),start:st,bk:vsBankSig(),qs:items,cur:{i:0,phase:'q',at:st},ans:null})
       .then(()=>{VS.creating=false}).catch(()=>{VS.creating=false});
   }
 }
@@ -1550,23 +1831,38 @@ function vsTick(){
   if(n<g.start){renderCountdown(Math.ceil((g.start-n)/1000));return}
   if(!c)return;
   if(c.phase==='end'){renderEnd();stopLoop();return}
-  if(c.phase==='q'){renderQuestion(c.i,c.at);updateTimer(c.at);return}
+  if(c.phase==='q'){renderQuestion(c.i,c.at);updateTimer(c.at,durOf(vsItem(c.i)),c.i,'q');return}
   if(c.phase==='r'){renderReveal(c.i);return}
-  if(c.phase==='b'){renderBreak(Math.floor(c.i/VS_PER_ROUND));return}
+  if(c.phase==='d'){renderDouble(c.i,c.at);updateTimer(c.at,DURQ.d,c.i,'d');return}
+  if(c.phase==='e'){renderDoubleReveal(c.i);return}
+  if(c.phase==='b'){renderBreak(Math.floor(c.i/VS_PER_ROUND),c.at);return}
+}
+function vsNextIndex(i,n){
+  const nx=i+1;
+  if(nx>=VS_N)return {i:nx,phase:'end',at:n};
+  if(nx%VS_PER_ROUND===0)return {i:nx,phase:'b',at:n};
+  return {i:nx,phase:'q',at:n};
 }
 function hostAdvance(){
   const c=VS.cur;if(!c||!VS.db||VS.now()<VS.game.start)return;
   const n=VS.now();let next=null;
   if(c.phase==='q'){
+    const it=vsItem(c.i);
     const a=VS.ans['q'+c.i]||{};
-    if((a.natan&&a.pino)||n>c.at+VS_Q+300)next={i:c.i,phase:'r',at:n};
+    if((a.natan&&a.pino)||n>c.at+durOf(it)+300)next={i:c.i,phase:'r',at:n};
   }else if(c.phase==='r'){
-    if(n>c.at+VS_R){
-      const nx=c.i+1;
-      if(nx>=VS_N)next={i:nx,phase:'end',at:n};
-      else if(nx%VS_PER_ROUND===0)next={i:nx,phase:'b',at:n};
-      else next={i:nx,phase:'q',at:n};
+    const it=vsItem(c.i);
+    if(n>c.at+rdurOf(it)){
+      if(it&&it.dd&&vsWinners(c.i).length)next={i:c.i,phase:'d',at:n};
+      else next=vsNextIndex(c.i,n);
     }
+  }else if(c.phase==='d'){
+    const E=vsWinners(c.i);
+    const D=VS.ans['d'+c.i]||{};
+    const done=E.length&&E.every(w=>D[w]);
+    if(done||n>c.at+DURQ.d+300)next={i:c.i,phase:'e',at:n};
+  }else if(c.phase==='e'){
+    if(n>c.at+RDURQ.e)next=vsNextIndex(c.i,n);
   }else if(c.phase==='b'){
     if(n>c.at+VS_BREAK)next={i:c.i,phase:'q',at:n};
   }
@@ -1605,45 +1901,253 @@ function vsOrd(i){
   if(i>0&&ord.indexOf(0)===vsOrd(i-1).indexOf(0))ord.push(ord.shift());
   return ord;
 }
+/* ערבוב מסונכרן לכל אורך, בלי סדר-זהות */
+function aShuf(n,seed){
+  const a=sshuffle([...Array(n).keys()],seed);
+  let id=true;for(let k=0;k<n;k++)if(a[k]!==k){id=false;break}
+  if(id)a.push(a.shift());
+  return a;
+}
+function typeChip(t){const m=TYPE_META[t];return m&&m.tag?'<span class="vs-type t-'+t+'">'+m.tag+'</span>':''}
+function instLine(t){const m=TYPE_META[t];return m&&m.inst?'<p class="vs-inst">'+m.inst+'</p>':''}
+function timerHtml(){return '<div class="vs-timer" id="vs-tm"><i id="vs-tm-i" style="width:100%"></i></div>'}
+function oppLine(){return '<div class="vs-opp" id="vs-opp"></div><div class="vs-fb" id="vs-fb"></div>'}
 function renderQuestion(i,qs){
   const key='q'+i;
-  if(VS.phase!=='q'+i){
+  if(VS.phase!==('q'+i)){
     VS.phase='q'+i;VS.pi=i;
-    if(!VS.order[key]){VS.order[key]=vsOrd(i)}
-    const q=VQ[VS.game.qs[i]],ord=VS.order[key];
+    const it=vsItem(i);const t=(it&&it.t)||'m';const q=vsData(it);
     SFX.chip();
-    VS.el().innerHTML=scoreHead(i)+
-      '<div class="vs-timer" id="vs-tm"><i id="vs-tm-i" style="width:100%"></i></div>'+
-      '<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p><p class="vs-q">'+q.q+'</p>'+
-      '<div class="vs-opts" id="vs-opts">'+
-      ord.map(o=>'<button onclick="vsAnswer('+i+','+o+',this)">'+q.o[o]+'</button>').join('')+
-      '</div></div><div class="vs-opp" id="vs-opp"></div><div class="vs-fb" id="vs-fb"></div>';
+    let inner='';
+    if(t==='m'){
+      if(!VS.order[key])VS.order[key]=vsOrd(i);
+      const ord=VS.order[key];
+      inner='<div class="vs-qcard in"><p class="vs-qcat">'+q.c+typeChip(t)+'</p>'+
+        (q.img?'<img class="vs-qimg" src="'+q.img+'" alt="" onerror="this.hidden=true">':'')+
+        '<p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-opts" id="vs-opts">'+
+        ord.map(o=>'<button onclick="vsAnsM('+i+','+o+',this)">'+q.o[o]+'</button>').join('')+
+        '</div></div>';
+    }else if(t==='o'){
+      VS.work[key]=[];
+      const ord=aShuf(4,gseed()+i*197+13);
+      inner='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p>'+
+        '<p class="vs-q">'+q.q+'</p>'+instLine(t)+
+        '<div class="vs-opts vs-ordopts" id="vs-opts">'+
+        ord.map(o=>'<button data-o="'+o+'" onclick="vsOrdTap('+i+','+o+',this)"><span class="ordb" hidden></span>'+q.items[o]+'</button>').join('')+
+        '</div><div class="vs-actrow"><button class="vs-clear" onclick="vsOrdClear('+i+')">נקה</button>'+
+        '<button class="vs-send" id="vs-send" disabled onclick="vsSendOrd('+i+')">שלח סדר</button></div></div>';
+    }else if(t==='s'){
+      VS.work[key]=[];
+      const ord=aShuf(q.o.length,gseed()+i*197+13);
+      inner='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p>'+
+        '<p class="vs-q">'+q.q+'</p>'+instLine(t)+
+        '<div class="vs-opts vs-selopts" id="vs-opts">'+
+        ord.map(o=>'<button data-o="'+o+'" onclick="vsSelTap('+i+','+o+',this)"><i class="ck"></i>'+q.o[o]+'</button>').join('')+
+        '</div><div class="vs-actrow"><span class="vs-count" id="vs-count">0 מסומנות</span>'+
+        '<button class="vs-send on" id="vs-send" onclick="vsSendSel('+i+')">שלח</button></div></div>';
+    }else if(t==='n'){
+      inner='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p>'+
+        '<p class="vs-q">'+q.q+'</p>'+instLine(t)+
+        '<div class="vs-numwrap"><input id="vs-num" inputmode="decimal" autocomplete="off" placeholder="מה הניחוש?">'+
+        (q.u?'<span class="vs-unit">'+q.u+'</span>':'')+'</div>'+
+        '<div class="vs-actrow"><span></span><button class="vs-send on" id="vs-send" onclick="vsSendNum('+i+')">שלח ניחוש</button></div></div>';
+    }else if(t==='p'){
+      VS.work[key]={sel:-1,pairs:{}};
+      const ord=aShuf(4,gseed()+i*197+13);
+      inner='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p>'+
+        '<p class="vs-q">'+q.q+'</p>'+instLine(t)+
+        '<div class="vs-pairs" id="vs-opts">'+
+        '<div class="vs-pcol" id="vs-pl">'+q.l.map((x,li)=>'<button data-l="'+li+'" onclick="vsPairL('+i+','+li+',this)">'+x+'</button>').join('')+'</div>'+
+        '<div class="vs-pcol" id="vs-pr">'+ord.map(ri=>'<button data-r="'+ri+'" onclick="vsPairR('+i+','+ri+',this)">'+q.r[ri]+'</button>').join('')+'</div>'+
+        '</div><div class="vs-actrow"><button class="vs-clear" onclick="vsPairClear('+i+')">נקה</button>'+
+        '<button class="vs-send" id="vs-send" disabled onclick="vsSendPair('+i+')">שלח זוגות</button></div></div>';
+    }
+    VS.el().innerHTML=scoreHead(i)+timerHtml()+inner+oppLine();
+    if(VS.myPick[key]!==undefined)vsLockUI();
   }
   onAnsUpdate();
 }
-function updateTimer(at){
-  const el=document.getElementById('vs-tm-i');if(!el)return;
-  const left=Math.max(0,at+VS_Q-VS.now()),pct=left/VS_Q*100;
-  el.style.width=pct+'%';
-  document.getElementById('vs-tm').classList.toggle('hot',left<5000);
-  if(left<=0)document.querySelectorAll('#vs-opts button').forEach(b=>b.disabled=true);
+function vsLockUI(){
+  document.querySelectorAll('#vs-opts button').forEach(b=>b.disabled=true);
+  const s=document.getElementById('vs-send');if(s)s.disabled=true;
+  const nn=document.getElementById('vs-num');if(nn)nn.disabled=true;
 }
-function vsAnswer(i,orig,btn){
+function updateTimer(at,dur,i,ph){
+  const el=document.getElementById('vs-tm-i');if(!el)return;
+  const left=Math.max(0,at+dur-VS.now()),pct=left/dur*100;
+  el.style.width=pct+'%';
+  const tm=document.getElementById('vs-tm');if(tm)tm.classList.toggle('hot',left<5000);
+  if(left<=0){
+    const k=ph+i;
+    if(!VS.autoT[k]){VS.autoT[k]=1;if(ph==='q')vsTimeUp(i);else vsLockUI();}
+  }
+}
+/* נגמר הזמן — שולחים אוטומטית את מה שכבר סומן */
+function vsTimeUp(i){
+  const key='q'+i;
+  const it=vsItem(i);const t=(it&&it.t)||'m';
+  if(VS.myPick[key]===undefined){
+    if(t==='o'&&VS.work[key]&&VS.work[key].length)vsSendOrd(i,true);
+    else if(t==='s'&&VS.work[key]&&VS.work[key].length)vsSendSel(i,true);
+    else if(t==='p'&&VS.work[key]&&Object.keys(VS.work[key].pairs).length)vsSendPair(i,true);
+    else if(t==='n'){const inp=document.getElementById('vs-num');if(inp&&inp.value.trim())vsSendNum(i,true)}
+  }
+  vsLockUI();
+}
+function vsStore(i,obj){
+  const key='q'+i;
+  VS.myPick[key]=1;
+  if(!VS.ans[key])VS.ans[key]={};
+  VS.ans[key][VS.who]=obj; /* עדכון מקומי מיידי */
+  if(VS.db)VS.db.ref('versus/game/ans/'+key+'/'+VS.who).set(obj);
+}
+function vsMs(i,ph){
+  const at=(VS.cur&&VS.cur.i===i)?VS.cur.at:VS.now();
+  const d=ph==='d'?DURQ.d:durOf(vsItem(i));
+  return Math.min(d,Math.max(0,VS.now()-at));
+}
+function vsFb(txt,good){const fb=document.getElementById('vs-fb');if(fb){fb.textContent=txt;fb.className='vs-fb '+(good?'g':(good===false?'b':'n'))}}
+function vsAnsM(i,orig,btn){
   const key='q'+i;
   if(VS.myPick[key]!==undefined)return;
-  const at=(VS.cur&&VS.cur.i===i)?VS.cur.at:VS.now();
-  const ms=Math.min(VS_Q,Math.max(0,VS.now()-at));
+  const ms=vsMs(i,'q');
   const ok=orig===0?1:0;
-  VS.myPick[key]=orig;
-  document.querySelectorAll('#vs-opts button').forEach(b=>b.disabled=true);
-  btn.classList.add('sel');
+  vsLockUI();btn.classList.add('sel');
+  const pts=ok?100+spdBonus('m',ms):0;
   if(ok){SFX.ok();buzz(30);if(ms<5000)SFX_VS.fast();
-    const fb=document.getElementById('vs-fb');if(fb){fb.textContent=ms<5000?'מהיר! +'+(100+Math.round((VS_Q-ms)/100)):'נכון! +'+(100+Math.round((VS_Q-ms)/100));fb.className='vs-fb g'}
-    popAt(btn);
-  }else{SFX.no();buzz([40,60,40]);
-    const fb=document.getElementById('vs-fb');if(fb){fb.textContent='לא נכון…';fb.className='vs-fb b'}
+    vsFb((ms<5000?'מהיר! +':'נכון! +')+pts,true);popAt(btn);
+  }else{SFX.no();buzz([40,60,40]);vsFb('לא נכון…',false)}
+  vsStore(i,{c:orig,ok:ok,ms:ms});
+}
+/* --- סידור --- */
+function vsOrdTap(i,o,btn){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=VS.work[key];
+  const ix=w.indexOf(o);
+  if(ix>=0)w.splice(ix,1);else{if(w.length>=4)return;w.push(o);SFX_VS.pick(w.length)}
+  document.querySelectorAll('#vs-opts button').forEach(b=>{
+    const oo=+b.dataset.o,p=w.indexOf(oo);
+    const bd=b.querySelector('.ordb');
+    if(p>=0){b.classList.add('picked');bd.hidden=false;bd.textContent=p+1}
+    else{b.classList.remove('picked');bd.hidden=true}
+  });
+  const s=document.getElementById('vs-send');
+  if(s){s.disabled=w.length!==4;s.classList.toggle('on',w.length===4)}
+  buzz(8);
+}
+function vsOrdClear(i){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  VS.work[key]=[];SFX.tap();
+  document.querySelectorAll('#vs-opts button').forEach(b=>{b.classList.remove('picked');const bd=b.querySelector('.ordb');bd.hidden=true});
+  const s=document.getElementById('vs-send');if(s){s.disabled=true;s.classList.remove('on')}
+}
+function vsSendOrd(i,auto){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=(VS.work[key]||[]).slice();
+  const ms=vsMs(i,'q');
+  let pc=0;for(let k=0;k<w.length;k++)if(w[k]===k)pc++;
+  const ok=pc===4?1:0;
+  vsLockUI();
+  if(!auto)SFX_VS.send();
+  const pts=ok?100+spdBonus('o',ms):pc*25;
+  vsFb(ok?'סדר מושלם! +'+pts:(pc?pc+'/4 במקום · +'+pts:'נשלח ✓'),ok?true:null);
+  if(ok){buzz(30);const gb=document.querySelector('#vs-opts button');if(gb)popAt(gb)}
+  vsStore(i,{v:w,pc:pc,ok:ok,ms:ms});
+}
+/* --- סמנו הכל --- */
+function vsSelTap(i,o,btn){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=VS.work[key];
+  const ix=w.indexOf(o);
+  if(ix>=0){w.splice(ix,1);btn.classList.remove('on')}else{w.push(o);btn.classList.add('on');SFX_VS.pick(w.length)}
+  const c=document.getElementById('vs-count');if(c)c.textContent=w.length+' מסומנות';
+  buzz(8);
+}
+function vsSendSel(i,auto){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const it=vsItem(i),q=VSEL[it.j];
+  const w=(VS.work[key]||[]).slice();
+  const ms=vsMs(i,'q');
+  const hit=w.filter(x=>x<q.k).length,miss=w.length-hit;
+  const ok=(hit===q.k&&miss===0)?1:0;
+  vsLockUI();
+  if(!auto)SFX_VS.send();
+  const pts=ok?100+spdBonus('s',ms):Math.max(0,(hit-miss)*25);
+  vsFb(ok?'מדויק! +'+pts:'נשלח ✓',ok?true:null);
+  if(ok)buzz(30);
+  vsStore(i,{v:w,hit:hit,miss:miss,ok:ok,ms:ms});
+}
+/* --- מי קרוב יותר --- */
+function vsSendNum(i,auto){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const inp=document.getElementById('vs-num');if(!inp)return;
+  const v=parseFloat((inp.value||'').replace(/[,\s]/g,'').replace(/[^\d.\-]/g,''));
+  if(isNaN(v)){if(!auto){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');SFX.no()}return}
+  const ms=vsMs(i,'q');
+  vsLockUI();
+  if(!auto)SFX_VS.send();
+  vsFb('הניחוש נשלח ✓ עכשיו נראה מי קרוב יותר…',null);
+  vsStore(i,{v:v,ok:0,ms:ms});
+}
+/* --- זוגות --- */
+function vsPairL(i,li,btn){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=VS.work[key];
+  if(w.pairs[li]!==undefined){ /* פירוק זוג קיים */
+    const ri=w.pairs[li];delete w.pairs[li];
+    vsPairPaint(i);SFX.tap();return;
   }
-  if(VS.db)VS.db.ref('versus/game/ans/'+key+'/'+VS.who).set({c:orig,ok:ok,ms:ms});
+  w.sel=(w.sel===li)?-1:li;
+  vsPairPaint(i);
+  if(w.sel>=0)SFX_VS.pick(1);
+}
+function vsPairR(i,ri,btn){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=VS.work[key];
+  /* אם הפריט הימני כבר בזוג — מפרקים */
+  for(const li in w.pairs)if(w.pairs[li]===ri){delete w.pairs[li];vsPairPaint(i);SFX.tap();return}
+  if(w.sel<0){SFX.tap();return}
+  w.pairs[w.sel]=ri;w.sel=-1;
+  SFX_VS.link();buzz(10);
+  vsPairPaint(i);
+}
+function vsPairPaint(i){
+  const key='q'+i,w=VS.work[key];
+  const colorOf={},used=Object.keys(w.pairs).map(Number).sort((a,b)=>a-b);
+  used.forEach((li,ix)=>colorOf[li]=li); /* צבע לפי הפריט השמאלי — יציב */
+  document.querySelectorAll('#vs-pl button').forEach(b=>{
+    const li=+b.dataset.l;
+    b.className='';
+    if(w.pairs[li]!==undefined)b.classList.add('pc'+li);
+    if(w.sel===li)b.classList.add('lsel');
+  });
+  document.querySelectorAll('#vs-pr button').forEach(b=>{
+    const ri=+b.dataset.r;b.className='';
+    for(const li in w.pairs)if(w.pairs[li]===ri)b.classList.add('pc'+li);
+  });
+  const n=Object.keys(w.pairs).length;
+  const s=document.getElementById('vs-send');
+  if(s){s.disabled=n!==4;s.classList.toggle('on',n===4)}
+}
+function vsPairClear(i){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  VS.work[key]={sel:-1,pairs:{}};SFX.tap();vsPairPaint(i);
+}
+function vsSendPair(i,auto){
+  const key='q'+i;if(VS.myPick[key]!==undefined)return;
+  const w=VS.work[key]||{pairs:{}};
+  const ms=vsMs(i,'q');
+  const arr=[-1,-1,-1,-1];
+  for(const li in w.pairs)arr[li]=w.pairs[li];
+  let pc=0;for(let k=0;k<4;k++)if(arr[k]===k)pc++;
+  const ok=pc===4?1:0;
+  vsLockUI();
+  if(!auto)SFX_VS.send();
+  const pts=ok?100+spdBonus('p',ms):pc*25;
+  vsFb(ok?'כל הזוגות! +'+pts:(pc?pc+'/4 זוגות · +'+pts:'נשלח ✓'),ok?true:null);
+  if(ok)buzz(30);
+  vsStore(i,{v:arr,pc:pc,ok:ok,ms:ms});
 }
 function popAt(btn){
   const r=btn.getBoundingClientRect();
@@ -1657,54 +2161,159 @@ function popAt(btn){
   }
 }
 function onAnsUpdate(){
-  if(VS.pi<0||!/^q\d+$/.test(String(VS.phase)))return;
-  const i=VS.pi,opp=VS.who==='natan'?'pino':'natan';
-  const a=VS.ans['q'+i]||{};
+  const ph=String(VS.phase||'');
+  const mQ=ph.match(/^q(\d+)$/),mD=ph.match(/^d(\d+)$/);
+  if(!mQ&&!mD)return;
+  const i=+(mQ?mQ[1]:mD[1]),pre=mQ?'q':'d',opp=VS.who==='natan'?'pino':'natan';
+  const a=VS.ans[pre+i]||{};
   const el=document.getElementById('vs-opp');
   if(el)el.textContent=a[opp]?NAMES[opp]+' '+GEN[opp].ansd:'';
-  if(a.natan&&a.pino&&!VS.zoom['q'+i]){
-    VS.zoom['q'+i]=1;
+  const need=pre==='d'?vsWinners(i):['natan','pino'];
+  if(need.length&&need.every(w=>a[w])&&!VS.zoom[pre+i]){
+    VS.zoom[pre+i]=1;
     /* both in — whoosh forward */
     tone(523,0,.07,'sine',.08);tone(784,.05,.08,'sine',.09);tone(1175,.1,.14,'sine',.1);tone(1568,.16,.18,'sine',.07);
     flashGlow();buzz(20);
   }
 }
-function renderReveal(i){
-  if(VS.phase!=='r'+i){
-    VS.phase='r'+i;
-    tone(392,0,.06,'sine',.05);tone(587,.04,.07,'sine',.05);tone(880,.08,.09,'sine',.05);
-    const q=VQ[VS.game.qs[i]],ord=VS.order['q'+i]||vsOrd(i);
-    const opp=VS.who==='natan'?'pino':'natan';
-    const a=VS.ans['q'+i]||{},mine=a[VS.who],hers=a[opp];
-    if(VS.myPick['q'+i]===undefined&&!mine){SFX.meh()}
-    const line=w=>{const x=a[w];if(!x)return NAMES[w]+': '+GEN[w].late;
-      return NAMES[w]+': '+(x.ok?'נכון ✓ +'+(100+Math.max(0,Math.round((VS_Q-x.ms)/100))):'טעות ✗')+' ('+(x.ms/1000).toFixed(1)+' שנ׳)'};
-    VS.el().innerHTML=scoreHead(i)+
-      '<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p><p class="vs-q">'+q.q+'</p>'+
-      '<div class="vs-opts">'+ord.map(o=>{
-        let cls=o===0?'good':(((mine&&mine.c===o)||(hers&&hers.c===o))?'bad':'');
-        const pickers=['natan','pino'].filter(w=>a[w]&&a[w].c===o);
-        const tags=pickers.map(w=>'<span class="picktag '+w+(pickers.length>1?' two':'')+'">'+NAMES[w]+'</span>').join('');
-        return '<button disabled class="'+cls+'">'+q.o[o]+tags+'</button>'}).join('')+
-      '</div></div>'+
-      '<div class="vs-opp" style="color:var(--vwhite);font-size:15px;line-height:1.7">'+qWinBadge(a)+line(VS.who)+'<br>'+line(opp)+'</div>';
-    const winners=['natan','pino'].filter(w=>a[w]&&a[w].ok);
-    if(winners.length){
-      const tw=winners.length===1?winners[0]:(a.natan.ms<=a.pino.ms?'natan':'pino');
-      if(tw===VS.who){
-        const gb=document.querySelector('#vs-body .vs-opts button.good');
-        if(gb){popAt(gb);tone(1046,.1,.09,'sine',.07);tone(1568,.18,.12,'sine',.06)}
-      }
-    }
-  }
+function ptLine(i,w,pre){
+  const A=VS.ans[(pre||'q')+i]||{},a=A[w];
+  if(!a)return NAMES[w]+': '+GEN[w].late;
+  const pts=pre==='d'?vsDPts(i,w):vsPts(i,w);
+  const t=(vsItem(i)||{}).t||'m';
+  let st;
+  if(pre==='d'||t==='m')st=a.ok?'נכון ✓ +'+pts:'טעות ✗';
+  else if(t==='o')st=(a.ok?'סדר מושלם ✓':(a.pc||0)+'/4 במקום')+' · +'+pts;
+  else if(t==='s')st=(a.ok?'מדויק ✓':(a.hit||0)+' פגיעות, '+(a.miss||0)+' פספוסים')+' · +'+pts;
+  else if(t==='p')st=(a.ok?'כל הזוגות ✓':(a.pc||0)+'/4 זוגות')+' · +'+pts;
+  else st='+'+pts;
+  return NAMES[w]+': '+st+' ('+((a.ms||0)/1000).toFixed(1)+' שנ׳)';
 }
-function qWinBadge(a){
-  const c=['natan','pino'].filter(w=>a[w]&&a[w].ok);
-  if(!c.length)return '';
-  const w=c.length===1?c[0]:(a.natan.ms<=a.pino.ms?'natan':'pino');
+function vsBadge(i,pre){
+  const A=VS.ans[(pre||'q')+i]||{};
+  const f=w=>pre==='d'?vsDPts(i,w):vsPts(i,w);
+  const pn=f('natan'),pp=f('pino');
+  if(pn<=0&&pp<=0)return '';
+  let w;
+  if(pn>pp)w='natan';else if(pp>pn)w='pino';
+  else w=((A.natan||{}).ms||1e9)<=((A.pino||{}).ms||1e9)?'natan':'pino';
   const verb=w==='pino'?'לקחה':'לקח';
   const col=w==='natan'?'var(--tq)':'var(--lil)';
   return '<div style="font-weight:700;font-size:16px;color:'+col+';margin-bottom:6px">⚡ '+NAMES[w]+' '+verb+' את השאלה</div>';
+}
+function fmtN(x){return (typeof x==='number'?x:0).toLocaleString('he-IL')}
+function pickTags(a,o){
+  const pickers=['natan','pino'].filter(w=>a[w]&&a[w].c===o);
+  return pickers.map(w=>'<span class="picktag '+w+(pickers.length>1?' two':'')+'">'+NAMES[w]+'</span>').join('');
+}
+function renderReveal(i){
+  if(VS.phase!==('r'+i))
+  {
+    VS.phase='r'+i;
+    tone(392,0,.06,'sine',.05);tone(587,.04,.07,'sine',.05);tone(880,.08,.09,'sine',.05);
+    const it=vsItem(i),t=(it&&it.t)||'m',q=vsData(it);
+    const opp=VS.who==='natan'?'pino':'natan';
+    const a=VS.ans['q'+i]||{},mine=a[VS.who];
+    if(!mine){SFX.meh()}
+    let body='';
+    if(t==='m'){
+      const ord=VS.order['q'+i]||vsOrd(i);
+      body='<div class="vs-qcard in"><p class="vs-qcat">'+q.c+'</p>'+
+        (q.img?'<img class="vs-qimg" src="'+q.img+'" alt="" onerror="this.hidden=true">':'')+
+        '<p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-opts">'+ord.map(o=>{
+          let cls=o===0?'good':((['natan','pino'].some(w=>a[w]&&a[w].c===o))?'bad':'');
+          return '<button disabled class="'+cls+'">'+q.o[o]+pickTags(a,o)+'</button>'}).join('')+
+        '</div></div>';
+    }else if(t==='o'){
+      body='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p><p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-seq">'+q.items.map((x,k)=>{
+          const marks=['natan','pino'].filter(w=>a[w]&&a[w].v&&a[w].v[k]===k).map(w=>'<i class="sq '+w+'">✓</i>').join('');
+          return '<div class="row"><b>'+(k+1)+'</b><span>'+x+'</span>'+marks+'</div>'}).join('')+
+        '</div></div>';
+    }else if(t==='s'){
+      body='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p><p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-opts vs-selopts">'+q.o.map((x,o)=>{
+          const good=o<q.k;
+          const picked=['natan','pino'].filter(w=>a[w]&&(a[w].v||[]).indexOf(o)>=0);
+          const cls=good?'good':(picked.length?'bad':'');
+          const tags=picked.map(w=>'<span class="picktag '+w+(picked.length>1?' two':'')+'">'+NAMES[w]+'</span>').join('');
+          return '<button disabled class="'+cls+'"><i class="ck"></i>'+x+tags+'</button>'}).join('')+
+        '</div></div>';
+    }else if(t==='n'){
+      const g=w=>{const x=a[w];if(!x||typeof x.v!=='number')return '<div class="vs-guess '+w+'"><b>—</b><span>'+NAMES[w]+' · '+GEN[w].late+'</span></div>';
+        const d=Math.abs(x.v-q.a);return '<div class="vs-guess '+w+'"><b>'+fmtN(x.v)+'</b><span>'+NAMES[w]+' · מרחק '+fmtN(Math.round(d*10)/10)+'</span></div>'};
+      body='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p><p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-truth"><span>התשובה</span><b>'+fmtN(q.a)+(q.u?' '+q.u:'')+'</b></div>'+
+        '<div class="vs-guesses">'+g(VS.who)+g(VS.who==='natan'?'pino':'natan')+'</div></div>';
+    }else if(t==='p'){
+      body='<div class="vs-qcard in act"><p class="vs-qcat">'+q.c+typeChip(t)+'</p><p class="vs-q">'+q.q+'</p>'+
+        '<div class="vs-seq">'+q.l.map((x,k)=>{
+          const marks=['natan','pino'].filter(w=>a[w]&&a[w].v&&a[w].v[k]===k).map(w=>'<i class="sq '+w+'">✓</i>').join('');
+          return '<div class="row"><span>'+x+' ← '+q.r[k]+'</span>'+marks+'</div>'}).join('')+
+        '</div></div>';
+    }
+    VS.el().innerHTML=scoreHead(i)+body+
+      '<div class="vs-opp" style="color:var(--vwhite);font-size:15px;line-height:1.7">'+vsBadge(i)+ptLine(i,VS.who)+'<br>'+ptLine(i,opp)+'</div>'+
+      ((it&&it.dd&&vsWinners(i).length)?'<p class="vs-dnext">⚡ שאלת בונוס בדרך ל'+vsWinners(i).map(w=>NAMES[w]).join(' ול')+'…</p>':'');
+    const mePts=vsPts(i,VS.who),oppPts=vsPts(i,opp);
+    if(mePts>0&&mePts>=oppPts){
+      const gb=document.querySelector('#vs-body .vs-opts button.good')||document.querySelector('#vs-body .vs-truth')||document.querySelector('#vs-body .vs-seq');
+      if(gb){popAt(gb);tone(1046,.1,.09,'sine',.07);tone(1568,.18,.12,'sine',.06)}
+    }
+  }
+}
+/* --- שאלת דאבל: מי שצדק עונה, השני צופה חי --- */
+function renderDouble(i,at){
+  if(VS.phase!==('d'+i)){
+    VS.phase='d'+i;
+    const it=vsItem(i),q=VQ[it.j].d;
+    const E=vsWinners(i),me=E.indexOf(VS.who)>=0;
+    const ord=aShuf(4,gseed()+i*777+3);
+    if(me){SFX_VS.bonus();buzz([20,40,20])}else{SFX_VS.lock()}
+    VS.el().innerHTML=scoreHead(i)+timerHtml()+
+      '<div class="vs-qcard in dcard'+(me?'':' locked')+'"><p class="vs-qcat">'+typeChip('d')+(me?'<span class="vs-dnote">צדקת — שווה עוד נקודות!</span>':'')+'</p>'+
+      '<p class="vs-q">'+q.q+'</p>'+
+      (me?'':'<p class="vs-lockrib">🔒 רק מי שצדק עונה — את/ה צופה חי</p>')+
+      '<div class="vs-opts" id="vs-opts">'+
+      ord.map(o=>'<button '+(me?'onclick="vsAnsD('+i+','+o+',this)"':'disabled class="dim"')+'>'+q.o[o]+'</button>').join('')+
+      '</div></div>'+oppLine();
+    if(me&&VS.myPick['d'+i]!==undefined)vsLockUI();
+  }
+  onAnsUpdate();
+}
+function vsAnsD(i,orig,btn){
+  const key='d'+i;
+  if(VS.myPick[key]!==undefined)return;
+  VS.myPick[key]=1;
+  const ms=vsMs(i,'d');
+  const ok=orig===0?1:0;
+  vsLockUI();btn.classList.add('sel');
+  const pts=ok?100+spdBonus('d',ms):0;
+  if(ok){SFX.ok();buzz(30);vsFb('בונוס! +'+pts,true);popAt(btn)}
+  else{SFX.no();buzz([40,60,40]);vsFb('הבונוס התפספס…',false)}
+  const obj={c:orig,ok:ok,ms:ms};
+  if(!VS.ans[key])VS.ans[key]={};VS.ans[key][VS.who]=obj;
+  if(VS.db)VS.db.ref('versus/game/ans/'+key+'/'+VS.who).set(obj);
+}
+function renderDoubleReveal(i){
+  if(VS.phase!==('e'+i)){
+    VS.phase='e'+i;
+    tone(392,0,.06,'sine',.05);tone(587,.04,.07,'sine',.05);tone(880,.08,.09,'sine',.05);
+    const it=vsItem(i),q=VQ[it.j].d;
+    const E=vsWinners(i),a=VS.ans['d'+i]||{};
+    const ord=aShuf(4,gseed()+i*777+3);
+    const opp=VS.who==='natan'?'pino':'natan';
+    const lines=E.map(w=>{const x=a[w];if(!x)return NAMES[w]+': '+GEN[w].late;
+      return NAMES[w]+': '+(x.ok?'נכון ✓ +'+vsDPts(i,w):'טעות ✗')+' ('+(x.ms/1000).toFixed(1)+' שנ׳)'}).join('<br>');
+    VS.el().innerHTML=scoreHead(i)+
+      '<div class="vs-qcard in dcard"><p class="vs-qcat">'+typeChip('d')+'</p><p class="vs-q">'+q.q+'</p>'+
+      '<div class="vs-opts">'+ord.map(o=>{
+        let cls=o===0?'good':((E.some(w=>a[w]&&a[w].c===o))?'bad':'');
+        return '<button disabled class="'+cls+'">'+q.o[o]+pickTags(a,o)+'</button>'}).join('')+
+      '</div></div>'+
+      '<div class="vs-opp" style="color:var(--vwhite);font-size:15px;line-height:1.7">'+vsBadge(i,'d')+lines+'</div>';
+  }
 }
 const REAL={natan:'נתנאל',pino:'שיראל'};
 function vsName(w,r){return r<0.35?REAL[w]:NAMES[w]}
@@ -1712,7 +2321,8 @@ function vsExposeJoke(upto){
   const R=srand(gseed()^Math.imul(upto+1,2654435761));
   const bank=[];
   for(let i=0;i<upto;i++){
-    const q=VQ[VS.game.qs[i]];if(!q)continue;
+    const it=vsItem(i);if(!it||(it.t&&it.t!=='m'))continue;
+    const q=VQ[it.j];if(!q)continue;
     ['natan','pino'].forEach(w=>{
       const a=(VS.ans['q'+i]||{})[w];
       if(!a)bank.push({w,q:q.q,type:'tm'});
@@ -1742,8 +2352,25 @@ function vsExposeJoke(upto){
            'עצרו הכול. <b>'+n+'</b> באמת לחצ'+(f?'ה':'')+' על ״'+m.wrong+'״ ב״'+m.q+'״ 🚨'];
   return T[Math.floor(R()*T.length)];
 }
-function renderBreak(roundIdx){
-  if(VS.phase!=='b'+roundIdx){
+/* הפסקת סבב: לוח קצר, ואז ספירה לוהטת 3־2־1 — שונה לגמרי ממסך הפתיחה */
+let bcShown=-1;
+function renderBreak(roundIdx,at){
+  const left=at+VS_BREAK-VS.now();
+  if(left<=3200){
+    const sec=Math.max(0,Math.ceil((left-200)/1000));
+    if(VS.phase===('bc'+roundIdx)&&bcShown===sec)return;
+    const first=VS.phase!==('bc'+roundIdx);
+    VS.phase='bc'+roundIdx;bcShown=sec;
+    if(sec>0){SFX_VS.btick();buzz(20)}
+    VS.el().innerHTML='<div class="vs-center vs-bcd-wrap">'+
+      '<p class="vs-bcd-lbl">סבב '+(roundIdx+1)+'</p>'+
+      (sec>0?'<div class="vs-bcd"><i class="ring"></i><b>'+sec+'</b></div><p class="vs-bcd-sub">מוכנים…</p>'
+            :'<div class="vs-bcd go"><b>צא!</b></div>')+
+      '</div>';
+    if(sec===0&&first!==true)SFX_VS.go();
+    return;
+  }
+  if(VS.phase!==('b'+roundIdx)){
     VS.phase='b'+roundIdx;SFX.round();
     const me=VS.score(VS.who),her=VS.score(VS.who==='natan'?'pino':'natan');
     const oppW=VS.who==='natan'?'pino':'natan';
@@ -1755,17 +2382,41 @@ function renderBreak(roundIdx){
       '<h2 class="vs-title" style="font-size:28px">סוף סבב '+roundIdx+'</h2>'+
       '<p class="vs-final" style="font-size:52px">'+me+' : '+her+'</p>'+
       '<p class="vs-sub" style="margin-bottom:0">'+msg+'</p>'+
-      '<p class="vs-expose">'+vsExposeJoke(roundIdx*VS_PER_ROUND)+'</p>'+
-      '<p class="vs-sub" style="margin-top:12px">סבב '+(roundIdx+1)+' מתחיל עוד רגע…</p></div>';
+      '<p class="vs-expose">'+vsExposeJoke(roundIdx*VS_PER_ROUND)+'</p></div>';
   }
 }
 function vsMistakes(w){
   const out=[];
   for(let i=0;i<VS_N;i++){
-    const a=(VS.ans['q'+i]||{})[w],q=VQ[VS.game.qs[i]];
-    if(!q)continue;
-    if(!a)out.push({q:q.q,ans:q.o[0],tm:true});
-    else if(!a.ok)out.push({q:q.q,ans:q.o[0],tm:false});
+    const it=vsItem(i);if(!it)continue;
+    const t=it.t||'m',q=vsData(it);if(!q)continue;
+    const a=(VS.ans['q'+i]||{})[w];
+    if(t==='m'){
+      if(!a)out.push({q:q.q,ans:'✔ '+q.o[0],tm:true,w});
+      else if(!a.ok)out.push({q:q.q,ans:'✔ '+q.o[0],tm:false,w});
+    }else if(t==='o'){
+      if(!a)out.push({q:q.q,ans:'✔ '+q.items.join(' ← '),tm:true,w});
+      else if(!a.ok)out.push({q:q.q,ans:'✔ '+q.items.join(' ← ')+' · סידרת '+(a.pc||0)+'/4',tm:false,w});
+    }else if(t==='s'){
+      if(!a)out.push({q:q.q,ans:'✔ '+q.o.slice(0,q.k).join(', '),tm:true,w});
+      else if(!a.ok)out.push({q:q.q,ans:'✔ '+q.o.slice(0,q.k).join(', '),tm:false,w});
+    }else if(t==='n'){
+      const pts=vsPts(i,w);
+      if(!a)out.push({q:q.q,ans:'✔ '+fmtN(q.a)+(q.u?' '+q.u:''),tm:true,w});
+      else if(pts<=0)out.push({q:q.q,ans:'✔ '+fmtN(q.a)+(q.u?' '+q.u:'')+' · ניחשת '+fmtN(a.v),tm:false,w});
+    }else if(t==='p'){
+      if(!a)out.push({q:q.q,ans:'✔ '+q.l.map((x,k)=>x+'↔'+q.r[k]).join(' · '),tm:true,w});
+      else if(!a.ok)out.push({q:q.q,ans:'✔ '+q.l.map((x,k)=>x+'↔'+q.r[k]).join(' · ')+' · '+(a.pc||0)+'/4',tm:false,w});
+    }
+    if(it.dd){
+      const A=(VS.ans['q'+i]||{})[w];
+      if(A&&A.ok){
+        const da=(VS.ans['d'+i]||{})[w];
+        const dq=VQ[it.j].d;
+        if(!da)out.push({q:'⚡ בונוס: '+dq.q,ans:'✔ '+dq.o[0],tm:true,w});
+        else if(!da.ok)out.push({q:'⚡ בונוס: '+dq.q,ans:'✔ '+dq.o[0],tm:false,w});
+      }
+    }
   }
   return out;
 }
@@ -1773,7 +2424,7 @@ function vsRevSection(w,cls){
   const m=vsMistakes(w);
   let h='<div class="vs-rev"><h4 class="'+cls+'">הטעויות של '+NAMES[w]+' ('+m.length+')</h4>';
   if(!m.length)return h+'<p class="ok-all">אפס טעויות. מפחיד. 😳</p></div>';
-  h+=m.map(x=>'<div class="row"><p>'+x.q+'</p><small class="'+(x.tm?'tm':'')+'">'+(x.tm?'⏰ '+GEN[w].late+' · ':'')+'✔ '+x.ans+'</small></div>').join('');
+  h+=m.map(x=>'<div class="row"><p>'+x.q+'</p><small class="'+(x.tm?'tm':'')+'">'+(x.tm?'⏰ '+GEN[x.w].late+' · ':'')+x.ans+'</small></div>').join('');
   return h+'</div>';
 }
 function renderEnd(){
@@ -1817,7 +2468,7 @@ function vsAgainUI(){
   const btn=document.getElementById('vs-again-btn');
   const note=document.getElementById('vs-again-note');
   if(btn&&a[VS.who]){btn.disabled=true;btn.style.opacity=.6;btn.textContent=a[opp]?'מתחילים! ⚡':'ממתין ל'+NAMES[opp]+'…'}
-  if(note)note.textContent=(a[opp]&&!a[VS.who])?NAMES[opp]+' '+(opp==='pino'?'רוצה':'רוצה')+' נקמה! לוחצים? 🔥':'';
+  if(note)note.textContent=(a[opp]&&!a[VS.who])?NAMES[opp]+' רוצה נקמה! לוחצים? 🔥':'';
 }
 function confettiVs(){
   const w=document.getElementById('confetti');w.innerHTML='';
@@ -1832,6 +2483,7 @@ function confettiVs(){
     w.appendChild(s);
   }
 }
+
 
 /* ================= PWA ================= */
 if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
@@ -1849,16 +2501,16 @@ function dyQs(){return sshuffle([...Array(VQ.length).keys()],dyHash('daily-'+dyK
 function dyOrd(i){return sshuffle([0,1,2,3],dyHash('ord-'+dyKey())+i*131+7)}
 function dyDot(){const el=document.getElementById('nav-dy-dot');if(el)el.hidden=!!(S.dy&&S.dy.date===dyKey()&&S.dy.done)}
 function dyHebDate(){return new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'})}
-const DY_WIN={natan:["נינו לקח את היום 👑 פוניטה — מחר את חוזרת בגדול 💘","הכתר של היום אצל נינו. הלב? נשאר חצי־חצי 💞","נינו ניצח בידע — פוניטה מנצחת בכל השאר 🥰","איזה מוח יש לנינו! פוניטה, לפחות בחרת נכון 😏💗","נינו חכם היום. פוניטה יפה תמיד. תיקו בחיים 💑"],
-pino:["פוניטה לקחה את היום 👑 נינו — מחר אתה חוזר בגדול 💘","הכתר של היום אצל פוניטה. הלב? נשאר חצי־חצי 💞","פוניטה ניצחה בידע — נינו מנצח בכל השאר 🥰","איזה מוח יש לפוניטה! נינו, לפחות בחרת נכון 😏💗","פוניטה חכמה היום. נינו חמוד תמיד. תיקו בחיים 💑"]};
-const DY_TIE=["תיקו מושלם — מוחות תאומים 🧠💞","אותו ציון בדיוק. זה גורל 🔮❤️","שוויון — בדיוק כמו שזוג צריך 💑","תיקו! הפרס: דייט 🍷💘"];
+const DY_WIN={natan:["נינו לקח את היום. פוניטה — נקמה מחר? 😉","היום של נינו. מחר דף חדש 🌙","נינו מוביל בידע. בכל השאר — שקול 😌","יתרון קטן לנינו. זמני, כמובן 😏","נינו צדק יותר היום. הכתר עובר דירה מחר? 👑"],
+pino:["פוניטה לקחה את היום. נינו — נקמה מחר? 😉","היום של פוניטה. מחר דף חדש 🌙","פוניטה מובילה בידע. בכל השאר — שקול 😌","יתרון קטן לפוניטה. זמני, כמובן 😏","פוניטה צדקה יותר היום. הכתר עובר דירה מחר? 👑"]};
+const DY_TIE=["תיקו נקי. מוחות מסונכרנים 🤝","אותו ציון בדיוק. מרשים 🎯","שוויון מוחלט — אין מנצח היום 😌","תיקו. מחר שוברים אותו 🌙"];
 let DYRUN=null, DYREF=null;
 function dyEnsure(){const t=dyKey();if(!S.dy||S.dy.date!==t){S.dy={date:t,res:[],done:0,sync:0};save()}}
 function renderDaily(){
   const b=document.getElementById('dy-body');
   if(typeof VQ==='undefined'||!VQ.length){b.innerHTML='<p class="dy-sub" style="margin-top:6vh">גרסת השאלות ישנה — רענן את האפליקציה כשיש אינטרנט.</p>';return}
   if(!S.vsWho){
-    b.innerHTML='<div class="dy-hero"><p class="dy-names">מי כאן? 💕</p><p class="dy-sub">פעם אחת בלבד — כדי שנדע מול מי משווים.</p>'+
+    b.innerHTML='<div class="dy-hero"><p class="dy-names">מי כאן?</p><p class="dy-sub">פעם אחת בלבד — כדי שנדע מול מי משווים.</p>'+
       '<button class="dy-pickbtn" onclick="SFX.tap();S.vsWho=\'natan\';save();renderDaily()">אני נינו</button>'+
       '<button class="dy-pickbtn" onclick="SFX.tap();S.vsWho=\'pino\';save();renderDaily()">אני פוניטה</button></div>';
     return;
@@ -1868,12 +2520,12 @@ function renderDaily(){
   if(DYRUN&&DYRUN.date===S.dy.date&&S.dy.res.length>0&&S.dy.res.length<DY_TOTAL){dyQuestion();return}
   DYRUN={date:S.dy.date,qs:dyQs()};
   if(S.dy.res.length>0&&S.dy.res.length<DY_TOTAL){dyQuestion();return}
-  b.innerHTML='<div class="dy-hero"><p class="dy-names">נינו ♥ פוניטה</p><p class="dy-date">'+dyHebDate()+'</p>'+
-    '<p class="dy-sub">10 שאלות. אותן שאלות בדיוק גם אצל '+NAMES[S.vsWho==='natan'?'pino':'natan']+' — כל אחד עונה מתי שמתאים לו, ובסוף משווים 💘</p>'+
-    '<button class="dy-start" onclick="SFX.tap();dyStart()">מתחילים 💘</button></div>';
+  b.innerHTML='<div class="dy-hero"><p class="dy-names">נינו <span class="ht">♥</span> פוניטה</p><p class="dy-date">'+dyHebDate()+'</p>'+
+    '<p class="dy-sub">10 שאלות. אותן שאלות בדיוק גם אצל '+NAMES[S.vsWho==='natan'?'pino':'natan']+' — כל אחד עונה מתי שמתאים לו, ובסוף משווים</p>'+
+    '<button class="dy-start" onclick="SFX.tap();dyStart()">מתחילים</button></div>';
 }
 function dyStart(){dyEnsure();if(!DYRUN||DYRUN.date!==S.dy.date)DYRUN={date:S.dy.date,qs:dyQs()};dyQuestion()}
-function dyProg(){let h='';for(let k=0;k<DY_TOTAL;k++){const r=S.dy.res[k];h+='<i class="'+(r===1?'f':(r===0?'x':''))+'">♥</i>'}return '<div class="dy-prog">'+h+'</div>'}
+function dyProg(){let h='';for(let k=0;k<DY_TOTAL;k++){const r=S.dy.res[k];h+='<i class="'+(r===1?'f':(r===0?'x':''))+'"></i>'}return '<div class="dy-seg">'+h+'</div>'}
 function dyQuestion(){
   const b=document.getElementById('dy-body'), i=S.dy.res.length, q=VQ[DYRUN.qs[i]], ord=dyOrd(i);
   b.innerHTML=dyProg()+'<div class="dy-qcard"><p class="dy-qcat">'+q.c+' · שאלה '+(i+1)+'/'+DY_TOTAL+'</p><p class="dy-q">'+q.q+'</p>'+
@@ -1898,7 +2550,7 @@ function dySync(){
 function dyResult(){
   const b=document.getElementById('dy-body'), me=S.dy.res.reduce((a,c)=>a+c,0), opp=S.vsWho==='natan'?'pino':'natan';
   b.innerHTML=dyProg()+
-    '<div class="dy-score"><span class="hg">💘</span><b>'+me+'/'+DY_TOTAL+'</b><span>הציון שלך היום, '+NAMES[S.vsWho]+'</span></div>'+
+    '<div class="dy-score"><span class="hg">🤍</span><b>'+me+'/'+DY_TOTAL+'</b><span>הציון שלך היום, '+NAMES[S.vsWho]+'</span></div>'+
     '<p class="dy-sub" id="dy-sync-note" style="margin:0 auto 10px">'+(S.dy.sync?'':'מסנכרן… אם אין אינטרנט, זה יעלה בפתיחה הבאה')+'</p>'+
     '<div class="dy-panel" id="dy-opp"><h4>'+NAMES[opp]+'</h4><div class="dy-wait"><span class="env">💌</span>עוד לא שיחק/ה היום — ברגע שתסיים, תראו כאן את ההשוואה</div></div>'+
     '<div id="dy-streak-wrap" style="text-align:center"></div>'+
@@ -1923,30 +2575,61 @@ function dyCompare(v){
   let rows='';
   for(let i=0;i<DY_TOTAL;i++){
     const qt=(VQ[qs[i]].q.length>52?VQ[qs[i]].q.slice(0,50)+'…':VQ[qs[i]].q);
-    rows+='<div class="dy-row"><span class="mk">'+(S.dy.res[i]?'💚':'✗')+'</span><span class="qt">'+qt+'</span><span class="mk">'+(oa[i]?'💚':'✗')+'</span></div>';
+    rows+='<div class="dy-row"><span class="mk">'+(S.dy.res[i]?'<i class="okm">✓</i>':'<i class="nom">✗</i>')+'</span><span class="qt">'+qt+'</span><span class="mk">'+(oa[i]?'<i class="okm">✓</i>':'<i class="nom">✗</i>')+'</span></div>';
   }
-  el.innerHTML='<div class="dy-vs-head"><div class="pl"><b>'+me+'</b>'+NAMES[S.vsWho]+'</div><span class="ht">💞</span><div class="pl"><b>'+os+'</b>'+NAMES[opp]+'</div></div>'+
+  el.innerHTML='<div class="dy-vs-head"><div class="pl"><b>'+me+'</b>'+NAMES[S.vsWho]+'</div><span class="ht">♥</span><div class="pl"><b>'+os+'</b>'+NAMES[opp]+'</div></div>'+
     '<p class="dy-love">'+line+'</p>'+
-    '<div class="dy-row" style="border-bottom:1px solid #331824;color:#E886AC;font-size:12px"><span class="mk">'+NAMES[S.vsWho]+'</span><span class="qt" style="text-align:center">השאלה</span><span class="mk">'+NAMES[opp]+'</span></div>'+rows;
+    '<div class="dy-row" style="border-bottom:1px solid #2C1822;color:#C793AB;font-size:12px"><span class="mk">'+NAMES[S.vsWho]+'</span><span class="qt" style="text-align:center">השאלה</span><span class="mk">'+NAMES[opp]+'</span></div>'+rows;
 }
 function dyStreak(all){
   const wrap=document.getElementById('dy-streak-wrap');if(!wrap)return;
   let n=0,d=new Date();
   while(true){const k=dyKey(d);const e=all[k];if(e&&e.natan&&e.pino){n++;d.setDate(d.getDate()-1)}else{if(k===dyKey()){d.setDate(d.getDate()-1);continue}break}}
-  if(n>0)wrap.innerHTML='<span class="dy-streak">🔥 רצף משותף: '+n+' '+(n===1?'יום':'ימים')+' של אהבה וידע</span>';
+  if(n>0)wrap.innerHTML='<span class="dy-streak">🔥 רצף משותף: '+n+' '+(n===1?'יום':'ימים')+' של ידע משותף</span>';
 }
 
 /* ================= PATHS — מסלולי למידה ================= */
 let PR={id:null,i:0,rev:false,hint:false};
 function pathById(id){return PATHS.find(p=>p.id===id)}
+function pthRoute(done,tot){
+  /* מסלול לילי: תחנות על נתיב מפותל, מימין לשמאל */
+  const W=300,H=52,pad=14;
+  const pts=[];
+  for(let k=0;k<tot;k++){const x=W-pad-(W-2*pad)*(tot===1?0:k/(tot-1));const y=k%2?37:15;pts.push([x,y])}
+  const seg=(a,b)=>{const mx=((a[0]+b[0])/2).toFixed(1);return ' C'+mx+','+a[1]+' '+mx+','+b[1]+' '+b[0].toFixed(1)+','+b[1]};
+  let full='M'+pts[0][0].toFixed(1)+','+pts[0][1];
+  for(let k=1;k<tot;k++)full+=seg(pts[k-1],pts[k]);
+  const litN=Math.max(0,Math.min(done,tot-1));
+  let lit='M'+pts[0][0].toFixed(1)+','+pts[0][1];
+  for(let k=1;k<=litN;k++)lit+=seg(pts[k-1],pts[k]);
+  const curIx=done<tot?done:-1;
+  let dots='';
+  for(let k=0;k<tot;k++){
+    const cls=k===curIx?'st cur':(k<done?'st done':'st');
+    dots+='<circle class="'+cls+'" cx="'+pts[k][0].toFixed(1)+'" cy="'+pts[k][1]+'" r="'+(k===curIx?5.5:4)+'"/>';
+  }
+  return '<svg class="pth-route" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+
+    '<path class="trail" d="'+full+'"/>'+(litN>0?'<path class="trail lit" d="'+lit+'"/>':'')+dots+'</svg>';
+}
+function ensureStars(){
+  const f=document.getElementById('starfield');
+  if(!f||f.childElementCount)return;
+  let s='';
+  for(let k=0;k<46;k++){
+    const z=(Math.random()*1.6+.8).toFixed(1);
+    s+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*100).toFixed(1)+'%;width:'+z+'px;height:'+z+'px;animation-duration:'+(2.4+Math.random()*3.4).toFixed(1)+'s;animation-delay:'+(Math.random()*3).toFixed(1)+'s"></i>';
+  }
+  f.innerHTML=s;
+}
 function renderPaths(){
   const l=document.getElementById('pth-list');
   if(typeof PATHS==='undefined'){l.innerHTML='<p class="pth-sub">גרסת התוכן ישנה — רענן את האפליקציה כשיש אינטרנט.</p>';return}
+  ensureStars();
   l.innerHTML=PATHS.map(p=>{
-    const done=S.pt[p.id]||0, tot=p.steps.length, pc=Math.round(done/tot*100);
+    const done=S.pt[p.id]||0, tot=p.steps.length;
     const st=done>=tot?'המסע הושלם ✓ — אפשר לעבור שוב':(done>0?'תחנה '+(done+1)+' מתוך '+tot:'עוד לא יצאת לדרך');
     return '<button class="pth-card" onclick="SFX.tap();openPath(\''+p.id+'\')"><div class="hd"><span class="ico">'+p.icon+'</span><b>'+p.title+'</b></div>'+
-      '<small>'+p.sub+'</small><div class="pth-track"><i style="width:'+pc+'%"></i></div><p class="pth-st">'+st+'</p></button>';
+      '<small>'+p.sub+'</small>'+pthRoute(done,tot)+'<p class="pth-st">'+st+'</p></button>';
   }).join('');
 }
 function openPath(id){
@@ -1958,8 +2641,8 @@ function openPath(id){
 function prStep(){
   const p=pathById(PR.id), st=p.steps[PR.i], b=document.getElementById('pr-body');
   PR.rev=false;PR.hint=false;
-  let dots='';for(let k=0;k<p.steps.length;k++)dots+='<i class="'+(k<=PR.i?'f':'')+'"></i>';
-  b.innerHTML='<div class="pr-dots">'+dots+'</div><p class="pr-chap">תחנה '+(PR.i+1)+' מתוך '+p.steps.length+'</p>'+
+  ensureStars();
+  b.innerHTML=pthRoute(PR.i,p.steps.length)+'<p class="pr-chap">תחנה '+(PR.i+1)+' מתוך '+p.steps.length+'</p>'+
     '<div class="pr-story"><b>'+st.t+'</b>'+st.txt+'</div>'+
     '<div class="card"><p class="cat" style="font-size:12px;color:#8A7B58;letter-spacing:.12em;margin:0 0 8px">עצור וחשוב</p>'+
     '<p style="font:500 20px/1.45 \'Frank Ruhl Libre\',serif;margin:0">'+st.q+'</p>'+
