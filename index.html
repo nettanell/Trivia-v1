@@ -546,17 +546,20 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 .vs-lockrib{font-size:13.5px;color:#FFD9A0;background:rgba(255,196,110,.09);border:1px dashed rgba(255,196,110,.4);border-radius:11px;padding:9px 12px;margin:-6px 0 14px;line-height:1.5}
 .vs-dnext{text-align:center;font-size:14.5px;font-weight:700;color:#FFD9A0;margin-top:12px;animation:cdPop .5s cubic-bezier(.22,1.4,.36,1)}
 /* ספירה לוהטת בין סבבים — שונה לגמרי מהפתיחה */
-.vs-bcd-wrap{position:relative}
-.vs-bcd-lbl{font-size:13px;letter-spacing:.3em;color:#FF9E6E;margin:0 0 10px;font-weight:700}
-.vs-bcd{position:relative;width:170px;height:170px;margin:0 auto;display:grid;place-items:center}
-.vs-bcd b{font:800 96px/1 "Heebo";background:linear-gradient(160deg,#FFE3B0 10%,#FF9E6E 55%,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(255,140,90,.55));animation:bcdPop .96s cubic-bezier(.22,1.5,.36,1)}
+.vs-bcd-wrap{position:fixed;inset:0;z-index:1;text-align:center;pointer-events:none}
+.vs-bcd-lbl{position:absolute;left:0;right:0;top:calc(50% - 85px - 34px);font-size:13px;letter-spacing:.3em;color:#FF9E6E;margin:0;font-weight:700}
+.vs-bcd{position:absolute;left:50%;top:50%;width:170px;height:170px;margin:-85px 0 0 -85px}
+.vs-bcd b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 96px/1 "Heebo";background:linear-gradient(160deg,#FFE3B0 10%,#FF9E6E 55%,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(255,140,90,.55));animation:bcdPop .96s cubic-bezier(.22,1.5,.36,1)}
+.vs-bcd b{padding-top:.09em} /* פיצוי מטריקות Heebo: הספרה יושבת ~0.046em מעל מרכז השורה */
+.vs-bcd.d1 b{padding-left:.094em} /* הספרה 1 צרה ומוסטת שמאלה בתוך התיבה שלה */
+.vs-bcd.go b{padding:0}
 .vs-bcd .ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,158,110,.55);animation:bcdRing .96s ease-out}
 .vs-bcd::after{content:"";position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,rgba(255,140,90,.22),transparent 65%);animation:bcdGlow .96s ease-out}
 @keyframes bcdPop{0%{transform:scale(1.9);opacity:0}35%{transform:scale(1);opacity:1}}
 @keyframes bcdRing{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
 @keyframes bcdGlow{0%{opacity:1}100%{opacity:.25}}
 .vs-bcd.go b{font-size:64px;background:linear-gradient(120deg,#FFE3B0,#FF9E6E,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent}
-.vs-bcd-sub{color:#C9836B;font-size:14px;letter-spacing:.1em;margin-top:10px}
+.vs-bcd-sub{position:absolute;left:0;right:0;top:calc(50% + 85px + 12px);color:#C9836B;font-size:14px;letter-spacing:.1em;margin:0}
 /* תיקון צבע שם בצ׳אט */
 .fx-msg.natan b{color:var(--tq)}
 
@@ -793,7 +796,7 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
   <div class="vs-off vs" id="vs-off" hidden>
     <div><div class="vs-wait"><span>📡</span></div>
     <h3 id="vs-off-t"></h3>
-    <p>ממתינים לחיבור מחדש…<br>המשחק ייסגר אוטומטית בעוד <b id="vs-off-n">30</b> שניות.</p>
+    <p id="vs-off-p">ממתינים לחיבור מחדש…</p>
     <button class="vs-btn" style="max-width:280px" onclick="SFX.tap();vsAbortAndLeave()">סיים משחק וצא</button></div>
   </div>
   <div class="fx-tray" id="fx-tray" hidden>
@@ -1561,13 +1564,13 @@ const VS={
     return s;
   },
   leave(){
-    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};VS.work={};VS.autoT={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
+    VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.meOn=true;VS.meOffAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};VS.work={};VS.autoT={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
     if(VS.loop){clearInterval(VS.loop);VS.loop=null}
     VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];
     if(VS.db&&VS.who){try{VS.db.ref('versus/p/'+VS.who).remove()}catch(e){}}
   }
 };
-function vsBankSig(){return [VQ.length,VORD.length,VSEL.length,VNUM.length,VPAIR.length].join('.')}
+function vsBankSig(){return ['v20',VQ.length,VORD.length,VSEL.length,VNUM.length,VPAIR.length].join('.')}
 function vsBanksOk(){return typeof VQ!=='undefined'&&VQ.length&&typeof VORD!=='undefined'&&typeof VSEL!=='undefined'&&typeof VNUM!=='undefined'&&typeof VPAIR!=='undefined'}
 function vsItem(i){return VS.game&&VS.game.qs?VS.game.qs[i]:null}
 function vsData(it){
@@ -1679,14 +1682,26 @@ async function startVsLobby(){
   fxListen(db);
   fxBarInit();
   const meRef=db.ref('versus/p/'+VS.who);
+  /* נוכחות עמידה: כל התחברות־מחדש לשרת רושמת אותנו שוב (onDisconnect מוחק בשרת, ובלי זה הצד השני חושב שנעלמנו) */
+  const conRef=db.ref('.info/connected');
+  const conCb=conRef.on('value',x=>{
+    const on=!!x.val();
+    VS.meOn=on;VS.meOffAt=on?0:(VS.meOffAt||Date.now());
+    if(on&&VS.active){meRef.onDisconnect().remove().then(()=>meRef.set({ts:firebase.database.ServerValue.TIMESTAMP})).catch(()=>{})}
+  });
+  VS.unsub.push(()=>conRef.off('value',conCb));
   meRef.onDisconnect().remove();
   meRef.set({ts:firebase.database.ServerValue.TIMESTAMP});
+  /* דופק כל 10 שניות — שומר את החיבור חי ומחזיר את הנוכחות אם נמחקה */
+  const hb=setInterval(()=>{if(VS.active&&VS.meOn!==false)meRef.set({ts:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{})},10000);
+  VS.unsub.push(()=>clearInterval(hb));
   const pRef=db.ref('versus/p');
   const pCb=pRef.on('value',s=>{
     if(!VS.active)return;
     const p=s.val()||{};
     const both=p[VS.who]&&p[opp];
     VS.oppHere=!!p[opp];
+    if(VS.oppHere)VS.absentAt=0;
     const t=document.getElementById('vs-lobby-t');
     if(t)t.textContent=both?'שניכם כאן — מתחילים!':GEN[opp].enter;
     maybeCreate(both);
@@ -1721,7 +1736,7 @@ async function startVsLobby(){
   VS.unsub.push(()=>cRef.off('value',cCb));
   function maybeCreate(both){
     if(VS.who!=='natan'||!both||VS.creating)return;
-    const gameDone=!VS.game||(VS.cur&&VS.cur.phase==='end')||VS.now()>VS.game.start+1800000;
+    const gameDone=!VS.game||VS.now()>VS.game.start+1800000; /* מסך סיום לא נחשב ״פנוי״ — משחק חדש רק דרך נקמה משותפת (הדופק מפעיל את הקולבק הזה כל 10 שניות) */
     if(!gameDone)return;
     VS.creating=true;
     db.ref('versus/fx').remove();
@@ -1797,15 +1812,27 @@ function fxShowMsg(m){
   if(m.w!==VS.who)buzz(18);
 }
 function vsRunning(){return VS.active&&VS.game&&!VS.ended&&!(VS.cur&&VS.cur.phase==='end')}
+const VS_OFF_GRACE=6000; /* ניתוק קצר לא מציג שום דבר — רק אחרי 6 שניות רצופות */
+const VS_OFF_MAX=60;
 function vsOffCheck(){
   const ov=document.getElementById('vs-off');if(!ov)return;
-  if(vsRunning()&&!VS.oppHere){
+  if(!vsRunning()){VS.absentAt=0;ov.hidden=true;return}
+  const opp=VS.who==='natan'?'pino':'natan';
+  const meOff=VS.meOn===false&&VS.meOffAt&&Date.now()-VS.meOffAt>VS_OFF_GRACE;
+  if(meOff){
+    /* אני זה שנפל — אל תאשים את הצד השני */
+    document.getElementById('vs-off-t').textContent='החיבור שלך לשרת נותק';
+    document.getElementById('vs-off-p').innerHTML='מתחבר מחדש אוטומטית…<br>המשחק ממשיך אצל '+NAMES[opp]+'.';
+    ov.hidden=false;return;
+  }
+  if(!VS.oppHere){
     if(!VS.absentAt)VS.absentAt=Date.now();
-    const left=30-Math.floor((Date.now()-VS.absentAt)/1000);
+    const gone=Date.now()-VS.absentAt;
+    if(gone<VS_OFF_GRACE){ov.hidden=true;return}
+    const left=VS_OFF_MAX-Math.floor(gone/1000);
     if(left<=0){vsAbort();ov.hidden=true;return}
-    const opp=VS.who==='natan'?'pino':'natan';
     document.getElementById('vs-off-t').textContent=GEN[opp].dc;
-    document.getElementById('vs-off-n').textContent=left;
+    document.getElementById('vs-off-p').innerHTML='ממתינים לחיבור מחדש…<br>המשחק ייסגר אוטומטית בעוד <b id="vs-off-n">'+left+'</b> שניות.';
     ov.hidden=false;
   }else{VS.absentAt=0;ov.hidden=true}
 }
@@ -2362,9 +2389,9 @@ function renderBreak(roundIdx,at){
     const first=VS.phase!==('bc'+roundIdx);
     VS.phase='bc'+roundIdx;bcShown=sec;
     if(sec>0){SFX_VS.btick();buzz(20)}
-    VS.el().innerHTML='<div class="vs-center vs-bcd-wrap">'+
+    VS.el().innerHTML='<div class="vs-bcd-wrap">'+
       '<p class="vs-bcd-lbl">סבב '+(roundIdx+1)+'</p>'+
-      (sec>0?'<div class="vs-bcd"><i class="ring"></i><b>'+sec+'</b></div><p class="vs-bcd-sub">מוכנים…</p>'
+      (sec>0?'<div class="vs-bcd d'+sec+'"><i class="ring"></i><b>'+sec+'</b></div><p class="vs-bcd-sub">מוכנים…</p>'
             :'<div class="vs-bcd go"><b>צא!</b></div>')+
       '</div>';
     if(sec===0&&first!==true)SFX_VS.go();
@@ -2375,14 +2402,11 @@ function renderBreak(roundIdx,at){
     const me=VS.score(VS.who),her=VS.score(VS.who==='natan'?'pino':'natan');
     const oppW=VS.who==='natan'?'pino':'natan';
     const leadW=me>her?VS.who:(her>me?oppW:null);
-    const Rb=srand(gseed()+roundIdx*53);
-    const msg=leadW?('⚡ '+NAMES[leadW]+(leadW==='pino'?' מובילה':' מוביל')+' · '+LEAD_TAUNTS[Math.floor(Rb()*LEAD_TAUNTS.length)]):'תיקו! הכול פתוח 🔥';
-    const SP=['🤹','🎭','🥁','🎪','🌀','🎯'];
-    VS.el().innerHTML='<div class="vs-center"><div class="vs-spin">'+SP[roundIdx%SP.length]+'</div>'+
+    const msg=leadW?(NAMES[leadW]+(leadW==='pino'?' מובילה':' מוביל')+' ב־'+Math.abs(me-her)):'תיקו';
+    VS.el().innerHTML='<div class="vs-center">'+
       '<h2 class="vs-title" style="font-size:28px">סוף סבב '+roundIdx+'</h2>'+
       '<p class="vs-final" style="font-size:52px">'+me+' : '+her+'</p>'+
-      '<p class="vs-sub" style="margin-bottom:0">'+msg+'</p>'+
-      '<p class="vs-expose">'+vsExposeJoke(roundIdx*VS_PER_ROUND)+'</p></div>';
+      '<p class="vs-sub" style="margin-bottom:0">'+msg+'</p></div>';
   }
 }
 function vsMistakes(w){
