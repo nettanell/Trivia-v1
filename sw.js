@@ -1,6 +1,6 @@
 /* Trivia PWA service worker — bump CACHE version on every deploy of index/questions */
-const CACHE='trivia-v20';
-const SHELL=['./','./index.html','./questions.js','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='trivia-v21';
+const SHELL=['./','./index.html','./questions.js','./photos.js','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
@@ -12,7 +12,7 @@ self.addEventListener('fetch',e=>{
   const req=e.request;
   if(req.method!=='GET')return;
   const url=new URL(req.url);
-  const isShell=req.mode==='navigate'||url.pathname.endsWith('/index.html')||url.pathname.endsWith('/questions.js');
+  const isShell=req.mode==='navigate'||url.pathname.endsWith('/index.html')||url.pathname.endsWith('/questions.js')||url.pathname.endsWith('/photos.js');
   if(isShell&&url.origin===location.origin){
     /* network-first: updates land immediately when online, cache keeps it working offline */
     e.respondWith(

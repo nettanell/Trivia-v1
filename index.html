@@ -546,9 +546,9 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 .vs-lockrib{font-size:13.5px;color:#FFD9A0;background:rgba(255,196,110,.09);border:1px dashed rgba(255,196,110,.4);border-radius:11px;padding:9px 12px;margin:-6px 0 14px;line-height:1.5}
 .vs-dnext{text-align:center;font-size:14.5px;font-weight:700;color:#FFD9A0;margin-top:12px;animation:cdPop .5s cubic-bezier(.22,1.4,.36,1)}
 /* ספירה לוהטת בין סבבים — שונה לגמרי מהפתיחה */
-.vs-bcd-wrap{position:fixed;inset:0;z-index:1;text-align:center;pointer-events:none}
-.vs-bcd-lbl{position:absolute;left:0;right:0;top:calc(50% - 85px - 34px);font-size:13px;letter-spacing:.3em;color:#FF9E6E;margin:0;font-weight:700}
-.vs-bcd{position:absolute;left:50%;top:50%;width:170px;height:170px;margin:-85px 0 0 -85px}
+.vs-bcd-wrap{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;pointer-events:none;transform:none}
+.vs-bcd-lbl{font-size:13px;letter-spacing:.3em;color:#FF9E6E;margin:0;font-weight:700}
+.vs-bcd{position:relative;width:170px;height:170px;flex:none}
 .vs-bcd b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 96px/1 "Heebo";background:linear-gradient(160deg,#FFE3B0 10%,#FF9E6E 55%,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(255,140,90,.55));animation:bcdPop .96s cubic-bezier(.22,1.5,.36,1)}
 .vs-bcd b{padding-top:.09em} /* פיצוי מטריקות Heebo: הספרה יושבת ~0.046em מעל מרכז השורה */
 .vs-bcd.d1 b{padding-left:.094em} /* הספרה 1 צרה ומוסטת שמאלה בתוך התיבה שלה */
@@ -559,7 +559,16 @@ body.thm-stats .dust i{background:rgba(150,190,255,.5)}
 @keyframes bcdRing{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
 @keyframes bcdGlow{0%{opacity:1}100%{opacity:.25}}
 .vs-bcd.go b{font-size:64px;background:linear-gradient(120deg,#FFE3B0,#FF9E6E,#FF5A7E);-webkit-background-clip:text;background-clip:text;color:transparent}
-.vs-bcd-sub{position:absolute;left:0;right:0;top:calc(50% + 85px + 12px);color:#C9836B;font-size:14px;letter-spacing:.1em;margin:0}
+.vs-bcd-sub{color:#C9836B;font-size:14px;letter-spacing:.1em;margin:0}
+/* הבזק תמונה בין סבבים / בסיום */
+.pic-flash{position:absolute;right:50%;bottom:calc(50% + 150px);transform:translateX(50%) rotate(-6deg);width:118px;height:118px;border-radius:14px;padding:6px 6px 22px;background:#FBF7EE;box-shadow:0 18px 40px rgba(0,0,0,.6);animation:picIn .5s cubic-bezier(.22,1.4,.36,1), picOut .5s ease-in 2.2s forwards;pointer-events:none}
+.pic-flash img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+.pic-flash span{position:absolute;left:0;right:0;bottom:3px;font:700 12px/1 "Heebo";color:#3A2F22}
+@keyframes picIn{0%{opacity:0;transform:translateX(50%) rotate(20deg) scale(.4)}100%{opacity:1;transform:translateX(50%) rotate(-6deg) scale(1)}}
+@keyframes picOut{to{opacity:0;transform:translateX(50%) rotate(-6deg) scale(.6)}}
+.pic-end{width:150px;height:150px;margin:6px auto 12px;border-radius:16px;padding:7px 7px 26px;background:#FBF7EE;box-shadow:0 18px 40px rgba(0,0,0,.6);transform:rotate(-4deg);animation:picIn .6s cubic-bezier(.22,1.4,.36,1)}
+.pic-end img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block}
+.pic-end span{display:block;text-align:center;margin-top:6px;font:700 13px/1 "Heebo";color:#3A2F22}
 /* תיקון צבע שם בצ׳אט */
 .fx-msg.natan b{color:var(--tq)}
 
@@ -880,6 +889,7 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
 </div>
 
 <script src="questions.js"></script>
+<script src="photos.js"></script>
 <script>
 if(typeof Q==='undefined'){
   document.body.innerHTML='<p style="padding:60px 30px;text-align:center;line-height:1.7">קובץ השאלות (questions.js) לא נטען.<br>ודא שהוא הועלה לאותה תיקייה שבה נמצא index.html.</p>';
@@ -1003,6 +1013,7 @@ function navGo(id){
   show(id);
 }
 function show(id){
+  if(id!=='versus'&&typeof bcdHide==='function')bcdHide();
   setNav(id);
   document.body.classList.toggle('thm-daily',id==='daily');
   document.body.classList.toggle('thm-paths',id==='paths'||id==='pathrun');
@@ -1564,6 +1575,7 @@ const VS={
     return s;
   },
   leave(){
+    if(typeof bcdHide==='function')bcdHide();
     VS.active=false;VS.ended=false;VS.game=null;VS.phase=null;VS.pi=-1;VS.oppHere=false;VS.absentAt=0;VS.meOn=true;VS.meOffAt=0;VS.cur=null;VS.curW='';VS.zoom={};VS.again={};VS.work={};VS.autoT={};const ov=document.getElementById('vs-off');if(ov)ov.hidden=true;const tr=document.getElementById('fx-tray');if(tr)tr.hidden=true;const fl=document.getElementById('fx-layer');if(fl)fl.innerHTML='';const fc=document.getElementById('fx-chatcol');if(fc)fc.innerHTML='';
     if(VS.loop){clearInterval(VS.loop);VS.loop=null}
     VS.unsub.forEach(f=>{try{f()}catch(e){}});VS.unsub=[];
@@ -1858,6 +1870,7 @@ function vsTick(){
   if(n<g.start){renderCountdown(Math.ceil((g.start-n)/1000));return}
   if(!c)return;
   if(c.phase==='end'){renderEnd();stopLoop();return}
+  if(c.phase!=='b')bcdHide();
   if(c.phase==='q'){renderQuestion(c.i,c.at);updateTimer(c.at,durOf(vsItem(c.i)),c.i,'q');return}
   if(c.phase==='r'){renderReveal(c.i);return}
   if(c.phase==='d'){renderDouble(c.i,c.at);updateTimer(c.at,DURQ.d,c.i,'d');return}
@@ -2381,6 +2394,18 @@ function vsExposeJoke(upto){
 }
 /* הפסקת סבב: לוח קצר, ואז ספירה לוהטת 3־2־1 — שונה לגמרי ממסך הפתיחה */
 let bcShown=-1;
+/* תמונות מצחיקות: photos.js מגדיר PHOTOS={natan:[...],pino:[...]} (נתיבים יחסיים, למשל 'pics/nino1.jpg') */
+function picOf(who,seed){const P=(typeof PHOTOS!=='undefined'&&PHOTOS[who])||[];if(!P.length)return null;return P[Math.floor(srand(seed)()*P.length)]}
+function picFlash(roundIdx){
+  /* בין סבבים: מי שמפגר בניקוד מקבל ״פלאש״ — זהה בשני הטלפונים (זרע = מזהה המשחק + סבב) */
+  const me=VS.score('natan'),her=VS.score('pino');if(me===her)return '';
+  const loser=me<her?'natan':'pino', src=picOf(loser,(VS.game.id|0)+roundIdx*97);
+  if(!src)return '';
+  return '<div class="pic-flash"><img src="'+src+'" alt=""><span>'+NAMES[loser]+(loser==='pino'?' מפגרת…':' מפגר…')+'</span></div>';
+}
+function picEnd(loser){const src=picOf(loser,(VS.game.id|0)+7);return src?'<div class="pic-end"><img src="'+src+'" alt=""><span>'+NAMES[loser]+' — לזיכרון 🤡</span></div>':''}
+function bcdLayer(){let l=document.getElementById('vs-bcd-layer');if(!l){l=document.createElement('div');l.id='vs-bcd-layer';l.className='vs-bcd-wrap';document.body.appendChild(l)}return l}
+function bcdHide(){const l=document.getElementById('vs-bcd-layer');if(l)l.remove()}
 function renderBreak(roundIdx,at){
   const left=at+VS_BREAK-VS.now();
   if(left<=3200){
@@ -2389,11 +2414,11 @@ function renderBreak(roundIdx,at){
     const first=VS.phase!==('bc'+roundIdx);
     VS.phase='bc'+roundIdx;bcShown=sec;
     if(sec>0){SFX_VS.btick();buzz(20)}
-    VS.el().innerHTML='<div class="vs-bcd-wrap">'+
-      '<p class="vs-bcd-lbl">סבב '+(roundIdx+1)+'</p>'+
+    if(first)VS.el().innerHTML='';
+    bcdLayer().innerHTML='<p class="vs-bcd-lbl">סבב '+(roundIdx+1)+'</p>'+
       (sec>0?'<div class="vs-bcd d'+sec+'"><i class="ring"></i><b>'+sec+'</b></div><p class="vs-bcd-sub">מוכנים…</p>'
             :'<div class="vs-bcd go"><b>צא!</b></div>')+
-      '</div>';
+      (first?picFlash(roundIdx):'');
     if(sec===0&&first!==true)SFX_VS.go();
     return;
   }
@@ -2457,10 +2482,11 @@ function renderEnd(){
   const me=VS.score(VS.who),her=VS.score(opp);
   const iWin=me>her,tie=me===her;
   const Re=srand(gseed()^0x5EED);
-  let title,roast='';
+  let title,roast='',pic='';
   if(tie){SFX.round();title='תיקו! 🤝';roast=TIE_LINES[Math.floor(Re()*TIE_LINES.length)];}
   else{
     const winner=iWin?VS.who:opp,loser=iWin?opp:VS.who;
+    pic=picEnd(loser);
     title='👑 '+NAMES[winner]+' '+GEN[winner].win+'!';
     const L=ROASTS[loser];roast=L[Math.floor(Re()*L.length)];
     if(iWin){trumpets();SFX_VS.win();confettiVs();emojiRain(['👑','🏆','🔥','⚡'],16);buzz([40,60,40,60,120]);}
@@ -2470,7 +2496,7 @@ function renderEnd(){
     '<h2 class="vs-title">'+title+'</h2>'+
     '<p class="vs-final">'+me+' : '+her+'</p>'+
     '<p class="vs-sub">'+NAMES[VS.who]+' מול '+NAMES[opp]+' · '+VS_N+' שאלות</p>'+
-    '<p class="vs-roast">'+roast+'</p>'+
+    '<p class="vs-roast">'+roast+'</p>'+pic+
     '<p id="vs-again-note" style="min-height:20px;color:var(--tq);font-weight:700;font-size:15px;margin:0 0 8px"></p>'+
     '<button class="vs-btn" id="vs-again-btn" onclick="vsRematch()">משחק חוזר — נקמה 🔄</button>'+
     '<button class="vs-ghost" onclick="VS.leave();show(\'home\')">חזרה לתרגול</button>'+
@@ -2521,7 +2547,24 @@ const DY_TOTAL=10;
 S.dy=S.dy||null; S.pt=S.pt||{};
 function dyKey(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dyHash(str){let h=9;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),387420489)}return (h^h>>>9)>>>0}
-function dyQs(){return sshuffle([...Array(VQ.length).keys()],dyHash('daily-'+dyKey())).slice(0,DY_TOTAL)}
+const DY_HARD=8, DY_EPOCH=Date.UTC(2026,8,17);
+function dyPool(){return (typeof DQ!=='undefined'&&DQ.length>=DY_TOTAL)?DQ:null}
+function dyDayIdx(){const d=new Date();return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-DY_EPOCH)/864e5)}
+function dyCycle(idxs,per,day,tag){
+  /* מסלול ללא חזרות: מערבבים את כל המאגר פעם ל״עונה״, וכל יום לוקח פרוסה משלו; כשנגמר — ערבוב חדש */
+  const seasons=Math.floor(idxs.length/per), season=Math.floor(day/seasons), off=(day%seasons)*per;
+  return sshuffle(idxs.slice(),dyHash(tag+'-s'+season)).slice(off,off+per);
+}
+function dyQs(){
+  const P=dyPool();
+  if(!P)return sshuffle([...Array(VQ.length).keys()],dyHash('daily-'+dyKey())).slice(0,DY_TOTAL);
+  const day=Math.max(0,dyDayIdx());
+  const hard=[],norm=[];P.forEach((q,i)=>(q.h?hard:norm).push(i));
+  const pick=dyCycle(hard,DY_HARD,day,'dq-h').concat(dyCycle(norm,DY_TOTAL-DY_HARD,day,'dq-n'));
+  return sshuffle(pick,dyHash('daily-mix-'+dyKey()));
+}
+function dyBank(){return dyPool()?'d2.'+DQ.length:'v.'+VQ.length}
+function dyQ(i){return dyPool()?DQ[i]:VQ[i]}
 function dyOrd(i){return sshuffle([0,1,2,3],dyHash('ord-'+dyKey())+i*131+7)}
 function dyDot(){const el=document.getElementById('nav-dy-dot');if(el)el.hidden=!!(S.dy&&S.dy.date===dyKey()&&S.dy.done)}
 function dyHebDate(){return new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'})}
@@ -2545,14 +2588,14 @@ function renderDaily(){
   DYRUN={date:S.dy.date,qs:dyQs()};
   if(S.dy.res.length>0&&S.dy.res.length<DY_TOTAL){dyQuestion();return}
   b.innerHTML='<div class="dy-hero"><p class="dy-names">נינו <span class="ht">♥</span> פוניטה</p><p class="dy-date">'+dyHebDate()+'</p>'+
-    '<p class="dy-sub">10 שאלות. אותן שאלות בדיוק גם אצל '+NAMES[S.vsWho==='natan'?'pino':'natan']+' — כל אחד עונה מתי שמתאים לו, ובסוף משווים</p>'+
+    '<p class="dy-sub">10 שאלות, רובן קשות באמת. אותן שאלות בדיוק גם אצל '+NAMES[S.vsWho==='natan'?'pino':'natan']+' — כל אחד עונה מתי שמתאים לו, ובסוף משווים</p>'+
     '<button class="dy-start" onclick="SFX.tap();dyStart()">מתחילים</button></div>';
 }
 function dyStart(){dyEnsure();if(!DYRUN||DYRUN.date!==S.dy.date)DYRUN={date:S.dy.date,qs:dyQs()};dyQuestion()}
 function dyProg(){let h='';for(let k=0;k<DY_TOTAL;k++){const r=S.dy.res[k];h+='<i class="'+(r===1?'f':(r===0?'x':''))+'"></i>'}return '<div class="dy-seg">'+h+'</div>'}
 function dyQuestion(){
-  const b=document.getElementById('dy-body'), i=S.dy.res.length, q=VQ[DYRUN.qs[i]], ord=dyOrd(i);
-  b.innerHTML=dyProg()+'<div class="dy-qcard"><p class="dy-qcat">'+q.c+' · שאלה '+(i+1)+'/'+DY_TOTAL+'</p><p class="dy-q">'+q.q+'</p>'+
+  const b=document.getElementById('dy-body'), i=S.dy.res.length, q=dyQ(DYRUN.qs[i]), ord=dyOrd(i);
+  b.innerHTML=dyProg()+'<div class="dy-qcard"><p class="dy-qcat">'+q.c+(q.h?' · 🔥 קשה':'')+' · שאלה '+(i+1)+'/'+DY_TOTAL+'</p><p class="dy-q">'+q.q+'</p>'+
     ord.map((oi,k)=>'<button class="dy-opt" data-oi="'+oi+'" onclick="dyPick(this,'+i+')">'+q.o[oi]+'</button>').join('')+'</div>';
 }
 function dyPick(btn,i){
@@ -2564,13 +2607,18 @@ function dyPick(btn,i){
   S.dy.res.push(ok?1:0);save();
   setTimeout(()=>{if(S.dy.res.length>=DY_TOTAL){S.dy.done=1;save();dyDot();dySync();dyResult()}else dyQuestion()},950);
 }
+function dyNote(t,err){const n=document.getElementById('dy-sync-note');if(n){n.textContent=t;n.style.color=err?'#FF8A9A':''}}
 function dySync(){
-  if(!S.dy.done||S.dy.sync)return;
+  if(!S.dy||!S.dy.done||S.dy.sync)return;
   loadFB().then(db=>{
-    db.ref('daily/'+S.dy.date+'/'+S.vsWho).set({s:S.dy.res.reduce((a,b)=>a+b,0),a:S.dy.res.join(''),ts:firebase.database.ServerValue.TIMESTAMP})
-      .then(()=>{S.dy.sync=1;save();const n=document.getElementById('dy-sync-note');if(n)n.textContent=''});
-  }).catch(()=>{});
+    db.ref('daily/'+S.dy.date+'/'+S.vsWho).set({s:S.dy.res.reduce((a,b)=>a+b,0),a:S.dy.res.join(''),bk:dyBank(),ts:firebase.database.ServerValue.TIMESTAMP})
+      .then(()=>{S.dy.sync=1;save();dyNote('')})
+      .catch(e=>{dyNote(/permission/i.test(String(e))?'השרת חסם את השמירה (הרשאות Firebase) — התוצאה שמורה בטלפון וננסה שוב':'השמירה נכשלה — ננסה שוב בפתיחה הבאה',1)});
+  }).catch(()=>dyNote('אין חיבור — התוצאה תעלה בפתיחה הבאה',1));
 }
+/* ניסיון סנכרון חוזר בכל חזרה לאפליקציה / חיבור מחדש */
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)dySync()});
+window.addEventListener('online',()=>dySync());
 function dyResult(){
   const b=document.getElementById('dy-body'), me=S.dy.res.reduce((a,c)=>a+c,0), opp=S.vsWho==='natan'?'pino':'natan';
   b.innerHTML=dyProg()+
@@ -2583,7 +2631,7 @@ function dyResult(){
   loadFB().then(db=>{
     if(DYREF)DYREF.off();
     DYREF=db.ref('daily/'+S.dy.date+'/'+opp);
-    DYREF.on('value',sn=>{const v=sn.val();if(v)dyCompare(v);});
+    DYREF.on('value',sn=>{const v=sn.val();if(v)dyCompare(v);},()=>{const el=document.getElementById('dy-opp');if(el)el.innerHTML='<h4>'+NAMES[opp]+'</h4><div class="dy-wait">אין הרשאת קריאה מהשרת — צריך לעדכן את חוקי Firebase לנתיב daily</div>'});
     db.ref('daily').orderByKey().limitToLast(60).once('value').then(sn=>dyStreak(sn.val()||{}));
   }).catch(()=>{});
 }
@@ -2592,13 +2640,14 @@ function dyCompare(v){
   const me=S.dy.res.reduce((a,c)=>a+c,0), opp=S.vsWho==='natan'?'pino':'natan';
   const os=v.s|0, oa=(v.a||'').split('').map(Number);
   const qs=DYRUN&&DYRUN.date===S.dy.date?DYRUN.qs:dyQs();
+  if(v.bk&&v.bk!==dyBank()){el.innerHTML='<h4>'+NAMES[opp]+'</h4><div class="dy-wait">ל'+NAMES[opp]+' יש גרסת שאלות אחרת — רעננו את האפליקציה בשני הטלפונים והשוו מחר</div>';return}
   let line;
   const R=srand(dyHash(S.dy.date+'-'+me+'-'+os));
   if(me===os)line=DY_TIE[Math.floor(R()*DY_TIE.length)];
   else{const w=(S.vsWho==='natan')===(me>os)?'natan':'pino';line=DY_WIN[w][Math.floor(R()*DY_WIN[w].length)]}
   let rows='';
   for(let i=0;i<DY_TOTAL;i++){
-    const qt=(VQ[qs[i]].q.length>52?VQ[qs[i]].q.slice(0,50)+'…':VQ[qs[i]].q);
+    const qq=dyQ(qs[i]).q, qt=(qq.length>52?qq.slice(0,50)+'…':qq);
     rows+='<div class="dy-row"><span class="mk">'+(S.dy.res[i]?'<i class="okm">✓</i>':'<i class="nom">✗</i>')+'</span><span class="qt">'+qt+'</span><span class="mk">'+(oa[i]?'<i class="okm">✓</i>':'<i class="nom">✗</i>')+'</span></div>';
   }
   el.innerHTML='<div class="dy-vs-head"><div class="pl"><b>'+me+'</b>'+NAMES[S.vsWho]+'</div><span class="ht">♥</span><div class="pl"><b>'+os+'</b>'+NAMES[opp]+'</div></div>'+
