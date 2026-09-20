@@ -648,6 +648,35 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
 .dy-vs-head .pl{color:#9A7386}
 .dy-vs-head .ht{font-size:16px;color:#D89AB4}
 
+
+.unseen-pill{display:inline-flex;align-items:center;gap:6px;margin:2px auto 14px;padding:8px 14px;border-radius:999px;background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.35);color:#CDBFFF;font-size:13.5px;letter-spacing:.02em;transition:transform .12s,background .2s}
+.unseen-pill:active{transform:scale(.96)}
+.unseen-pill b{font-weight:700;color:#fff;font-size:15px}
+.unseen-pill span{color:#8E86B8}
+.unseen-pill em{font-style:normal;color:#8E86B8;font-size:16px;margin-right:2px}
+.unseen-pill.zero{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.35);color:#9EEFF8}
+.p-unseen{font-size:12.5px;color:#CDBFFF;letter-spacing:.04em;text-align:left;white-space:nowrap;opacity:.85}
+.unseen-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 4px;max-height:52vh;overflow:auto}
+.unseen-grid .ur{display:flex;align-items:baseline;gap:5px;padding:9px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--hair);color:#EDE6D6;font-size:13px;text-align:right;direction:rtl}
+.unseen-grid .ur span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.unseen-grid .ur b{color:#CDBFFF;font-size:15px}
+.unseen-grid .ur i{font-style:normal;color:#8E86B8;font-size:11px;direction:ltr}
+.unseen-grid .ur.done{opacity:.45}
+.unseen-grid .ur.done b{color:#9EEFF8}
+
+.exam-btn{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;margin:0 0 4px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,196,86,.10),rgba(255,120,60,.08));border:1px solid rgba(255,180,80,.45);color:#FFD9A0;transition:transform .12s}
+.exam-btn:active{transform:scale(.98)}
+.exam-btn span{font-size:15px;font-weight:600;letter-spacing:.02em}
+.exam-btn b{font-weight:400;font-size:12.5px;color:#C9A57A}
+.exam-btn.done{background:rgba(255,255,255,.03);border-color:var(--hair);color:#9A9280}
+.exam-btn.done b{color:#D9C69A;font-size:14px;font-weight:600}
+
+.explain{display:flex;flex-direction:column;gap:10px;align-items:center;padding:14px 14px 12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(201,162,92,.45);animation:revealIn .3s ease;text-align:center}
+.explain[hidden]{display:none}
+.explain p{margin:0;font-size:15px;color:var(--canvas);line-height:1.45}
+.explain p b{color:var(--brass-hi)}
+.explain button{padding:11px 22px;border-radius:12px;background:var(--brass);color:#171208;font-weight:600;font-size:15px;border:0}
+.explain button:active{transform:scale(.95)}
 </style>
 </head>
 <body>
@@ -682,8 +711,10 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
       <div class="num"><div><b id="today-n">0</b><span id="today-goal">מתוך 10 היום</span></div></div>
     </div>
     <p class="home-sub" id="home-sub"></p>
+    <button class="unseen-pill" id="unseen-pill" onclick="showUnseen()"></button>
     <button class="primary" id="main-btn" onclick="startSession()">התחל תרגול</button>
     <button class="secondary" id="boost-btn" onclick="startBoost()" hidden>חיזוק נקודות חלשות</button>
+    <button class="exam-btn" id="exam-btn" onclick="startExam()" hidden></button>
     <p class="chips-lbl">אורך סבב</p>
     <div class="chips" id="len-chips"></div>
     <p class="chips-lbl" id="new-lbl">שאלות חדשות בכל סבב</p>
@@ -701,7 +732,7 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
     </button>
     <h1 id="p-counter" style="letter-spacing:.06em"></h1>
-    <span style="width:40px"></span>
+    <span class="p-unseen" id="p-unseen" style="width:40px"></span>
   </div>
   <div class="card-wrap">
     <div class="progress"><i id="p-bar" style="width:0%"></i></div>
@@ -719,6 +750,10 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
       <div class="rowbtns" id="reveal-btns">
         <button id="b-hint" onclick="showHint()">רמז</button>
         <button class="amber" id="b-ans" onclick="showAns()">תשובה</button>
+      </div>
+      <div class="explain" id="explain" hidden>
+        <p>🗣 עכשיו, בקול, במשפט אחד: <b>למה</b> זו התשובה?</p>
+        <button onclick="explainDone()">אמרתי — לדירוג</button>
       </div>
       <div class="grade" id="grade">
         <button class="no" onclick="grade(0,this)">לא ידעתי<small>נראה שוב בקרוב</small></button>
@@ -780,6 +815,7 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
   <h3>שליטה לפי נושא</h3>
   <div id="s-cats"></div>
   <div class="weak" id="s-weak"></div>
+  <button class="secondary" id="explain-tgl" onclick="toggleExplain()"></button>
   <p class="tiny" id="s-store"></p>
   <p class="tiny">שאלה נחשבת "נשלטת" אחרי שידעת אותה שלוש פעמים ברצף.<br>שאלות שלא ידעת חוזרות בסבב הזה; "בערך" חוזר מחר.</p>
   <button class="secondary gold-btn" onclick="report()">דו״ח לקלוד — העתק ושלח בצ׳אט</button>
@@ -943,7 +979,9 @@ const GOAL=10;
 const INTERVALS=[1,3,7,14,30]; // days per box for "knew"
 let S={p:{},days:{},lastDay:null,streak:0,cat:'הכל'};
 let mem=null; // in-memory fallback
-let session=[],idx=0,gotIt=0,cur=null,requeue=[],freeMode=false,boostMode=false,hist=[],reviewPos=-1,hintStep=0;
+let session=[],idx=0,gotIt=0,cur=null,requeue=[],freeMode=false,boostMode=false,examMode=false,hist=[],reviewPos=-1,hintStep=0;
+function weekKey(d=new Date()){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y0=new Date(Date.UTC(x.getUTCFullYear(),0,1));return x.getUTCFullYear()+'-w'+Math.ceil(((x-y0)/86400000+1)/7)}
+function lastSeenOf(p){return p.due-(p.box>0?INTERVALS[p.box-1]:0)*86400000}
 let roundMiss=[],roundMeh=[];
 
 function dayKey(d=new Date()){return d.toISOString().slice(0,10)}
@@ -1054,7 +1092,6 @@ function renderHome(){
   const btn=document.getElementById('main-btn');
   let sub=[];
   if(due)sub.push(due+' שאלות מחכות לחזרה');
-  if(neu)sub.push(neu+' שאלות חדשות');
   if(!due&&!neu){
     const now=Date.now();
     const dues=pool().filter(i=>P(i)&&P(i).seen>0).map(i=>P(i).due);
@@ -1066,15 +1103,55 @@ function renderHome(){
     document.getElementById('headline').textContent='סיימת להיום.';
   }else{btn.textContent='התחל תרגול';btn.onclick=startSession;}
   document.getElementById('home-sub').textContent=sub.join(' · ');
+  const allNew=Q.filter((q,i)=>!P(i)||P(i).seen===0).length;
+  const up=document.getElementById('unseen-pill');
+  up.innerHTML=(S.cat==='הכל'?'<b>'+allNew+'</b> שאלות שעוד לא נשאלת':'<b>'+neu+'</b> חדשות ב'+S.cat+' <span>· '+allNew+' בכל המאגר</span>')+' <em>›</em>';
+  up.classList.toggle('zero',allNew===0);
+  if(allNew===0)up.innerHTML='<b>0</b> חדשות — הכל נשאל. הגיע הזמן לבקש מקלוד מנה חדשה <em>›</em>';
   document.getElementById('streak-badge').innerHTML=S.streak>0?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"/></svg>'+S.streak+' ימים':'';
   document.getElementById('chips').innerHTML=CATS.map(c=>'<button class="chip'+(S.cat===c?' on':'')+'" onclick="setCat(\''+c+'\')">'+c+'</button>').join('');
   const L=S.len||10;
   document.getElementById('len-chips').innerHTML=[10,20,30,50].map(n=>'<button class="chip'+(L===n?' on':'')+'" onclick="setLen('+n+')">'+n+'</button>').join('');
   const NN=(S.newN===undefined?5:S.newN);
-  document.getElementById('new-chips').innerHTML=[0,3,5,10].map(n=>'<button class="chip'+(NN===n?' on':'')+'" onclick="setNewN('+n+')">'+(n===0?'בלי חדשות':n)+'</button>').join('');
+  document.getElementById('new-chips').innerHTML=[0,3,5,10,20,'all'].map(n=>'<button class="chip'+(NN===n?' on':'')+'" onclick="setNewN('+(n==='all'?"'all'":n)+')">'+(n===0?'בלי חדשות':n==='all'?'רק חדשות':n)+'</button>').join('');
   const weakN=pool().filter(i=>P(i)&&P(i).seen>0&&(P(i).ok<P(i).seen||P(i).run===0)).length;
   document.getElementById('boost-btn').hidden=weakN<5;
+  renderExamBtn();
   renderSnd();
+}
+function examCands(){
+  const now=Date.now(),day=86400000;
+  const all=Q.map((q,i)=>i).filter(i=>P(i)&&P(i).run>=3);
+  const old=all.filter(i=>now-lastSeenOf(P(i))>=21*day).sort((a,b)=>lastSeenOf(P(a))-lastSeenOf(P(b)));
+  const rest=all.filter(i=>!old.includes(i)).sort((a,b)=>lastSeenOf(P(a))-lastSeenOf(P(b)));
+  return {all,pick:[...old,...rest].slice(0,15)};
+}
+function renderExamBtn(){
+  const b=document.getElementById('exam-btn');if(!b)return;
+  const ex=S.exam||{},wk=weekKey(),c=examCands();
+  if(c.all.length<8){b.hidden=true;return}
+  b.hidden=false;
+  if(ex.week===wk&&ex.done){b.classList.add('done');b.innerHTML='<span>מבחן השבוע הושלם</span><b>'+ex.score+'/'+ex.n+'</b>';b.onclick=()=>{SFX.tap();openModal('מבחן שבועי','כבר עשית את המבחן השבוע ('+ex.score+' מתוך '+ex.n+'). הבא נפתח ביום שני. רוצה לרוץ עליו שוב בלי שזה נספר?',null,[{t:'כן, שוב',amber:true,f:()=>{closeModal();startExam(true)}},{t:'סגור',f:closeModal}])}}
+  else{b.classList.remove('done');b.innerHTML='<span>מבחן שבועי — בלי רמזים</span><b>'+c.pick.length+' שאלות שאתה ״שולט״ בהן. באמת?</b>';b.onclick=()=>startExam(false);}
+}
+let examRerun=false;
+function startExam(rerun){
+  SFX.tap();examRerun=!!rerun;
+  const c=examCands();if(c.pick.length<5){show('home');return}
+  session=shuffle(c.pick.slice());earlySet=new Set();
+  freeMode=false;boostMode=false;examMode=true;comboRun=0;
+  beginRound();
+}
+function showUnseen(){
+  SFX.tap();
+  const cats=CATS.slice(1);
+  const rows=cats.map(c=>{const ids=Q.map((q,i)=>i).filter(i=>Q[i].c===c);const n=ids.filter(i=>!P(i)||P(i).seen===0).length;return {c,n,t:ids.length}}).sort((a,b)=>b.n-a.n);
+  const tot=rows.reduce((a,r)=>a+r.n,0);
+  const html='<div class="unseen-grid">'+rows.map(r=>'<button class="ur'+(r.n===0?' done':'')+'" onclick="setCat(\''+r.c+'\');closeModal()"><span>'+r.c+'</span><b>'+r.n+'</b><i>/'+r.t+'</i></button>').join('')+'</div>';
+  openModal('עוד לא נשאלת — לפי נושא','סה״כ '+tot+' שאלות חדשות מתוך '+Q.length+'. לחיצה על נושא בוחרת אותו לסבב הבא.',null,[{t:'סגור',amber:true,f:closeModal}]);
+  const ta=document.getElementById('m-ta');ta.hidden=true;
+  let g=document.getElementById('m-extra');if(!g){g=document.createElement('div');g.id='m-extra';ta.parentNode.insertBefore(g,ta);}
+  g.innerHTML=html;g.hidden=false;
 }
 function setNewN(n){SFX.chip();S.newN=n;save();renderHome();}
 function setLen(n){SFX.chip();S.len=n;save();renderHome();}
@@ -1088,20 +1165,38 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 /* RNG דטרמיניסטי משותף — אותו זרע (מזהה המשחק) נותן אותה תוצאה בשני הטלפונים */
 function srand(s){s|=0;return function(){s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function sshuffle(a,seed){const r=srand(seed);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+let earlySet=new Set();
 function beginRound(){idx=0;gotIt=0;requeue=[];hist=[];roundMiss=[];roundMeh=[];SFX.start();show('practice');next();}
 function startSession(){comboRun=0;
   const now=Date.now(),p=pool(),L=S.len||10;
   const due=shuffle(p.filter(i=>P(i)&&P(i).seen>0&&P(i).due<=now));
   const neu=shuffle(p.filter(i=>!P(i)||P(i).seen===0));
-  const NN=Math.min(S.newN===undefined?5:S.newN,L);
-  /* new questions get RESERVED slots first; due fills the rest */
+  const want=(S.newN===undefined?5:S.newN==='all'?L:S.newN);
+  const NN=Math.min(want,L);
+  /* חדשות: בדיוק NN (או פחות אם נגמרו) — לעולם לא יותר ממה שבחרת */
   const takeNew=neu.slice(0,NN);
-  const takeDue=due.slice(0,Math.max(0,L-takeNew.length));
-  session=shuffle([...takeNew,...takeDue]);
-  if(session.length<L)session=shuffle([...session,...neu.slice(NN,NN+(L-session.length))]);
-  if(session.length<L)session=[...session,...due.slice(takeDue.length,takeDue.length+(L-session.length))];
-  if(!session.length){startFree();return}
-  freeMode=false;boostMode=false;
+  /* השאר: חזרות שהגיע זמנן */
+  let takeDue=due.slice(0,Math.max(0,L-takeNew.length));
+  let early=[];
+  if(takeNew.length+takeDue.length<L){
+    /* אין מספיק חזרות — משלימים בחזרה מוקדמת של שאלות שכבר נלמדו (החלשות/הקרובות קודם), בלי לגעת בחדשות */
+    const rest=L-takeNew.length-takeDue.length;
+    early=p.filter(i=>P(i)&&P(i).seen>0&&P(i).due>now&&!takeDue.includes(i))
+      .sort((a,b)=>{const pa=P(a),pb=P(b);return (pa.ok/pa.seen)-(pb.ok/pb.seen)||pa.due-pb.due}).slice(0,rest);
+  }
+  earlySet=new Set(early);
+  session=shuffle([...takeNew,...takeDue,...early]);
+  if(!session.length){
+    if(NN===0&&neu.length){
+      openModal('אין מה לחזור עליו עדיין','בחרת ״בלי חדשות״, אבל אין שאלות שכבר למדת בנושא הזה. לפתוח חדשות, או לתרגל חופשי?',null,[
+        {t:'5 חדשות בסבב',amber:true,f:()=>{closeModal();S.newN=5;save();renderHome();startSession();}},
+        {t:'תרגול חופשי',f:()=>{closeModal();startFree();}},
+        {t:'ביטול',f:closeModal}]);
+      return;
+    }
+    startFree();return
+  }
+  freeMode=false;boostMode=false;examMode=false;
   beginRound();
 }
 function startBoost(){
@@ -1111,13 +1206,13 @@ function startBoost(){
   });
   session=cand.slice(0,S.len||10);
   if(!session.length){show('home');return}
-  freeMode=false;boostMode=true;
+  freeMode=false;boostMode=true;examMode=false;
   beginRound();
 }
 function startFree(){
   session=shuffle(pool()).slice(0,S.len||10);
   if(!session.length){show('home');return}
-  freeMode=true;boostMode=false;
+  freeMode=true;boostMode=false;examMode=false;
   beginRound();
 }
 function hint2Text(a){
@@ -1137,7 +1232,8 @@ function next(){
   cur=session[idx];const q=Q[cur],p=prog(cur);
   hintStep=0;
   document.getElementById('c-cat').textContent=q.c;
-  document.getElementById('c-again').textContent=freeMode?'תרגול חופשי':boostMode?'חיזוק':(p.seen>0?'חזרה':'');
+  document.getElementById('c-again').textContent=examMode?'מבחן שבועי':freeMode?'תרגול חופשי':boostMode?'חיזוק':(p.seen>0?(earlySet.has(cur)?'חזרה מוקדמת':'חזרה'):'✦ חדשה')+(q.r?' · 🔄 הפוך':'');
+  const un=document.getElementById('p-unseen');if(un){const k=newCount();un.textContent=k?'✦ '+k:'';un.title=k+' שאלות שעוד לא נשאלת';}
   document.getElementById('c-q').textContent=q.q;
   setImg(q);
   document.getElementById('c-hint-t').textContent=q.h;
@@ -1154,8 +1250,9 @@ function next(){
   document.getElementById('b-prev').hidden=hist.length===0;
   document.getElementById('reveal-btns').style.display='flex';
   const bh=document.getElementById('b-hint');
-  bh.disabled=false;bh.style.opacity=1;bh.textContent='רמז';
+  bh.disabled=false;bh.style.opacity=1;bh.textContent='רמז';bh.style.display=examMode?'none':'';
   document.getElementById('grade').classList.remove('on');
+  document.getElementById('explain').hidden=true;
   document.getElementById('grade-hint').textContent='נסה לענות בראש לפני שתחשוף';
   document.getElementById('p-counter').textContent=(idx+1)+' / '+session.length;
   document.getElementById('p-bar').style.width=(idx/session.length*100)+'%';
@@ -1180,10 +1277,22 @@ function showAns(){
   SFX.reveal();
   document.getElementById('c-ans').hidden=false;
   document.getElementById('reveal-btns').style.display='none';
-  document.getElementById('grade').classList.add('on');
-  document.getElementById('grade-hint').textContent='היה כנה עם עצמך — זה מה שמלמד';
+  if(S.explain!==false&&!examMode){
+    document.getElementById('explain').hidden=false;
+    document.getElementById('grade-hint').textContent='הסבר בקול = הזיכרון נחרט פי כמה';
+  }else{
+    document.getElementById('grade').classList.add('on');
+    document.getElementById('grade-hint').textContent='היה כנה עם עצמך — זה מה שמלמד';
+  }
   if(deepOf(Q[cur]))document.getElementById('b-deep').hidden=false;
 }
+function explainDone(){
+  SFX.tap();
+  document.getElementById('explain').hidden=true;
+  document.getElementById('grade').classList.add('on');
+  document.getElementById('grade-hint').textContent='היה כנה עם עצמך — זה מה שמלמד';
+}
+function toggleExplain(){SFX.chip();S.explain=S.explain===false?true:false;save();renderStats();}
 function deepOf(q){return q.d||null}
 function showDeep(){
   SFX.hint();
@@ -1259,7 +1368,11 @@ function grade(g,btn){
   }
   else if(g===1){SFX.meh();buzz(12);comboRun=0;if(!roundMeh.includes(cur))roundMeh.push(cur);}
   else{SFX.no();buzz([25,40,25]);comboRun=0;if(!roundMiss.includes(cur))roundMiss.push(cur);}
-  if(freeMode){
+  if(examMode){
+    p.seen++;
+    if(g===2){p.ok++;gotIt++;}
+    else{p.run=0;p.box=Math.max(0,p.box-2);p.due=now;}
+  }else if(freeMode){
     p.seen++;
     if(g===2){p.ok++;gotIt++;}
     if(g===0){p.run=0;p.box=0;p.due=now;if(!requeue.includes(cur)&&session.filter(x=>x===cur).length<2)requeue.push(cur);}
@@ -1288,7 +1401,11 @@ function finish(){
   else if(acc>=0.8){confettiSky(40);}
   document.getElementById('d-n').textContent=gotIt+'/'+session.length;
   document.getElementById('d-title').textContent=n>=GOAL?'היעד היומי הושלם':'סבב הושלם';
-  document.getElementById('d-sub').textContent=freeMode?'תרגול חופשי — לוח החזרות שלך לא השתנה.':((S.streak>1?S.streak+' ימים ברצף. ':'')+(n>=GOAL?'המוח ממשיך לעבד את זה ברקע.':'עוד '+(GOAL-n)+' שאלות ליעד.'));
+  if(examMode){
+    if(!examRerun){S.exam={week:weekKey(),done:true,score:gotIt,n:session.length,at:Date.now()};save();}
+    document.getElementById('d-title').textContent=gotIt===session.length?'שליטה מלאה. באמת.':gotIt>=session.length*0.8?'מבחן שבועי — יציב':'מבחן שבועי — יש מה לחזק';
+    document.getElementById('d-sub').textContent=(session.length-gotIt)?'מה שפספסת חזר ללוח החזרות ויופיע שוב בקרוב. זה בדיוק מה שהמבחן נועד לתפוס.':'כל מה שסימנת ״נשלט״ עדיין אצלך בראש אחרי שבועות. זה זיכרון ארוך טווח.';
+  }else document.getElementById('d-sub').textContent=freeMode?'תרגול חופשי — לוח החזרות שלך לא השתנה.':((S.streak>1?S.streak+' ימים ברצף. ':'')+(n>=GOAL?'המוח ממשיך לעבד את זה ברקע.':'עוד '+(GOAL-n)+' שאלות ליעד.'));
   const mb=document.getElementById('d-miss-btn');
   const mn=roundMiss.length+roundMeh.length;
   mb.hidden=mn===0;
@@ -1348,9 +1465,11 @@ function renderStats(){
   document.getElementById('s-cats').innerHTML=cats.map(c=>{
     const ids=Q.map((q,i)=>i).filter(i=>Q[i].c===c);
     const m=ids.filter(i=>P(i)&&P(i).run>=1).length;
-    return '<div class="catrow"><span class="name">'+c+'</span><span class="track"><i style="width:0%" data-w="'+(m/ids.length*100)+'"></i></span><span class="n">'+m+'/'+ids.length+'</span></div>';
+    const u=ids.filter(i=>!P(i)||P(i).seen===0).length;
+    return '<div class="catrow"><span class="name">'+c+(u?' <small style="color:#8E86B8;font-size:11px">✦'+u+'</small>':'')+'</span><span class="track"><i style="width:0%" data-w="'+(m/ids.length*100)+'"></i></span><span class="n">'+m+'/'+ids.length+'</span></div>';
   }).join('');
   requestAnimationFrame(()=>{document.querySelectorAll('#s-cats .track i').forEach(el=>el.style.width=el.dataset.w+'%')});
+  document.getElementById('explain-tgl').textContent='שלב ״הסבר בקול״ לפני דירוג: '+(S.explain===false?'כבוי':'פועל');
   document.getElementById('s-store').textContent=(saveStatus||'עוד לא נשמר בפתיחה הזו')+(S.savedAt?' · שמירה אחרונה: '+new Date(S.savedAt).toLocaleString('he-IL',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'}):'');
   const weak=Q.map((q,i)=>i).filter(i=>P(i)&&P(i).seen>=2&&P(i).ok/P(i).seen<.5).slice(0,5);
   document.getElementById('s-weak').innerHTML=weak.length?'<p>הכי מתפספסות אצלך:</p><ul>'+weak.map(i=>'<li>'+Q[i].q+'</li>').join('')+'</ul>':'<p>עוד אין מספיק נתונים כדי לזהות נקודות חולשה.</p>';
@@ -1365,6 +1484,7 @@ function openModal(title,text,taVal,btns,editable){
   document.getElementById('m-text').textContent=text;
   const ta=document.getElementById('m-ta');
   ta.hidden=taVal===null;ta.value=taVal||'';ta.readOnly=!editable;
+  const ex=document.getElementById('m-extra');if(ex){ex.hidden=true;ex.innerHTML='';}
   const wrap=document.getElementById('m-btns');wrap.innerHTML='';
   btns.forEach(b=>{const el=document.createElement('button');el.textContent=b.t;if(b.amber)el.className='amber';el.onclick=b.f;wrap.appendChild(el);});
   document.getElementById('modal').hidden=false;
