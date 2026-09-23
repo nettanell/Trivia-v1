@@ -671,12 +671,6 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
 .exam-btn.done{background:rgba(255,255,255,.03);border-color:var(--hair);color:#9A9280}
 .exam-btn.done b{color:#D9C69A;font-size:14px;font-weight:600}
 
-.explain{display:flex;flex-direction:column;gap:10px;align-items:center;padding:14px 14px 12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(201,162,92,.45);animation:revealIn .3s ease;text-align:center}
-.explain[hidden]{display:none}
-.explain p{margin:0;font-size:15px;color:var(--canvas);line-height:1.45}
-.explain p b{color:var(--brass-hi)}
-.explain button{padding:11px 22px;border-radius:12px;background:var(--brass);color:#171208;font-weight:600;font-size:15px;border:0}
-.explain button:active{transform:scale(.95)}
 </style>
 </head>
 <body>
@@ -751,10 +745,6 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
         <button id="b-hint" onclick="showHint()">רמז</button>
         <button class="amber" id="b-ans" onclick="showAns()">תשובה</button>
       </div>
-      <div class="explain" id="explain" hidden>
-        <p>🗣 עכשיו, בקול, במשפט אחד: <b>למה</b> זו התשובה?</p>
-        <button onclick="explainDone()">אמרתי — לדירוג</button>
-      </div>
       <div class="grade" id="grade">
         <button class="no" onclick="grade(0,this)">לא ידעתי<small>נראה שוב בקרוב</small></button>
         <button class="meh" onclick="grade(1,this)">בערך<small>נחזור מחר</small></button>
@@ -815,7 +805,6 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
   <h3>שליטה לפי נושא</h3>
   <div id="s-cats"></div>
   <div class="weak" id="s-weak"></div>
-  <button class="secondary" id="explain-tgl" onclick="toggleExplain()"></button>
   <p class="tiny" id="s-store"></p>
   <p class="tiny">שאלה נחשבת "נשלטת" אחרי שידעת אותה שלוש פעמים ברצף.<br>שאלות שלא ידעת חוזרות בסבב הזה; "בערך" חוזר מחר.</p>
   <button class="secondary gold-btn" onclick="report()">דו״ח לקלוד — העתק ושלח בצ׳אט</button>
@@ -1232,7 +1221,7 @@ function next(){
   cur=session[idx];const q=Q[cur],p=prog(cur);
   hintStep=0;
   document.getElementById('c-cat').textContent=q.c;
-  document.getElementById('c-again').textContent=examMode?'מבחן שבועי':freeMode?'תרגול חופשי':boostMode?'חיזוק':(p.seen>0?(earlySet.has(cur)?'חזרה מוקדמת':'חזרה'):'✦ חדשה')+(q.r?' · 🔄 הפוך':'');
+  document.getElementById('c-again').textContent=examMode?'מבחן שבועי':freeMode?'תרגול חופשי':boostMode?'חיזוק':(p.seen>0?(earlySet.has(cur)?'חזרה מוקדמת':'חזרה'):'✦ חדשה');
   const un=document.getElementById('p-unseen');if(un){const k=newCount();un.textContent=k?'✦ '+k:'';un.title=k+' שאלות שעוד לא נשאלת';}
   document.getElementById('c-q').textContent=q.q;
   setImg(q);
@@ -1252,7 +1241,6 @@ function next(){
   const bh=document.getElementById('b-hint');
   bh.disabled=false;bh.style.opacity=1;bh.textContent='רמז';bh.style.display=examMode?'none':'';
   document.getElementById('grade').classList.remove('on');
-  document.getElementById('explain').hidden=true;
   document.getElementById('grade-hint').textContent='נסה לענות בראש לפני שתחשוף';
   document.getElementById('p-counter').textContent=(idx+1)+' / '+session.length;
   document.getElementById('p-bar').style.width=(idx/session.length*100)+'%';
@@ -1277,22 +1265,10 @@ function showAns(){
   SFX.reveal();
   document.getElementById('c-ans').hidden=false;
   document.getElementById('reveal-btns').style.display='none';
-  if(S.explain!==false&&!examMode){
-    document.getElementById('explain').hidden=false;
-    document.getElementById('grade-hint').textContent='הסבר בקול = הזיכרון נחרט פי כמה';
-  }else{
-    document.getElementById('grade').classList.add('on');
-    document.getElementById('grade-hint').textContent='היה כנה עם עצמך — זה מה שמלמד';
-  }
-  if(deepOf(Q[cur]))document.getElementById('b-deep').hidden=false;
-}
-function explainDone(){
-  SFX.tap();
-  document.getElementById('explain').hidden=true;
   document.getElementById('grade').classList.add('on');
   document.getElementById('grade-hint').textContent='היה כנה עם עצמך — זה מה שמלמד';
+  if(deepOf(Q[cur]))document.getElementById('b-deep').hidden=false;
 }
-function toggleExplain(){SFX.chip();S.explain=S.explain===false?true:false;save();renderStats();}
 function deepOf(q){return q.d||null}
 function showDeep(){
   SFX.hint();
@@ -1469,7 +1445,6 @@ function renderStats(){
     return '<div class="catrow"><span class="name">'+c+(u?' <small style="color:#8E86B8;font-size:11px">✦'+u+'</small>':'')+'</span><span class="track"><i style="width:0%" data-w="'+(m/ids.length*100)+'"></i></span><span class="n">'+m+'/'+ids.length+'</span></div>';
   }).join('');
   requestAnimationFrame(()=>{document.querySelectorAll('#s-cats .track i').forEach(el=>el.style.width=el.dataset.w+'%')});
-  document.getElementById('explain-tgl').textContent='שלב ״הסבר בקול״ לפני דירוג: '+(S.explain===false?'כבוי':'פועל');
   document.getElementById('s-store').textContent=(saveStatus||'עוד לא נשמר בפתיחה הזו')+(S.savedAt?' · שמירה אחרונה: '+new Date(S.savedAt).toLocaleString('he-IL',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'}):'');
   const weak=Q.map((q,i)=>i).filter(i=>P(i)&&P(i).seen>=2&&P(i).ok/P(i).seen<.5).slice(0,5);
   document.getElementById('s-weak').innerHTML=weak.length?'<p>הכי מתפספסות אצלך:</p><ul>'+weak.map(i=>'<li>'+Q[i].q+'</li>').join('')+'</ul>':'<p>עוד אין מספיק נתונים כדי לזהות נקודות חולשה.</p>';
