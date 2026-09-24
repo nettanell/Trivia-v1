@@ -1,5 +1,5 @@
 /* Trivia PWA service worker — bump CACHE version on every deploy of index/questions */
-const CACHE='trivia-v24';
+const CACHE='trivia-v25';
 const SHELL=['./','./index.html','./questions.js','./photos.js','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install',e=>{

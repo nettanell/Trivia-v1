@@ -106,6 +106,7 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 .reveal.ans p{font:500 19.5px/1.5 "Frank Ruhl Libre",serif}
 .reveal.ans p.lbl,.reveal.ans p.more{font-family:"Heebo"}
 .reveal .more{font-size:15px;color:#5A5240;margin-top:8px;line-height:1.55}
+.reveal .more,#c-ans-t,#c-deep-t{white-space:pre-line}
 .reveal.deep{background:rgba(201,162,92,.1);margin:16px -10px 0;padding:14px 12px 12px;border-radius:14px;border:1px solid rgba(169,130,64,.35)}
 .reveal.deep .lbl{color:var(--brass2)}
 .reveal.deep p{font-size:15.5px;line-height:1.65;font-family:"Heebo";font-weight:400}
@@ -993,7 +994,7 @@ async function save(){
   try{localStorage.setItem(KEY,raw);b=true;}catch(e){}
   saveStatus=c&&b?'נשמר (קלוד + דפדפן)':c?'נשמר (קלוד)':b?'נשמר (דפדפן)':'⚠︎ השמירה נכשלה!';
 }
-function qid(i){const s=Q[i].q;let h=0;for(let j=0;j<s.length;j++){h=(h*31+s.charCodeAt(j))>>>0}return 'q'+h.toString(36)}
+function qid(i){const s=Q[i].k||Q[i].q;let h=0;for(let j=0;j<s.length;j++){h=(h*31+s.charCodeAt(j))>>>0}return 'q'+h.toString(36)}
 function P(i){return S.p[qid(i)]}
 function prog(i){return S.p[qid(i)]||(S.p[qid(i)]={box:0,due:0,seen:0,ok:0,run:0})}
 
