@@ -107,6 +107,34 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 .reveal.ans p.lbl,.reveal.ans p.more{font-family:"Heebo"}
 .reveal .more{font-size:15px;color:#5A5240;margin-top:8px;line-height:1.55}
 .reveal .more,#c-ans-t,#c-deep-t{white-space:pre-line}
+/* ===== מילון מונחים ===== */
+.term{color:#8A6A2B;font-weight:500;text-decoration:none;border-bottom:1.5px dotted rgba(169,130,64,.7);padding-bottom:1px;cursor:pointer;transition:background .15s,border-color .15s;border-radius:2px;-webkit-tap-highlight-color:transparent}
+.term::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--brass);margin:0 0 7px 3px;vertical-align:baseline;opacity:.85}
+.term:active,.term.hit{background:rgba(201,162,92,.22);border-bottom-color:var(--brass2)}
+.reveal.deep .term{color:#7A5C22}
+.gs-x .term,.gs-e .term{color:var(--brass-hi);border-bottom-color:rgba(232,206,150,.55)}
+.gs-x .term::after,.gs-e .term::after{background:var(--brass-hi)}
+.gsheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center}
+.gsheet[hidden]{display:none}
+.gs-bg{position:absolute;inset:0;background:rgba(5,4,3,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:gsFade .25s ease}
+@keyframes gsFade{from{opacity:0}to{opacity:1}}
+.gs-box{position:relative;width:100%;max-width:520px;max-height:82dvh;overflow:auto;background:linear-gradient(180deg,#1A1612 0%,#120F0C 100%);border:1px solid rgba(201,162,92,.32);border-bottom:0;border-radius:24px 24px 0 0;padding:14px 22px calc(26px + env(safe-area-inset-bottom));color:var(--canvas);
+  box-shadow:0 -30px 90px -20px rgba(0,0,0,.9), 0 0 80px -30px rgba(232,206,150,.25), inset 0 1px 0 rgba(255,255,255,.08);animation:gsUp .38s cubic-bezier(.22,1.1,.36,1)}
+@keyframes gsUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.gs-box.out{animation:gsDown .22s ease forwards}
+@keyframes gsDown{to{transform:translateY(60px);opacity:0}}
+.gs-grip{width:40px;height:4px;border-radius:2px;background:rgba(246,239,223,.22);margin:0 auto 16px}
+.gs-kicker{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.14em;color:var(--brass2);margin:0 0 6px}
+.gs-kicker i{width:6px;height:6px;border-radius:50%;background:var(--brass);box-shadow:0 0 10px var(--brass);display:inline-block}
+.gs-t{font:500 27px/1.25 "Frank Ruhl Libre",serif;color:var(--brass-hi);margin:0 0 14px}
+.gs-x{font-size:16.5px;line-height:1.7;color:var(--canvas);margin:0;white-space:pre-line}
+.gs-e{margin:16px 0 0;padding:12px 14px;border-radius:14px;background:rgba(201,162,92,.09);border:1px solid rgba(201,162,92,.28);font-size:15px;line-height:1.6;color:var(--canvas2)}
+.gs-e b{display:block;font-size:11px;letter-spacing:.14em;color:var(--brass2);font-weight:500;margin:0 0 4px}
+.gs-btns{display:flex;gap:10px;margin-top:18px}
+.gs-btns button{flex:1;padding:13px;border-radius:14px;font-weight:500;font-size:15px;background:var(--wall2);border:1px solid var(--hair);color:var(--canvas);transition:transform .12s}
+.gs-btns button:active{transform:scale(.96)}
+.gs-btns button.back{flex:0 0 auto;padding:13px 16px;color:var(--brass-hi);border-color:rgba(201,162,92,.4)}
+
 .reveal.deep{background:rgba(201,162,92,.1);margin:16px -10px 0;padding:14px 12px 12px;border-radius:14px;border:1px solid rgba(169,130,64,.35)}
 .reveal.deep .lbl{color:var(--brass2)}
 .reveal.deep p{font-size:15.5px;line-height:1.65;font-family:"Heebo";font-weight:400}
@@ -905,6 +933,17 @@ body.thm-daily .dust i{background:rgba(216,154,180,.4)}
 </nav>
 <div class="confetti" id="confetti"></div>
 <div class="flash" id="flash"></div>
+<div class="gsheet" id="gsheet" hidden>
+  <div class="gs-bg" onclick="gsClose()"></div>
+  <div class="gs-box" id="gs-box" role="dialog" aria-modal="true">
+    <div class="gs-grip"></div>
+    <p class="gs-kicker"><i></i>מונח</p>
+    <h3 class="gs-t" id="gs-t"></h3>
+    <p class="gs-x" id="gs-x"></p>
+    <div class="gs-e" id="gs-e" hidden><b>דוגמה</b><span id="gs-e-t"></span></div>
+    <div class="gs-btns"><button class="back" id="gs-back" onclick="gsBack()" hidden>‹ חזרה</button><button onclick="gsClose()">הבנתי</button></div>
+  </div>
+</div>
 <div class="modal" id="modal" hidden>
   <div class="modal-box">
     <h3 id="m-title"></h3>
@@ -1228,8 +1267,8 @@ function next(){
   setImg(q);
   document.getElementById('c-hint-t').textContent=q.h;
   document.getElementById('c-hint2-t').textContent=hint2Text(q.a);
-  document.getElementById('c-ans-t').textContent=q.a;
-  document.getElementById('c-more').textContent=q.m||'';
+  document.getElementById('c-ans-t').innerHTML=glossHTML(q.a,q.q);
+  document.getElementById('c-more').innerHTML=glossHTML(q.m||'',q.q);
   document.getElementById('c-hint').hidden=true;
   document.getElementById('c-hint2').hidden=true;
   document.getElementById('c-ans').hidden=true;
@@ -1271,9 +1310,67 @@ function showAns(){
   if(deepOf(Q[cur]))document.getElementById('b-deep').hidden=false;
 }
 function deepOf(q){return q.d||null}
+/* ===== מילון מונחים: סימון אוטומטי + חלון הרחבה ===== */
+const GL=(typeof GLOSS==='object')?GLOSS:{};
+const GL_FORMS=(()=>{const a=[];for(const id in GL)GL[id].w.forEach(w=>a.push({id,w}));return a.sort((x,y)=>y.w.length-x.w.length)})();
+const HB='[\u05D0-\u05EA\u05F0-\u05F4A-Za-z0-9]';
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+/* מסמן את ההופעה הראשונה של כל מונח (עד 6 בבלוק), מדלג על מונחים שהם נושא השאלה עצמה */
+function glossHTML(text,qText,skipId){
+  if(!text)return '';
+  let t=esc(text);
+  if(!GL_FORMS.length)return t;
+  const skip=new Set();
+  if(qText)GL_FORMS.forEach(f=>{if(qText.includes(f.w))skip.add(f.id)});
+  if(skipId)skip.add(skipId);
+  const done=new Set();let n=0;
+  for(const f of GL_FORMS){
+    if(n>=6)break;
+    if(skip.has(f.id)||done.has(f.id))continue;
+    const re=new RegExp('(^|[^\\u05D0-\\u05EA\\u05F0-\\u05F4A-Za-z0-9<>])([\u05D5]?[\u05DB\u05E9]?[\u05D1\u05DC\u05D4]?)('+f.w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?!'+HB+')','u');
+    const m=re.exec(t);if(!m)continue;
+    /* לא לסמן בתוך תגית שכבר נוצרה */
+    const before=t.slice(0,m.index);if((before.match(/<span/g)||[]).length!==(before.match(/<\/span>/g)||[]).length)continue;
+    t=t.slice(0,m.index)+m[1]+m[2]+'<span class="term" data-g="'+f.id+'" onclick="gsOpen(\''+f.id+'\',this)">'+m[3]+'</span>'+t.slice(m.index+m[0].length);
+    done.add(f.id);n++;
+  }
+  return t.replace(/([.,—:;\s]+)<\/span>/g,'</span>$1');
+}
+const gsStack=[];
+function gsOpen(id,el){
+  const g=GL[id];if(!g)return;
+  SFX.hint();if(navigator.vibrate)navigator.vibrate(8);
+  if(el){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),350)}
+  const sh=document.getElementById('gsheet');
+  if(!sh.hidden&&gsStack.length)gsStack.push(gsStack[gsStack.length-1]);
+  gsRender(id);
+  if(sh.hidden){gsStack.length=0;gsStack.push(id);sh.hidden=false;document.body.style.overflow='hidden';}
+  else{gsStack[gsStack.length-1]=id;}
+  document.getElementById('gs-back').hidden=gsStack.length<2;
+  document.getElementById('gs-box').scrollTop=0;
+}
+function gsRender(id){
+  const g=GL[id];
+  document.getElementById('gs-t').textContent=g.t;
+  document.getElementById('gs-x').innerHTML=glossHTML(g.x,null,id);
+  const e=document.getElementById('gs-e');
+  if(g.e){e.hidden=false;document.getElementById('gs-e-t').innerHTML=glossHTML(g.e,null,id)}else e.hidden=true;
+}
+function gsBack(){
+  SFX.tap();gsStack.pop();
+  gsRender(gsStack[gsStack.length-1]);
+  document.getElementById('gs-back').hidden=gsStack.length<2;
+  document.getElementById('gs-box').scrollTop=0;
+}
+function gsClose(){
+  const sh=document.getElementById('gsheet');if(sh.hidden)return;
+  SFX.tap();const b=document.getElementById('gs-box');b.classList.add('out');
+  setTimeout(()=>{b.classList.remove('out');sh.hidden=true;document.body.style.overflow='';gsStack.length=0;},200);
+}
+
 function showDeep(){
   SFX.hint();
-  document.getElementById('c-deep-t').textContent=deepOf(Q[cur])||'';
+  document.getElementById('c-deep-t').innerHTML=glossHTML(deepOf(Q[cur])||'',Q[cur].q);
   document.getElementById('c-deep').hidden=false;
   document.getElementById('b-deep').hidden=true;
 }
@@ -1293,11 +1390,11 @@ function renderReview(){
   setImg(q);
   document.getElementById('c-hint').hidden=true;
   document.getElementById('c-hint2').hidden=true;
-  document.getElementById('c-ans-t').textContent=q.a;
-  document.getElementById('c-more').textContent=q.m||'';
+  document.getElementById('c-ans-t').innerHTML=glossHTML(q.a,q.q);
+  document.getElementById('c-more').innerHTML=glossHTML(q.m||'',q.q);
   document.getElementById('c-ans').hidden=false;
   const d=deepOf(q);
-  document.getElementById('c-deep-t').textContent=d||'';
+  document.getElementById('c-deep-t').innerHTML=glossHTML(d||'',q.q);
   document.getElementById('c-deep').hidden=!d;
   document.getElementById('b-deep').hidden=true;
   document.getElementById('reveal-btns').style.display='none';
@@ -1398,9 +1495,9 @@ function renderMissed(){
       +'<p class="mc"><span>'+q.c+'</span></p>'
       +(q.img?'<img class="qimg" src="'+q.img+'" alt="" onerror="this.hidden=true">':'')
       +'<p class="mq">'+q.q+'</p>'
-      +'<p class="ma">'+q.a+'</p>'
-      +(q.m?'<p class="mm">'+q.m+'</p>':'')
-      +(d?'<button class="mdbtn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden;SFX.tap()">העמקה</button><div class="mdeep" hidden>'+d+'</div>':'')
+      +'<p class="ma">'+glossHTML(q.a,q.q)+'</p>'
+      +(q.m?'<p class="mm">'+glossHTML(q.m,q.q)+'</p>':'')
+      +(d?'<button class="mdbtn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden;SFX.tap()">העמקה</button><div class="mdeep" hidden>'+glossHTML(d,q.q)+'</div>':'')
       +'</div>';
   };
   let html='';
@@ -2816,7 +2913,7 @@ function prStep(){
     '<div class="card"><p class="cat" style="font-size:12px;color:#8A7B58;letter-spacing:.12em;margin:0 0 8px">עצור וחשוב</p>'+
     '<p style="font:500 20px/1.45 \'Frank Ruhl Libre\',serif;margin:0">'+st.q+'</p>'+
     '<div class="reveal" id="pr-hint" hidden><p class="lbl">רמז</p><p>'+st.h+'</p></div>'+
-    '<div class="reveal ans" id="pr-ans" hidden><p class="lbl">תשובה</p><p>'+st.a+'</p>'+(st.m?'<p class="more">'+st.m+'</p>':'')+'</div>'+
+    '<div class="reveal ans" id="pr-ans" hidden><p class="lbl">תשובה</p><p>'+glossHTML(st.a,st.q)+'</p>'+(st.m?'<p class="more">'+glossHTML(st.m,st.q)+'</p>':'')+'</div>'+
     '<div class="rowbtns" id="pr-btns" style="margin-top:16px"><button onclick="SFX.tap();prHint()">רמז</button><button class="amber" onclick="SFX.tap();prReveal()">תשובה</button></div></div>'+
     '<div id="pr-nextwrap"></div>';
   window.scrollTo(0,0);
